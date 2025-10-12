@@ -30,6 +30,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [aiExplanation, setAiExplanation] = useState<AIMoveExplanation | null>(null);
   const [aiGuesses, setAiGuesses] = useState<GuessFeedback[]>([]);
   const [loading, setLoading] = useState(false);
+  const [aiStatus, setAiStatus] = useState<'in-progress' | 'won' | 'lost'>('in-progress');
 
   const maxGuesses = 6;
 
@@ -42,10 +43,19 @@ const GameBoard: React.FC<GameBoardProps> = ({
       }, delay);
       return () => clearTimeout(timer);
     }
-  }, [gameMode, guesses.length, status]);
+    // Auto-play AI in race mode
+    if (gameMode === 'race' && aiStatus === 'in-progress' && status === 'in-progress') {
+      const delay = aiGuesses.length === 0 ? 1000 : 2000;
+      const timer = setTimeout(() => {
+        playAIMove();
+      }, delay);
+      return () => clearTimeout(timer);
+    }
+  }, [gameMode, guesses.length, status, aiGuesses.length, aiStatus]);
 
   const playAIMove = async () => {
-    if (status !== 'in-progress') return;
+    if (gameMode === 'race' && aiStatus !== 'in-progress') return;
+    if (gameMode !== 'race' && status !== 'in-progress') return;
 
     setLoading(true);
     try {
@@ -65,21 +75,31 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
       if (gameMode === 'custom-challenge') {
         setGuesses(prev => [...prev, newGuess]);
+        setStatus(data.status);
+
+        if (data.status === 'won') {
+          const guessCount = guesses.length + 1;
+          setMessage(`AI solved it in ${guessCount} guess${guessCount === 1 ? '' : 'es'}! The word was "${data.secret}"`);
+          setSecret(data.secret);
+        } else if (data.status === 'lost') {
+          setMessage(`AI failed to solve! The word was "${data.secret}"`);
+          setSecret(data.secret);
+        }
       } else if (gameMode === 'race') {
         setAiGuesses(prev => [...prev, newGuess]);
+        setAiStatus(data.status);
+
+        if (data.status === 'won') {
+          const guessCount = aiGuesses.length + 1;
+          setMessage(`AI solved it in ${guessCount} guess${guessCount === 1 ? '' : 'es'}! The word was "${data.secret}"`);
+          setSecret(data.secret);
+        } else if (data.status === 'lost') {
+          setMessage(`AI failed to solve! The word was "${data.secret}"`);
+          setSecret(data.secret);
+        }
       }
 
       setAiExplanation(data.explanation);
-      setStatus(data.status);
-
-      if (data.status === 'won') {
-        const guessCount = gameMode === 'custom-challenge' ? guesses.length + 1 : aiGuesses.length + 1;
-        setMessage(`AI solved it in ${guessCount} guess${guessCount === 1 ? '' : 'es'}! The word was "${data.secret}"`);
-        setSecret(data.secret);
-      } else if (data.status === 'lost') {
-        setMessage(`AI failed to solve! The word was "${data.secret}"`);
-        setSecret(data.secret);
-      }
     } catch (error: any) {
       setMessage(error.message || 'Error getting AI move');
     } finally {
@@ -178,7 +198,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
         </div>
         <div className="info-item">
           <span className="label">AI:</span>
-          <span className="value">Optimized</span>
+          <span className="value">AI</span>
         </div>
         {hardMode && <div className="hard-mode-badge">HARD MODE</div>}
       </div>
@@ -214,7 +234,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
               />
             </div>
             <div className="board-section">
-              <h3>AI (Optimized)</h3>
+              <h3>AI</h3>
               <WordleGrid
                 guesses={aiGuesses}
                 currentGuess=""

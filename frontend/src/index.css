@@ -10,7 +10,7 @@
   --color-absent: #787c7e;
   --color-empty: #d3d6da;
   --color-bg: #ffffff;
-  --color-text: #000000;
+  --color-text: #1a1a1a;
   --color-border: #d3d6da;
   --color-key-bg: #818384;
   --color-key-text: #ffffff;
@@ -19,7 +19,7 @@
   --color-header-gradient-1: #667eea;
   --color-header-gradient-2: #764ba2;
   --color-footer-bg: #f5f5f5;
-  --color-footer-text: #666;
+  --color-footer-text: #555;
 }
 
 @media (prefers-color-scheme: dark) {

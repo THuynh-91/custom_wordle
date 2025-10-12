@@ -20,11 +20,14 @@
 .info-item .label {
   font-weight: 600;
   color: #666;
+  font-size: 1.05rem;
 }
 
 .info-item .value {
   color: #333;
   text-transform: capitalize;
+  font-size: 1.05rem;
+  font-weight: 500;
 }
 
 .hard-mode-badge {
@@ -42,8 +45,9 @@
   margin-bottom: 1rem;
   background: #e3f2fd;
   border-radius: 8px;
-  color: #1976d2;
-  font-weight: 500;
+  color: #1565c0;
+  font-weight: 600;
+  font-size: 1.1rem;
   animation: slideDown 0.3s ease-out;
 }
 
@@ -99,8 +103,8 @@
 
 .loading-indicator p {
   color: #667eea;
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-weight: 700;
+  font-size: 1.15rem;
 }
 
 .game-content {
@@ -116,7 +120,9 @@
 .board-section h3 {
   text-align: center;
   margin-bottom: 1rem;
-  color: #555;
+  color: #333;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 
 .game-stats {
@@ -132,28 +138,29 @@
 
 .stat-value {
   display: block;
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: #667eea;
 }
 
 .stat-label {
   display: block;
-  font-size: 0.9rem;
-  color: #666;
+  font-size: 1rem;
+  color: #555;
   margin-top: 0.25rem;
+  font-weight: 600;
 }
 
 .new-game-button {
   display: block;
   margin: 2rem auto 0;
-  padding: 0.75rem 2rem;
+  padding: 0.85rem 2.5rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
 }
