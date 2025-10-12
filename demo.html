@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>AI Wordle Duel - Demo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    h1 {
+      color: white;
+      margin: 20px 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .game-container {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    .setup {
+      text-align: center;
+    }
+    .setup button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px 5px;
+      transition: transform 0.2s;
+    }
+    .setup button:hover {
+      transform: translateY(-2px);
+    }
+    select {
+      padding: 10px;
+      border-radius: 6px;
+      border: 2px solid #ddd;
+      font-size: 16px;
+      margin: 10px 0;
+    }
+    .grid {
+      display: grid;
+      grid-template-rows: repeat(6, 1fr);
+      gap: 5px;
+      margin: 20px 0;
+    }
+    .row {
+      display: grid;
+      gap: 5px;
+    }
+    .row.length-5 { grid-template-columns: repeat(5, 1fr); }
+    .row.length-4 { grid-template-columns: repeat(4, 1fr); }
+    .row.length-3 { grid-template-columns: repeat(3, 1fr); }
+    .row.length-6 { grid-template-columns: repeat(6, 1fr); }
+    .tile {
+      aspect-ratio: 1;
+      border: 2px solid #d3d6da;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-radius: 4px;
+    }
+    .tile.correct { background: #6aaa64; border-color: #6aaa64; color: white; }
+    .tile.present { background: #c9b458; border-color: #c9b458; color: white; }
+    .tile.absent { background: #787c7e; border-color: #787c7e; color: white; }
+    .tile.filled { border-color: #878a8c; }
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      text-transform: uppercase;
+      text-align: center;
+      letter-spacing: 0.5em;
+    }
+    .message {
+      text-align: center;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .message.success { background: #d4edda; color: #155724; }
+    .message.error { background: #f8d7da; color: #721c24; }
+    .message.info { background: #d1ecf1; color: #0c5460; }
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 2px solid #eee;
+    }
+    .stat { text-align: center; }
+    .stat-value { font-size: 24px; font-weight: bold; color: #667eea; }
+    .stat-label { font-size: 12px; color: #666; }
+  </style>
+</head>
+<body>
+  <h1>🎮 AI Wordle Duel</h1>
+
+  <div class="game-container">
+    <div id="setup" class="setup">
+      <h2>Setup Your Game</h2>
+      <p>Choose word length:</p>
+      <select id="lengthSelect">
+        <option value="3">3 Letters</option>
+        <option value="4">4 Letters</option>
+        <option value="5" selected>5 Letters</option>
+        <option value="6">6 Letters</option>
+      </select>
+      <br>
+      <button onclick="startGame()">Start Game</button>
+    </div>
+
+    <div id="game" style="display: none;">
+      <div id="grid" class="grid"></div>
+      <input
+        id="guessInput"
+        type="text"
+        placeholder="Type your guess"
+        onkeypress="handleKeyPress(event)"
+      >
+      <div id="message"></div>
+      <div class="stats">
+        <div class="stat">
+          <div id="guessCount" class="stat-value">0</div>
+          <div class="stat-label">Guesses</div>
+        </div>
+        <div class="stat">
+          <div id="remaining" class="stat-value">6</div>
+          <div class="stat-label">Remaining</div>
+        </div>
+      </div>
+      <button onclick="resetGame()">New Game</button>
+    </div>
+  </div>
+
+  <script>
+    let gameId = null;
+    let wordLength = 5;
+    let maxGuesses = 6;
+    let guesses = [];
+    let gameStatus = 'in-progress';
+
+    async function startGame() {
+      wordLength = parseInt(document.getElementById('lengthSelect').value);
+
+      try {
+        const response = await fetch('http://localhost:3000/api/game/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mode: 'human-play', length: wordLength })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to create game');
+        }
+
+        const data = await response.json();
+        gameId = data.gameId;
+        guesses = [];
+        gameStatus = 'in-progress';
+
+        document.getElementById('setup').style.display = 'none';
+        document.getElementById('game').style.display = 'block';
+        document.getElementById('guessInput').focus();
+        document.getElementById('guessInput').maxLength = wordLength;
+
+        renderGrid();
+        updateStats();
+        showMessage('Game started! Try to guess the word.', 'info');
+      } catch (error) {
+        alert('Error starting game: ' + error.message);
+      }
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+
+      for (let i = 0; i < maxGuesses; i++) {
+        const row = document.createElement('div');
+        row.className = `row length-${wordLength}`;
+
+        if (i < guesses.length) {
+          const guess = guesses[i];
+          for (let j = 0; j < wordLength; j++) {
+            const tile = document.createElement('div');
+            tile.className = `tile ${guess.feedback[j]}`;
+            tile.textContent = guess.guess[j];
+            row.appendChild(tile);
+          }
+        } else if (i === guesses.length && gameStatus === 'in-progress') {
+          const currentGuess = document.getElementById('guessInput').value.toLowerCase();
+          for (let j = 0; j < wordLength; j++) {
+            const tile = document.createElement('div');
+            tile.className = 'tile' + (j < currentGuess.length ? ' filled' : '');
+            tile.textContent = j < currentGuess.length ? currentGuess[j] : '';
+            row.appendChild(tile);
+          }
+        } else {
+          for (let j = 0; j < wordLength; j++) {
+            const tile = document.createElement('div');
+            tile.className = 'tile';
+            row.appendChild(tile);
+          }
+        }
+
+        grid.appendChild(row);
+      }
+    }
+
+    function handleKeyPress(event) {
+      if (event.key === 'Enter') {
+        submitGuess();
+      } else {
+        setTimeout(renderGrid, 10);
+      }
+    }
+
+    async function submitGuess() {
+      if (gameStatus !== 'in-progress') return;
+
+      const input = document.getElementById('guessInput');
+      const word = input.value.toLowerCase().trim();
+
+      if (word.length !== wordLength) {
+        showMessage(`Word must be ${wordLength} letters!`, 'error');
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:3000/api/game/${gameId}/guess`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ word })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          showMessage(data.message || 'Invalid guess', 'error');
+          return;
+        }
+
+        guesses.push({ guess: word, feedback: data.feedback });
+        gameStatus = data.status;
+        input.value = '';
+
+        renderGrid();
+        updateStats();
+
+        if (data.status === 'won') {
+          showMessage(`🎉 Congratulations! You won in ${guesses.length} guesses!`, 'success');
+        } else if (data.status === 'lost') {
+          showMessage(`Game Over! The word was: ${data.secret.toUpperCase()}`, 'error');
+        } else {
+          showMessage(`${data.remainingGuesses} guesses left`, 'info');
+        }
+      } catch (error) {
+        showMessage('Error: ' + error.message, 'error');
+      }
+    }
+
+    function updateStats() {
+      document.getElementById('guessCount').textContent = guesses.length;
+      document.getElementById('remaining').textContent = maxGuesses - guesses.length;
+    }
+
+    function showMessage(text, type) {
+      const msg = document.getElementById('message');
+      msg.textContent = text;
+      msg.className = `message ${type}`;
+    }
+
+    function resetGame() {
+      document.getElementById('setup').style.display = 'block';
+      document.getElementById('game').style.display = 'none';
+      document.getElementById('message').textContent = '';
+    }
+  </script>
+</body>
+</html>

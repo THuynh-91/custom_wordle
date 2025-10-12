@@ -1,0 +1,97 @@
+.keyboard {
+  max-width: 500px;
+  margin: 2rem auto;
+  user-select: none;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.key {
+  min-width: 43px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-empty);
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.1s;
+  text-transform: uppercase;
+}
+
+.key:hover:not(:disabled) {
+  background: #bbb;
+  transform: scale(1.05);
+}
+
+.key:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.key:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.key-wide {
+  min-width: 65px;
+  font-size: 0.75rem;
+}
+
+.key-correct {
+  background: var(--color-correct);
+  color: white;
+}
+
+.key-present {
+  background: var(--color-present);
+  color: white;
+}
+
+.key-absent {
+  background: var(--color-absent);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .keyboard {
+    max-width: 100%;
+  }
+
+  .key {
+    min-width: 36px;
+    height: 48px;
+    font-size: 0.8rem;
+  }
+
+  .key-wide {
+    min-width: 55px;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .key {
+    min-width: 28px;
+    height: 42px;
+    font-size: 0.75rem;
+  }
+
+  .key-wide {
+    min-width: 45px;
+    font-size: 0.65rem;
+  }
+
+  .keyboard-row {
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+}

@@ -1,0 +1,160 @@
+.wordle-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 0 auto;
+  max-width: fit-content;
+}
+
+.grid-row {
+  display: flex;
+  gap: 5px;
+}
+
+.tile {
+  width: 62px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  border: 2px solid var(--color-border);
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+  animation: popIn 0.15s ease-in-out;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateX(0);
+  }
+  50% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0);
+  }
+}
+
+.tile.empty {
+  background: transparent;
+}
+
+.tile.filled {
+  border-color: #878a8c;
+}
+
+.tile.correct {
+  background: var(--color-correct);
+  border-color: var(--color-correct);
+  color: white;
+  animation: flip 0.5s ease-in-out;
+}
+
+.tile.present {
+  background: var(--color-present);
+  border-color: var(--color-present);
+  color: white;
+  animation: flip 0.5s ease-in-out;
+}
+
+.tile.absent {
+  background: var(--color-absent);
+  border-color: var(--color-absent);
+  color: white;
+  animation: flip 0.5s ease-in-out;
+}
+
+/* Adjust tile size for different word lengths */
+.wordle-grid.length-3 .tile {
+  width: 80px;
+  height: 80px;
+  font-size: 2.5rem;
+}
+
+.wordle-grid.length-4 .tile {
+  width: 70px;
+  height: 70px;
+  font-size: 2.2rem;
+}
+
+.wordle-grid.length-5 .tile {
+  width: 62px;
+  height: 62px;
+  font-size: 2rem;
+}
+
+.wordle-grid.length-6 .tile {
+  width: 54px;
+  height: 54px;
+  font-size: 1.8rem;
+}
+
+.wordle-grid.length-7 .tile {
+  width: 48px;
+  height: 48px;
+  font-size: 1.6rem;
+}
+
+@media (max-width: 768px) {
+  .tile {
+    width: 52px;
+    height: 52px;
+    font-size: 1.6rem;
+  }
+
+  .wordle-grid.length-3 .tile {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+
+  .wordle-grid.length-4 .tile {
+    width: 56px;
+    height: 56px;
+    font-size: 1.8rem;
+  }
+
+  .wordle-grid.length-5 .tile {
+    width: 52px;
+    height: 52px;
+    font-size: 1.6rem;
+  }
+
+  .wordle-grid.length-6 .tile {
+    width: 46px;
+    height: 46px;
+    font-size: 1.4rem;
+  }
+
+  .wordle-grid.length-7 .tile {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .wordle-grid.length-6 .tile,
+  .wordle-grid.length-7 .tile {
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+  }
+}

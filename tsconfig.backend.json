@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "jsx": "preserve",
+    "lib": ["ES2022"],
+    "outDir": "./dist/backend",
+    "rootDir": "./"
+  },
+  "include": ["backend/**/*", "shared/**/*"],
+  "exclude": ["node_modules", "dist", "frontend", "**/*.test.ts"]
+}

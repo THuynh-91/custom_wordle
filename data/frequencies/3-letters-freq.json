@@ -1,0 +1,210 @@
+{
+  "a": {
+    "total": 137,
+    "positions": [
+      24,
+      105,
+      8
+    ]
+  },
+  "b": {
+    "total": 49,
+    "positions": [
+      24,
+      1,
+      25
+    ]
+  },
+  "c": {
+    "total": 27,
+    "positions": [
+      17,
+      4,
+      6
+    ]
+  },
+  "d": {
+    "total": 59,
+    "positions": [
+      20,
+      3,
+      41
+    ]
+  },
+  "e": {
+    "total": 103,
+    "positions": [
+      15,
+      58,
+      37
+    ]
+  },
+  "f": {
+    "total": 28,
+    "positions": [
+      24,
+      2,
+      3
+    ]
+  },
+  "g": {
+    "total": 58,
+    "positions": [
+      17,
+      5,
+      39
+    ]
+  },
+  "h": {
+    "total": 34,
+    "positions": [
+      26,
+      6,
+      2
+    ]
+  },
+  "i": {
+    "total": 78,
+    "positions": [
+      10,
+      67,
+      1
+    ]
+  },
+  "j": {
+    "total": 13,
+    "positions": [
+      13,
+      0,
+      0
+    ]
+  },
+  "k": {
+    "total": 16,
+    "positions": [
+      6,
+      2,
+      8
+    ]
+  },
+  "l": {
+    "total": 36,
+    "positions": [
+      20,
+      10,
+      8
+    ]
+  },
+  "m": {
+    "total": 41,
+    "positions": [
+      19,
+      3,
+      20
+    ]
+  },
+  "n": {
+    "total": 60,
+    "positions": [
+      16,
+      7,
+      39
+    ]
+  },
+  "o": {
+    "total": 96,
+    "positions": [
+      18,
+      73,
+      8
+    ]
+  },
+  "p": {
+    "total": 61,
+    "positions": [
+      30,
+      4,
+      30
+    ]
+  },
+  "q": {
+    "total": 0,
+    "positions": [
+      0,
+      0,
+      0
+    ]
+  },
+  "r": {
+    "total": 62,
+    "positions": [
+      26,
+      16,
+      20
+    ]
+  },
+  "s": {
+    "total": 46,
+    "positions": [
+      36,
+      3,
+      8
+    ]
+  },
+  "t": {
+    "total": 88,
+    "positions": [
+      30,
+      3,
+      58
+    ]
+  },
+  "u": {
+    "total": 60,
+    "positions": [
+      4,
+      53,
+      3
+    ]
+  },
+  "v": {
+    "total": 10,
+    "positions": [
+      7,
+      2,
+      1
+    ]
+  },
+  "w": {
+    "total": 50,
+    "positions": [
+      20,
+      6,
+      25
+    ]
+  },
+  "x": {
+    "total": 13,
+    "positions": [
+      0,
+      1,
+      12
+    ]
+  },
+  "y": {
+    "total": 54,
+    "positions": [
+      12,
+      5,
+      37
+    ]
+  },
+  "z": {
+    "total": 5,
+    "positions": [
+      5,
+      0,
+      0
+    ]
+  }
+}

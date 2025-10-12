@@ -1,0 +1,93 @@
+/**
+ * Express server for AI Wordle Duel
+ */
+
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import compression from 'compression';
+import dotenv from 'dotenv';
+import { WordService } from './services/word-service.js';
+import gameRoutes from './routes/game.js';
+import wordRoutes from './routes/words.js';
+import leaderboardRoutes from './routes/leaderboard.js';
+
+// Load environment variables
+dotenv.config();
+
+const app = express();
+const PORT = parseInt(process.env.PORT || '3000', 10);
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+
+// Middleware
+app.use(helmet());
+app.use(compression());
+app.use(cors({
+  origin: FRONTEND_URL.split(','),
+  credentials: true
+}));
+app.use(express.json());
+
+// Request logging
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  next();
+});
+
+// Health check
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// API routes
+app.use('/api/game', gameRoutes);
+app.use('/api/words', wordRoutes);
+app.use('/api/leaderboard', leaderboardRoutes);
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ error: 'Not Found', message: `Route ${req.path} not found` });
+});
+
+// Error handler
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error('Error:', err);
+  res.status(err.statusCode || 500).json({
+    error: err.name || 'Internal Server Error',
+    message: err.message || 'An unexpected error occurred',
+    statusCode: err.statusCode || 500
+  });
+});
+
+// Initialize and start server
+async function start() {
+  try {
+    console.log('Initializing word service...');
+    await WordService.initialize();
+
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`\n${'='.repeat(50)}`);
+      console.log(`🎮 AI Wordle Duel Server`);
+      console.log(`${'='.repeat(50)}`);
+      console.log(`Server running on port ${PORT}`);
+      console.log(`Access at: http://localhost:${PORT} or http://0.0.0.0:${PORT}`);
+      console.log(`Frontend URL: ${FRONTEND_URL}`);
+      console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+      console.log(`\nWord lists loaded:`);
+
+      const info = WordService.getWordListInfo();
+      for (const [length, counts] of Object.entries(info)) {
+        console.log(`  ${length} letters: ${counts.answers} answers, ${counts.guesses} valid guesses`);
+      }
+
+      console.log(`\n✅ Server ready!\n`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
+}
+
+start();
+
+export default app;

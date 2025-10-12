@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(test:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill:*)",
+      "Bash(tasklist)",
+      "Bash(curl http://localhost:3000/health)",
+      "Bash(curl http://localhost:5173)",
+      "Bash(npm run dev)",
+      "Bash(timeout:*)",
+      "Bash(curl http://localhost:5174)",
+      "Bash(curl:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

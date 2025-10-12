@@ -1,0 +1,18 @@
+# ML Training Requirements for AI Wordle Duel
+
+# Core ML frameworks
+torch>=2.0.0
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Training utilities
+scikit-learn>=1.3.0
+tensorboard>=2.13.0
+tqdm>=4.65.0
+
+# Data processing
+jsonlines>=3.1.0
+
+# Optional: for RL training
+gym>=0.26.0
+stable-baselines3>=2.0.0
