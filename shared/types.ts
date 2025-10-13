@@ -195,6 +195,8 @@ export interface RaceState {
   humanStatus: 'in-progress' | 'won' | 'lost';
   aiStatus: 'in-progress' | 'won' | 'lost';
   solverType: SolverType;
+  currentTurn: 'human' | 'ai'; // Track whose turn it is
+  maxGuesses: number;
   startedAt: number;
   completedAt?: number;
 }

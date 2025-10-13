@@ -31,8 +31,40 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [aiGuesses, setAiGuesses] = useState<GuessFeedback[]>([]);
   const [loading, setLoading] = useState(false);
   const [aiStatus, setAiStatus] = useState<'in-progress' | 'won' | 'lost'>('in-progress');
+  const [currentTurn, setCurrentTurn] = useState<'human' | 'ai'>('human');
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   const maxGuesses = 6;
+
+  // Fetch initial game state for race mode
+  useEffect(() => {
+    const fetchGameState = async () => {
+      if (gameMode === 'race' && isFirstLoad) {
+        try {
+          const response = await fetch(`/api/game/${gameId}`);
+          if (response.ok) {
+            const data = await response.json();
+            if (data.currentTurn) {
+              setCurrentTurn(data.currentTurn);
+              // Load existing guesses if any (for page refresh scenarios)
+              if (data.humanGuesses) {
+                setGuesses(data.humanGuesses);
+                setStatus(data.humanStatus);
+              }
+              if (data.aiGuesses) {
+                setAiGuesses(data.aiGuesses);
+                setAiStatus(data.aiStatus);
+              }
+              setIsFirstLoad(false);
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching game state:', error);
+        }
+      }
+    };
+    fetchGameState();
+  }, [gameId, gameMode, isFirstLoad]);
 
   useEffect(() => {
     // Auto-play for custom challenge mode with natural delay
@@ -43,15 +75,15 @@ const GameBoard: React.FC<GameBoardProps> = ({
       }, delay);
       return () => clearTimeout(timer);
     }
-    // Auto-play AI in race mode
-    if (gameMode === 'race' && aiStatus === 'in-progress' && status === 'in-progress') {
-      const delay = aiGuesses.length === 0 ? 1000 : 2000;
+    // Auto-play AI in race mode only when it's AI's turn
+    if (gameMode === 'race' && aiStatus === 'in-progress' && currentTurn === 'ai') {
+      const delay = aiGuesses.length === 0 ? 800 : 600; // Faster in race mode
       const timer = setTimeout(() => {
         playAIMove();
       }, delay);
       return () => clearTimeout(timer);
     }
-  }, [gameMode, guesses.length, status, aiGuesses.length, aiStatus]);
+  }, [gameMode, guesses.length, status, aiGuesses.length, aiStatus, currentTurn]);
 
   const playAIMove = async () => {
     if (gameMode === 'race' && aiStatus !== 'in-progress') return;
@@ -88,6 +120,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
       } else if (gameMode === 'race') {
         setAiGuesses(prev => [...prev, newGuess]);
         setAiStatus(data.status);
+        setCurrentTurn('human'); // Switch turn back to human
 
         if (data.status === 'won') {
           const guessCount = aiGuesses.length + 1;
@@ -109,6 +142,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
   const handleKeyPress = (key: string) => {
     if (status !== 'in-progress' || loading) return;
+    // In race mode, check if it's the human's turn
+    if (gameMode === 'race' && currentTurn !== 'human') return;
 
     if (key === 'ENTER') {
       submitGuess();
@@ -151,6 +186,11 @@ const GameBoard: React.FC<GameBoardProps> = ({
       setCurrentGuess('');
       setStatus(data.status);
       setMessage('');
+
+      // In race mode, switch turn to AI
+      if (gameMode === 'race') {
+        setCurrentTurn('ai');
+      }
 
       if (data.status === 'won') {
         setMessage(`Congratulations! You solved it in ${guesses.length + 1} guess${guesses.length + 1 === 1 ? '' : 'es'}!`);
@@ -209,6 +249,22 @@ const GameBoard: React.FC<GameBoardProps> = ({
         </div>
       )}
 
+      {gameMode === 'race' && (
+        <div className={`turn-indicator ${currentTurn === 'human' ? 'your-turn' : 'ai-turn'}`}>
+          {status === 'in-progress' && aiStatus === 'in-progress' ? (
+            currentTurn === 'human' ? (
+              "Your Turn! (Use opponent's feedback)"
+            ) : (
+              <span className="ai-thinking">
+                AI's Turn... <span className="dots">⚡</span>
+              </span>
+            )
+          ) : (
+            status === 'won' ? "You Won! 🎉" : aiStatus === 'won' ? "AI Won! 🤖" : "Game Over"
+          )}
+        </div>
+      )}
+
       {loading && gameMode === 'custom-challenge' && (
         <div className="loading-indicator">
           <div className="spinner"></div>
@@ -219,7 +275,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
       <div className={`game-content ${gameMode === 'race' ? 'race-mode' : ''}`}>
         {gameMode === 'race' ? (
           <>
-            <div className="board-section">
+            <div className={`board-section ${currentTurn === 'human' ? 'active-player' : ''}`}>
               <h3>You</h3>
               <WordleGrid
                 guesses={guesses}
@@ -230,10 +286,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
               <Keyboard
                 onKeyPress={handleKeyPress}
                 letterStates={getLetterStates()}
-                disabled={status !== 'in-progress' || loading}
+                disabled={status !== 'in-progress' || loading || (gameMode === 'race' && currentTurn !== 'human')}
               />
             </div>
-            <div className="board-section">
+            <div className={`board-section ${currentTurn === 'ai' ? 'active-player' : ''}`}>
               <h3>AI</h3>
               <WordleGrid
                 guesses={aiGuesses}

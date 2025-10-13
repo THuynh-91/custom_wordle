@@ -16,6 +16,7 @@ import {
   ValidateWordRequest,
   ValidateWordResponse,
   GameState,
+  RaceState,
   AIMoveResponse,
   SolverType,
   WordLength
@@ -26,6 +27,7 @@ const router = express.Router();
 
 // In-memory game storage (use Redis in production)
 const games = new Map<string, GameState>();
+const raceGames = new Map<string, RaceState>();
 
 /**
  * Create a new game
@@ -65,19 +67,37 @@ router.post('/create', async (req, res) => {
 
     // Create game state
     const gameId = uuidv4();
-    const gameState: GameState = {
-      gameId,
-      mode,
-      length,
-      secret: secretWord,
-      maxGuesses: DEFAULT_MAX_GUESSES,
-      hardMode,
-      guesses: [],
-      status: 'in-progress',
-      startedAt: Date.now()
-    };
 
-    games.set(gameId, gameState);
+    // Race mode uses separate storage
+    if (mode === 'race') {
+      const raceState: RaceState = {
+        gameId,
+        secret: secretWord,
+        length,
+        humanGuesses: [],
+        aiGuesses: [],
+        humanStatus: 'in-progress',
+        aiStatus: 'in-progress',
+        solverType: solverType || 'entropy',
+        currentTurn: Math.random() < 0.5 ? 'human' : 'ai', // Randomly decide who goes first
+        maxGuesses: DEFAULT_MAX_GUESSES,
+        startedAt: Date.now()
+      };
+      raceGames.set(gameId, raceState);
+    } else {
+      const gameState: GameState = {
+        gameId,
+        mode,
+        length,
+        secret: secretWord,
+        maxGuesses: DEFAULT_MAX_GUESSES,
+        hardMode,
+        guesses: [],
+        status: 'in-progress',
+        startedAt: Date.now()
+      };
+      games.set(gameId, gameState);
+    }
 
     // Create response
     const response: CreateGameResponse = {
@@ -104,6 +124,81 @@ router.post('/:gameId/guess', async (req, res) => {
     const { gameId } = req.params;
     const { word }: SubmitGuessRequest = req.body;
 
+    // Check if this is a race game
+    const raceGame = raceGames.get(gameId);
+    if (raceGame) {
+      // Handle race mode guess
+      if (raceGame.humanStatus !== 'in-progress') {
+        return res.status(400).json({
+          error: 'Game Ended',
+          message: 'Your game has ended'
+        });
+      }
+
+      if (raceGame.currentTurn !== 'human') {
+        return res.status(400).json({
+          error: 'Not Your Turn',
+          message: 'Wait for AI to complete their turn'
+        });
+      }
+
+      // Validate guess
+      const normalizedGuess = word.toLowerCase().trim();
+
+      if (normalizedGuess.length !== raceGame.length) {
+        return res.status(400).json({
+          error: 'Invalid Guess',
+          message: ERROR_MESSAGES.INVALID_GUESS_LENGTH(raceGame.length, normalizedGuess.length)
+        });
+      }
+
+      if (!WordService.isValidGuess(normalizedGuess, raceGame.length)) {
+        return res.status(400).json({
+          error: 'Invalid Word',
+          message: ERROR_MESSAGES.WORD_NOT_IN_LIST(normalizedGuess)
+        });
+      }
+
+      // Generate feedback
+      const feedback = GameEngine.generateFeedback(normalizedGuess, raceGame.secret);
+      const isWin = GameEngine.isWin(feedback);
+      const isLoss = raceGame.humanGuesses.length + 1 >= raceGame.maxGuesses && !isWin;
+
+      // Update race state
+      raceGame.humanGuesses.push({
+        guess: normalizedGuess,
+        feedback,
+        timestamp: Date.now()
+      });
+
+      if (isWin) {
+        raceGame.humanStatus = 'won';
+        if (raceGame.aiStatus !== 'in-progress') {
+          raceGame.completedAt = Date.now();
+        }
+      } else if (isLoss) {
+        raceGame.humanStatus = 'lost';
+        if (raceGame.aiStatus !== 'in-progress') {
+          raceGame.completedAt = Date.now();
+        }
+      }
+
+      // Switch turn to AI
+      raceGame.currentTurn = 'ai';
+
+      // Create response
+      const response: SubmitGuessResponse = {
+        feedback,
+        status: raceGame.humanStatus,
+        guessNumber: raceGame.humanGuesses.length,
+        remainingGuesses: raceGame.maxGuesses - raceGame.humanGuesses.length,
+        secret: raceGame.humanStatus !== 'in-progress' && raceGame.aiStatus !== 'in-progress' ? raceGame.secret : undefined
+      };
+
+      return res.json(response);
+    }
+
+    // Normal game mode
     const game = games.get(gameId);
 
     if (!game) {
@@ -194,6 +289,120 @@ router.get('/:gameId/ai-move', async (req, res) => {
     const { gameId } = req.params;
     const { solverType = 'entropy' } = req.query;
 
+    // Check if this is a race game
+    const raceGame = raceGames.get(gameId);
+    if (raceGame) {
+      // Handle race mode AI move
+      if (raceGame.aiStatus !== 'in-progress') {
+        return res.status(400).json({
+          error: 'Game Ended',
+          message: 'AI game has ended'
+        });
+      }
+
+      if (raceGame.currentTurn !== 'ai') {
+        return res.status(400).json({
+          error: 'Not AI Turn',
+          message: 'It is the human\'s turn'
+        });
+      }
+
+      // Build constraints and filter candidates based on BOTH AI's and human's guesses
+      // In turn-based race mode, AI can see all human guesses and their feedback
+      const allAnswers = WordService.getAnswerWords(raceGame.length);
+      const allGuesses = WordService.getGuessWords(raceGame.length);
+
+      let candidates: string[];
+      if (raceGame.aiGuesses.length === 0 && raceGame.humanGuesses.length === 0) {
+        // First move - all answers are candidates
+        candidates = allAnswers;
+      } else {
+        // Combine BOTH AI's and human's guesses to build constraints
+        // This allows AI to learn from both players' feedback for optimal play
+        const combinedGuesses = [...raceGame.aiGuesses, ...raceGame.humanGuesses];
+        const constraints = GameEngine.buildConstraints(combinedGuesses);
+        candidates = GameEngine.filterCandidates(allAnswers, constraints);
+      }
+
+      // Get all previously guessed words to avoid repeating
+      const alreadyGuessed = new Set([
+        ...raceGame.aiGuesses.map(g => g.guess),
+        ...raceGame.humanGuesses.map(g => g.guess)
+      ]);
+
+      // Filter out already guessed words from candidates
+      candidates = candidates.filter(word => !alreadyGuessed.has(word));
+
+      if (candidates.length === 0) {
+        return res.status(500).json({
+          error: 'No Candidates',
+          message: 'No valid candidates remain'
+        });
+      }
+
+      // Get solver
+      let solver;
+      switch (raceGame.solverType) {
+        case 'frequency':
+          solver = new FrequencySolver(raceGame.length, candidates, allGuesses);
+          break;
+        case 'entropy':
+        default:
+          solver = new EntropySolver(raceGame.length, candidates, allGuesses);
+          break;
+      }
+
+      // Get move
+      const move = solver.getNextMove(raceGame.aiGuesses, candidates);
+
+      // Generate feedback
+      const feedback = GameEngine.generateFeedback(move.guess, raceGame.secret);
+      const isWin = GameEngine.isWin(feedback);
+      const isLoss = raceGame.aiGuesses.length + 1 >= raceGame.maxGuesses && !isWin;
+
+      // Update race state
+      raceGame.aiGuesses.push({
+        guess: move.guess,
+        feedback,
+        timestamp: Date.now()
+      });
+
+      if (isWin) {
+        raceGame.aiStatus = 'won';
+        if (raceGame.humanStatus !== 'in-progress') {
+          raceGame.completedAt = Date.now();
+        }
+      } else if (isLoss) {
+        raceGame.aiStatus = 'lost';
+        if (raceGame.humanStatus !== 'in-progress') {
+          raceGame.completedAt = Date.now();
+        }
+      }
+
+      // Switch turn back to human
+      raceGame.currentTurn = 'human';
+
+      // Calculate remaining candidates
+      const newConstraints = GameEngine.buildConstraints(raceGame.aiGuesses);
+      const newCandidates = GameEngine.filterCandidates(allAnswers, newConstraints);
+
+      // Create response
+      const response: AIMoveResponse = {
+        guess: move.guess,
+        feedback,
+        explanation: {
+          ...move.explanation,
+          candidateCountAfter: newCandidates.length
+        },
+        remainingCandidates: newCandidates.length,
+        status: raceGame.aiStatus,
+        secret: raceGame.humanStatus !== 'in-progress' && raceGame.aiStatus !== 'in-progress' ? raceGame.secret : undefined
+      };
+
+      return res.json(response);
+    }
+
+    // Normal game mode
     const game = games.get(gameId);
 
     if (!game) {
@@ -324,6 +533,18 @@ router.post('/:gameId/validate', async (req, res) => {
 router.get('/:gameId', async (req, res) => {
   try {
     const { gameId } = req.params;
+
+    // Check for race game first
+    const raceGame = raceGames.get(gameId);
+    if (raceGame) {
+      const bothEnded = raceGame.humanStatus !== 'in-progress' && raceGame.aiStatus !== 'in-progress';
+      const response = {
+        ...raceGame,
+        secret: bothEnded ? raceGame.secret : undefined
+      };
+      return res.json(response);
+    }
+
     const game = games.get(gameId);
 
     if (!game) {

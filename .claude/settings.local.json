@@ -12,7 +12,15 @@
       "Bash(npm run dev)",
       "Bash(timeout:*)",
       "Bash(curl http://localhost:5174)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(npm run build)",
+      "Bash(npm start)",
+      "Bash(dir dist)",
+      "Bash(dir:*)",
+      "Bash(node:*)",
+      "Bash(cmd //c taskkill:*)",
+      "Bash(cmd //c \"tasklist | findstr node.exe\")",
+      "Bash(cmd //c:*)"
     ],
     "deny": [],
     "ask": []
