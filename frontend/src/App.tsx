@@ -23,6 +23,29 @@ function App() {
     setGameId(null);
   };
 
+  const handleReplay = async () => {
+    // Create new game with current settings
+    try {
+      const response = await fetch('/api/game/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mode: gameMode,
+          length: wordLength,
+          hardMode: hardMode,
+          solverType: solverType
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setGameId(data.gameId);
+      }
+    } catch (error) {
+      console.error('Error creating replay game:', error);
+    }
+  };
+
   return (
     <div className="App">
       <header className="app-header">
@@ -35,12 +58,14 @@ function App() {
           <GameSetup onGameStart={handleGameStart} />
         ) : (
           <GameBoard
+            key={gameId}
             gameId={gameId}
             gameMode={gameMode}
             wordLength={wordLength}
             solverType={solverType}
             hardMode={hardMode}
             onNewGame={handleNewGame}
+            onReplay={handleReplay}
           />
         )}
       </main>

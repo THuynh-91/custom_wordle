@@ -12,6 +12,7 @@ interface GameBoardProps {
   solverType: SolverType;
   hardMode: boolean;
   onNewGame: () => void;
+  onReplay: () => void;
 }
 
 const GameBoard: React.FC<GameBoardProps> = ({
@@ -20,7 +21,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
   wordLength,
   solverType,
   hardMode,
-  onNewGame
+  onNewGame,
+  onReplay
 }) => {
   const [currentGuess, setCurrentGuess] = useState('');
   const [guesses, setGuesses] = useState<GuessFeedback[]>([]);
@@ -33,6 +35,11 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [aiStatus, setAiStatus] = useState<'in-progress' | 'won' | 'lost'>('in-progress');
   const [currentTurn, setCurrentTurn] = useState<'human' | 'ai'>('human');
   const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [showAIThoughts, setShowAIThoughts] = useState(false);
+  const [showResultModal, setShowResultModal] = useState(false);
+  const [humanWins, setHumanWins] = useState(0);
+  const [aiWins, setAiWins] = useState(0);
+  const [ties, setTies] = useState(0);
 
   const maxGuesses = 6;
 
@@ -111,10 +118,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
         if (data.status === 'won') {
           const guessCount = guesses.length + 1;
-          setMessage(`AI solved it in ${guessCount} guess${guessCount === 1 ? '' : 'es'}! The word was "${data.secret}"`);
+          setMessage(`AI solved it in ${guessCount} guess${guessCount === 1 ? '' : 'es'}!`);
           setSecret(data.secret);
         } else if (data.status === 'lost') {
-          setMessage(`AI failed to solve! The word was "${data.secret}"`);
+          setMessage(`AI failed to solve!`);
           setSecret(data.secret);
         }
       } else if (gameMode === 'race') {
@@ -124,11 +131,17 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
         if (data.status === 'won') {
           const guessCount = aiGuesses.length + 1;
-          setMessage(`AI solved it in ${guessCount} guess${guessCount === 1 ? '' : 'es'}! The word was "${data.secret}"`);
+          setMessage(`AI won in ${guessCount} guess${guessCount === 1 ? '' : 'es'}!`);
           setSecret(data.secret);
+          setAiWins(prev => prev + 1);
+          setShowResultModal(true);
         } else if (data.status === 'lost') {
-          setMessage(`AI failed to solve! The word was "${data.secret}"`);
+          setMessage(`AI failed to solve!`);
           setSecret(data.secret);
+          // Check if human also lost/won
+          if (status !== 'in-progress') {
+            setShowResultModal(true);
+          }
         }
       }
 
@@ -195,9 +208,16 @@ const GameBoard: React.FC<GameBoardProps> = ({
       if (data.status === 'won') {
         setMessage(`Congratulations! You solved it in ${guesses.length + 1} guess${guesses.length + 1 === 1 ? '' : 'es'}!`);
         setSecret(data.secret);
+        if (gameMode === 'race') {
+          setHumanWins(prev => prev + 1);
+          setShowResultModal(true);
+        }
       } else if (data.status === 'lost') {
-        setMessage(`Game over! The word was "${data.secret.toUpperCase()}"`);
+        setMessage(`Game over!`);
         setSecret(data.secret);
+        if (gameMode === 'race' && aiStatus !== 'in-progress') {
+          setShowResultModal(true);
+        }
       }
     } catch (error: any) {
       setMessage(error.message || 'Error submitting guess');
@@ -225,6 +245,32 @@ const GameBoard: React.FC<GameBoardProps> = ({
     return states;
   };
 
+  const handleReplay = () => {
+    // Close modal and trigger replay in parent
+    setShowResultModal(false);
+    onReplay();
+  };
+
+  const getResultMessage = () => {
+    if (gameMode !== 'race') return '';
+
+    if (status === 'won' && aiStatus !== 'won') {
+      return 'You Won!';
+    } else if (aiStatus === 'won' && status !== 'won') {
+      return 'AI Won!';
+    } else if (status === 'won' && aiStatus === 'won') {
+      if (guesses.length < aiGuesses.length) {
+        return 'You Won! (Fewer Guesses)';
+      } else if (aiGuesses.length < guesses.length) {
+        return 'AI Won! (Fewer Guesses)';
+      } else {
+        return 'Tie!';
+      }
+    } else {
+      return 'Both Lost!';
+    }
+  };
+
   return (
     <div className="game-board">
       <div className="game-info">
@@ -242,6 +288,38 @@ const GameBoard: React.FC<GameBoardProps> = ({
         </div>
         {hardMode && <div className="hard-mode-badge">HARD MODE</div>}
       </div>
+
+      {/* Scoreboard for race mode */}
+      {gameMode === 'race' && (
+        <div className="scoreboard">
+          <div className="score-item human">
+            <span className="score-label">You</span>
+            <span className="score-value">{humanWins}</span>
+          </div>
+          <div className="score-item tie">
+            <span className="score-label">Ties</span>
+            <span className="score-value">{ties}</span>
+          </div>
+          <div className="score-item ai">
+            <span className="score-label">AI</span>
+            <span className="score-value">{aiWins}</span>
+          </div>
+        </div>
+      )}
+
+      {/* AI Thoughts Toggle */}
+      {(gameMode === 'race' || gameMode === 'custom-challenge') && (
+        <div className="ai-toggle">
+          <label>
+            <input
+              type="checkbox"
+              checked={showAIThoughts}
+              onChange={(e) => setShowAIThoughts(e.target.checked)}
+            />
+            <span>Show AI Thoughts</span>
+          </label>
+        </div>
+      )}
 
       {message && (
         <div className={`message ${status !== 'in-progress' ? 'game-over' : ''}`}>
@@ -297,7 +375,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 wordLength={wordLength}
                 maxGuesses={maxGuesses}
               />
-              {aiExplanation && <AIPanel explanation={aiExplanation} />}
+              {showAIThoughts && aiExplanation && <AIPanel explanation={aiExplanation} />}
             </div>
           </>
         ) : (
@@ -315,7 +393,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 disabled={status !== 'in-progress' || loading}
               />
             )}
-            {aiExplanation && <AIPanel explanation={aiExplanation} />}
+            {showAIThoughts && aiExplanation && <AIPanel explanation={aiExplanation} />}
           </>
         )}
       </div>
@@ -331,9 +409,54 @@ const GameBoard: React.FC<GameBoardProps> = ({
         </div>
       </div>
 
-      <button className="new-game-button" onClick={onNewGame}>
-        New Game
-      </button>
+      <div className="game-actions">
+        {(status !== 'in-progress' || aiStatus !== 'in-progress') && (
+          <button className="replay-button" onClick={handleReplay}>
+            Play Again (Same Mode)
+          </button>
+        )}
+        <button className="new-game-button" onClick={onNewGame}>
+          New Game
+        </button>
+      </div>
+
+      {/* Result Modal */}
+      {showResultModal && secret && (
+        <div className="modal-overlay" onClick={() => setShowResultModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setShowResultModal(false)}>
+              ×
+            </button>
+            <div className="modal-header">
+              <h2>{getResultMessage()}</h2>
+            </div>
+            <div className="modal-body">
+              <div className="secret-word-reveal">
+                <p className="secret-label">The word was:</p>
+                <p className="secret-word">{secret.toUpperCase()}</p>
+              </div>
+              <div className="game-summary">
+                <div className="summary-row">
+                  <span>Your Guesses:</span>
+                  <span className="summary-value">{guesses.length} / {maxGuesses}</span>
+                </div>
+                <div className="summary-row">
+                  <span>AI Guesses:</span>
+                  <span className="summary-value">{aiGuesses.length} / {maxGuesses}</span>
+                </div>
+              </div>
+            </div>
+            <div className="modal-actions">
+              <button className="modal-button replay" onClick={handleReplay}>
+                Play Again
+              </button>
+              <button className="modal-button new-game" onClick={onNewGame}>
+                New Game
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
