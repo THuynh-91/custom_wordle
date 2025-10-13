@@ -352,8 +352,10 @@ router.get('/:gameId/ai-move', async (req, res) => {
           break;
       }
 
-      // Get move
-      const move = solver.getNextMove(raceGame.aiGuesses, candidates);
+      // Get move - pass COMBINED guess history so AI knows about human's guesses
+      // This prevents AI from using precomputed first guess if human already played
+      const combinedGuessHistory = [...raceGame.humanGuesses, ...raceGame.aiGuesses];
+      const move = solver.getNextMove(combinedGuessHistory, candidates);
 
       // Generate feedback
       const feedback = GameEngine.generateFeedback(move.guess, raceGame.secret);
@@ -382,8 +384,9 @@ router.get('/:gameId/ai-move', async (req, res) => {
       // Switch turn back to human
       raceGame.currentTurn = 'human';
 
-      // Calculate remaining candidates
-      const newConstraints = GameEngine.buildConstraints(raceGame.aiGuesses);
+      // Calculate remaining candidates using COMBINED guesses for accuracy
+      const updatedCombinedGuesses = [...raceGame.humanGuesses, ...raceGame.aiGuesses];
+      const newConstraints = GameEngine.buildConstraints(updatedCombinedGuesses);
       const newCandidates = GameEngine.filterCandidates(allAnswers, newConstraints);
 
       // Create response
