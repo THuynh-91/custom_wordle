@@ -35,11 +35,11 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [aiStatus, setAiStatus] = useState<'in-progress' | 'won' | 'lost'>('in-progress');
   const [currentTurn, setCurrentTurn] = useState<'human' | 'ai'>('human');
   const [isFirstLoad, setIsFirstLoad] = useState(true);
-  const [showAIThoughts, setShowAIThoughts] = useState(false);
   const [showResultModal, setShowResultModal] = useState(false);
   const [humanWins, setHumanWins] = useState(0);
   const [aiWins, setAiWins] = useState(0);
   const [ties, setTies] = useState(0);
+  const [isInvalidWord, setIsInvalidWord] = useState(false);
 
   const maxGuesses = 6;
 
@@ -82,8 +82,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
       }, delay);
       return () => clearTimeout(timer);
     }
-    // Auto-play AI in race mode only when it's AI's turn
-    if (gameMode === 'race' && aiStatus === 'in-progress' && currentTurn === 'ai') {
+    // Auto-play AI in race mode only when it's AI's turn and both players are still playing
+    if (gameMode === 'race' && aiStatus === 'in-progress' && status === 'in-progress' && currentTurn === 'ai') {
       const delay = aiGuesses.length === 0 ? 800 : 600; // Faster in race mode
       const timer = setTimeout(() => {
         playAIMove();
@@ -120,28 +120,35 @@ const GameBoard: React.FC<GameBoardProps> = ({
           const guessCount = guesses.length + 1;
           setMessage(`AI solved it in ${guessCount} guess${guessCount === 1 ? '' : 'es'}!`);
           setSecret(data.secret);
+          setTimeout(() => setShowResultModal(true), 500);
         } else if (data.status === 'lost') {
           setMessage(`AI failed to solve!`);
           setSecret(data.secret);
+          setTimeout(() => setShowResultModal(true), 500);
         }
       } else if (gameMode === 'race') {
         setAiGuesses(prev => [...prev, newGuess]);
         setAiStatus(data.status);
-        setCurrentTurn('human'); // Switch turn back to human
 
         if (data.status === 'won') {
           const guessCount = aiGuesses.length + 1;
           setMessage(`AI won in ${guessCount} guess${guessCount === 1 ? '' : 'es'}!`);
           setSecret(data.secret);
           setAiWins(prev => prev + 1);
-          setShowResultModal(true);
+          // Stop human from playing when AI wins
+          setStatus('lost');
+          // Show modal immediately on AI win
+          setTimeout(() => setShowResultModal(true), 500);
         } else if (data.status === 'lost') {
           setMessage(`AI failed to solve!`);
           setSecret(data.secret);
-          // Check if human also lost/won
+          // Check if human also finished
           if (status !== 'in-progress') {
-            setShowResultModal(true);
+            setTimeout(() => setShowResultModal(true), 500);
           }
+        } else {
+          // AI hasn't finished yet, switch turn back to human
+          setCurrentTurn('human');
         }
       }
 
@@ -154,6 +161,21 @@ const GameBoard: React.FC<GameBoardProps> = ({
   };
 
   const handleKeyPress = (key: string) => {
+    // In custom challenge mode, user tries to beat the AI
+    if (gameMode === 'custom-challenge') {
+      if (loading) return; // Allow typing even after AI finishes
+
+      if (key === 'ENTER') {
+        submitGuess();
+      } else if (key === 'BACKSPACE') {
+        setCurrentGuess(prev => prev.slice(0, -1));
+      } else if (currentGuess.length < wordLength && /^[a-z]$/i.test(key)) {
+        setCurrentGuess(prev => prev + key.toLowerCase());
+      }
+      return;
+    }
+
+    // For other modes, check status
     if (status !== 'in-progress' || loading) return;
     // In race mode, check if it's the human's turn
     if (gameMode === 'race' && currentTurn !== 'human') return;
@@ -175,6 +197,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
     }
 
     setLoading(true);
+    setIsInvalidWord(false);
     try {
       const response = await fetch(`/api/game/${gameId}/guess`, {
         method: 'POST',
@@ -210,18 +233,30 @@ const GameBoard: React.FC<GameBoardProps> = ({
         setSecret(data.secret);
         if (gameMode === 'race') {
           setHumanWins(prev => prev + 1);
-          setShowResultModal(true);
+          // Stop AI from playing when human wins
+          setAiStatus('lost');
         }
+        // Show modal on win
+        setTimeout(() => setShowResultModal(true), 500);
       } else if (data.status === 'lost') {
         setMessage(`Game over!`);
         setSecret(data.secret);
-        if (gameMode === 'race' && aiStatus !== 'in-progress') {
-          setShowResultModal(true);
+        if (gameMode === 'race') {
+          // Show modal only if AI also finished
+          if (aiStatus !== 'in-progress') {
+            setTimeout(() => setShowResultModal(true), 500);
+          }
+        } else {
+          // Show modal immediately for non-race modes
+          setTimeout(() => setShowResultModal(true), 500);
         }
       }
     } catch (error: any) {
-      setMessage(error.message || 'Error submitting guess');
-      setTimeout(() => setMessage(''), 2000);
+      // Just trigger shake animation, no message needed
+      setIsInvalidWord(true);
+      setTimeout(() => {
+        setIsInvalidWord(false);
+      }, 500);
     } finally {
       setLoading(false);
     }
@@ -252,40 +287,41 @@ const GameBoard: React.FC<GameBoardProps> = ({
   };
 
   const getResultMessage = () => {
-    if (gameMode !== 'race') return '';
-
-    if (status === 'won' && aiStatus !== 'won') {
-      return 'You Won!';
-    } else if (aiStatus === 'won' && status !== 'won') {
-      return 'AI Won!';
-    } else if (status === 'won' && aiStatus === 'won') {
-      if (guesses.length < aiGuesses.length) {
-        return 'You Won! (Fewer Guesses)';
-      } else if (aiGuesses.length < guesses.length) {
-        return 'AI Won! (Fewer Guesses)';
+    if (gameMode === 'race') {
+      if (status === 'won' && aiStatus !== 'won') {
+        return 'You Won!';
+      } else if (aiStatus === 'won' && status !== 'won') {
+        return 'AI Won!';
+      } else if (status === 'won' && aiStatus === 'won') {
+        if (guesses.length < aiGuesses.length) {
+          return 'You Won! (Fewer Guesses)';
+        } else if (aiGuesses.length < guesses.length) {
+          return 'AI Won! (Fewer Guesses)';
+        } else {
+          return 'Tie!';
+        }
       } else {
-        return 'Tie!';
+        return 'Both Lost!';
+      }
+    } else if (gameMode === 'custom-challenge') {
+      if (status === 'won') {
+        return 'AI Solved It!';
+      } else {
+        return 'AI Failed!';
       }
     } else {
-      return 'Both Lost!';
+      // human-play mode
+      if (status === 'won') {
+        return 'You Won!';
+      } else {
+        return 'Game Over!';
+      }
     }
   };
 
   return (
     <div className="game-board">
       <div className="game-info">
-        <div className="info-item">
-          <span className="label">Mode:</span>
-          <span className="value">{gameMode}</span>
-        </div>
-        <div className="info-item">
-          <span className="label">Length:</span>
-          <span className="value">{wordLength} letters</span>
-        </div>
-        <div className="info-item">
-          <span className="label">AI:</span>
-          <span className="value">AI</span>
-        </div>
         {hardMode && <div className="hard-mode-badge">HARD MODE</div>}
       </div>
 
@@ -304,20 +340,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
             <span className="score-label">AI</span>
             <span className="score-value">{aiWins}</span>
           </div>
-        </div>
-      )}
-
-      {/* AI Thoughts Toggle */}
-      {(gameMode === 'race' || gameMode === 'custom-challenge') && (
-        <div className="ai-toggle">
-          <label>
-            <input
-              type="checkbox"
-              checked={showAIThoughts}
-              onChange={(e) => setShowAIThoughts(e.target.checked)}
-            />
-            <span>Show AI Thoughts</span>
-          </label>
         </div>
       )}
 
@@ -360,6 +382,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 currentGuess={currentGuess}
                 wordLength={wordLength}
                 maxGuesses={maxGuesses}
+                isInvalidWord={isInvalidWord}
               />
               <Keyboard
                 onKeyPress={handleKeyPress}
@@ -375,7 +398,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 wordLength={wordLength}
                 maxGuesses={maxGuesses}
               />
-              {showAIThoughts && aiExplanation && <AIPanel explanation={aiExplanation} />}
             </div>
           </>
         ) : (
@@ -385,6 +407,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
               currentGuess={currentGuess}
               wordLength={wordLength}
               maxGuesses={maxGuesses}
+              isInvalidWord={isInvalidWord}
             />
             {gameMode !== 'custom-challenge' && (
               <Keyboard
@@ -393,7 +416,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 disabled={status !== 'in-progress' || loading}
               />
             )}
-            {showAIThoughts && aiExplanation && <AIPanel explanation={aiExplanation} />}
           </>
         )}
       </div>
@@ -407,17 +429,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
           <span className="stat-value">{maxGuesses - guesses.length}</span>
           <span className="stat-label">Remaining</span>
         </div>
-      </div>
-
-      <div className="game-actions">
-        {(status !== 'in-progress' || aiStatus !== 'in-progress') && (
-          <button className="replay-button" onClick={handleReplay}>
-            Play Again (Same Mode)
-          </button>
-        )}
-        <button className="new-game-button" onClick={onNewGame}>
-          New Game
-        </button>
       </div>
 
       {/* Result Modal */}
@@ -435,16 +446,25 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 <p className="secret-label">The word was:</p>
                 <p className="secret-word">{secret.toUpperCase()}</p>
               </div>
-              <div className="game-summary">
-                <div className="summary-row">
-                  <span>Your Guesses:</span>
-                  <span className="summary-value">{guesses.length} / {maxGuesses}</span>
+              {gameMode === 'race' ? (
+                <div className="game-summary">
+                  <div className="summary-row">
+                    <span>Your Guesses:</span>
+                    <span className="summary-value">{guesses.length} / {maxGuesses}</span>
+                  </div>
+                  <div className="summary-row">
+                    <span>AI Guesses:</span>
+                    <span className="summary-value">{aiGuesses.length} / {maxGuesses}</span>
+                  </div>
                 </div>
-                <div className="summary-row">
-                  <span>AI Guesses:</span>
-                  <span className="summary-value">{aiGuesses.length} / {maxGuesses}</span>
+              ) : (
+                <div className="game-summary">
+                  <div className="summary-row">
+                    <span>{gameMode === 'custom-challenge' ? 'AI Guesses:' : 'Your Guesses:'}</span>
+                    <span className="summary-value">{guesses.length} / {maxGuesses}</span>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
             <div className="modal-actions">
               <button className="modal-button replay" onClick={handleReplay}>

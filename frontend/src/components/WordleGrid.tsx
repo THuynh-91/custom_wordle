@@ -7,9 +7,10 @@ interface WordleGridProps {
   currentGuess: string;
   wordLength: WordLength;
   maxGuesses: number;
+  isInvalidWord?: boolean;
 }
 
-const WordleGrid: React.FC<WordleGridProps> = ({ guesses, currentGuess, wordLength, maxGuesses }) => {
+const WordleGrid: React.FC<WordleGridProps> = ({ guesses, currentGuess, wordLength, maxGuesses, isInvalidWord = false }) => {
   const renderTile = (letter: string, state: TileState, index: number, rowIndex: number) => {
     const delay = index * 100; // Stagger animation
     return (
@@ -49,7 +50,7 @@ const WordleGrid: React.FC<WordleGridProps> = ({ guesses, currentGuess, wordLeng
         );
       }
       return (
-        <div key={rowIndex} className="grid-row">
+        <div key={rowIndex} className={`grid-row ${isInvalidWord ? 'shake' : ''}`}>
           {tiles}
         </div>
       );

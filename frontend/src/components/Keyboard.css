@@ -17,18 +17,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-empty);
-  border: none;
+  background: white;
+  border: 2px solid #d3d6da;
   border-radius: 4px;
   font-size: 1rem;
   font-weight: 800;
   cursor: pointer;
   transition: all 0.1s;
   text-transform: uppercase;
+  color: #1a1a1a;
 }
 
 .key:hover:not(:disabled) {
-  background: #bbb;
+  background: #f5f5f5;
   transform: scale(1.05);
 }
 
@@ -49,17 +50,23 @@
 
 .key-correct {
   background: var(--color-correct);
+  border-color: var(--color-correct);
   color: white;
+  font-weight: 900;
 }
 
 .key-present {
   background: var(--color-present);
+  border-color: var(--color-present);
   color: white;
+  font-weight: 900;
 }
 
 .key-absent {
-  background: var(--color-absent);
+  background: #787c7e;
+  border-color: #787c7e;
   color: white;
+  opacity: 0.5;
 }
 
 @media (max-width: 768px) {
