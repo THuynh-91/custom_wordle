@@ -12,7 +12,7 @@ interface GameBoardProps {
   solverType: SolverType;
   hardMode: boolean;
   onNewGame: () => void;
-  onReplay: () => void;
+  onReplay: (newWord?: string) => void;
 }
 
 const GameBoard: React.FC<GameBoardProps> = ({
@@ -40,6 +40,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [aiWins, setAiWins] = useState(0);
   const [ties, setTies] = useState(0);
   const [isInvalidWord, setIsInvalidWord] = useState(false);
+  const [newChallengeWord, setNewChallengeWord] = useState('');
+  const [challengeWordError, setChallengeWordError] = useState('');
 
   const maxGuesses = 6;
 
@@ -303,9 +305,21 @@ const GameBoard: React.FC<GameBoardProps> = ({
   };
 
   const handleReplay = () => {
-    // Close modal and trigger replay in parent
-    setShowResultModal(false);
-    onReplay();
+    // For Challenge AI mode, need to validate and pass the new word
+    if (gameMode === 'custom-challenge') {
+      if (newChallengeWord.length !== wordLength) {
+        setChallengeWordError(`Word must be ${wordLength} letters`);
+        return;
+      }
+      setChallengeWordError('');
+      setShowResultModal(false);
+      onReplay(newChallengeWord);
+      setNewChallengeWord('');
+    } else {
+      // For other modes, use default replay behavior
+      setShowResultModal(false);
+      onReplay();
+    }
   };
 
   const getResultMessage = () => {
@@ -518,6 +532,22 @@ const GameBoard: React.FC<GameBoardProps> = ({
                   </div>
                 </div>
               )}
+              {gameMode === 'custom-challenge' && (
+                <div className="challenge-replay-section">
+                  <label className="challenge-label">Enter a new word to challenge AI:</label>
+                  <input
+                    type="text"
+                    className="challenge-input"
+                    value={newChallengeWord}
+                    onChange={(e) => setNewChallengeWord(e.target.value.toLowerCase())}
+                    maxLength={wordLength}
+                    placeholder={`Enter a ${wordLength}-letter word`}
+                  />
+                  {challengeWordError && (
+                    <div className="challenge-error">{challengeWordError}</div>
+                  )}
+                </div>
+              )}
             </div>
             <div className="modal-actions">
               {gameMode === 'race' && (
@@ -526,7 +556,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 </button>
               )}
               <button className="modal-button replay" onClick={handleReplay}>
-                Play Again
+                {gameMode === 'custom-challenge' ? 'Challenge AI' : 'Play Again'}
               </button>
               <button className="modal-button new-game" onClick={onNewGame}>
                 {gameMode === 'race' ? 'New Race' : 'New Game'}

@@ -46,7 +46,7 @@ function App() {
     setGameId(null);
   };
 
-  const handleReplay = async () => {
+  const handleReplay = async (newWord?: string) => {
     // Create new game with current settings
     try {
       const response = await fetch('/api/game/create', {
@@ -56,6 +56,7 @@ function App() {
           mode: gameMode,
           length: wordLength,
           hardMode: hardMode,
+          secret: gameMode === 'custom-challenge' && newWord ? newWord : undefined,
           solverType: solverType
         })
       });

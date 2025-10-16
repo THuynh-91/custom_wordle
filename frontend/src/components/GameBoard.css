@@ -501,6 +501,48 @@
   color: var(--color-correct);
 }
 
+/* Challenge Replay Section */
+.challenge-replay-section {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: var(--color-panel-bg);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+}
+
+.challenge-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+}
+
+.challenge-input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: inherit;
+  text-transform: lowercase;
+  transition: border-color 0.2s;
+}
+
+.challenge-input:focus {
+  outline: none;
+  border-color: var(--color-correct);
+}
+
+.challenge-error {
+  margin-top: 0.5rem;
+  color: #e74c3c;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
 .secret-word-reveal {
   text-align: center;
   padding: 1.5rem;
