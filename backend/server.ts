@@ -24,6 +24,18 @@ const app = express();
 const PORT = parseInt(process.env.PORT || '3000', 10);
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
+const wordServiceReady = WordService.initialize();
+
+// Ensure word data is loaded before handling requests
+app.use(async (_req, _res, next) => {
+  try {
+    await wordServiceReady;
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Middleware
 app.use(helmet({
   contentSecurityPolicy: {
@@ -84,7 +96,12 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 async function start() {
   try {
     console.log('Initializing word service...');
-    await WordService.initialize();
+    await wordServiceReady;
+
+    if (process.env.VERCEL) {
+      console.log('Running in Vercel - exporting app for serverless function');
+      return;
+    }
 
     app.listen(PORT, '0.0.0.0', () => {
       console.log(`\n${'='.repeat(50)}`);

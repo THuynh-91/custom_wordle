@@ -16,7 +16,9 @@
     "lint": "eslint . --ext .ts,.tsx",
     "prepare-data": "node --loader ts-node/esm scripts/prepare-word-lists.ts",
     "train-ml": "python ml/train_policy.py",
-    "generate-trajectories": "node --loader ts-node/esm scripts/generate-trajectories.ts"
+    "generate-trajectories": "node --loader ts-node/esm scripts/generate-trajectories.ts",
+    "postbuild": "node scripts/flatten-backend.cjs && node scripts/copy-runtime-assets.cjs",
+    "vercel-build": "npm run build"
   },
   "dependencies": {
     "compression": "^1.7.4",
