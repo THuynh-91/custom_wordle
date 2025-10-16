@@ -479,6 +479,22 @@ const GameBoard: React.FC<GameBoardProps> = ({
               <h2>{getResultMessage()}</h2>
             </div>
             <div className="modal-body">
+              {gameMode === 'race' && (
+                <div className="modal-scoreboard">
+                  <div className="modal-score-item human">
+                    <span className="modal-score-label">You</span>
+                    <span className="modal-score-value">{humanWins}</span>
+                  </div>
+                  <div className="modal-score-item tie">
+                    <span className="modal-score-label">Ties</span>
+                    <span className="modal-score-value">{ties}</span>
+                  </div>
+                  <div className="modal-score-item ai">
+                    <span className="modal-score-label">AI</span>
+                    <span className="modal-score-value">{aiWins}</span>
+                  </div>
+                </div>
+              )}
               <div className="secret-word-reveal">
                 <p className="secret-label">The word was:</p>
                 <p className="secret-word">{secret.toUpperCase()}</p>
