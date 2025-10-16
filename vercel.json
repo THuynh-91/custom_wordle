@@ -18,11 +18,12 @@
     },
     {
       "src": "^/$",
-      "dest": "dist/frontend/index.html"
+      "dest": "frontend/index.html"
     },
     {
       "src": "^/(.*)$",
-      "dest": "dist/frontend/$1"
+      "dest": "frontend/$1"
     }
   ]
 }
+
