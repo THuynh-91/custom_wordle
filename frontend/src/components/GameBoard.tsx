@@ -137,14 +137,14 @@ const GameBoard: React.FC<GameBoardProps> = ({
           setMessage(`AI won in ${guessCount} guess${guessCount === 1 ? '' : 'es'}!`);
           setSecret(data.secret);
           setAiWins(prev => prev + 1);
-          // Stop human from playing when AI wins
           setStatus('lost');
-          // Always show modal when race ends
+
+          // Show modal immediately when AI wins, just like Human Play mode
           setTimeout(() => setShowResultModal(true), 800);
         } else if (newAiStatus === 'lost') {
           setMessage(`AI failed to solve!`);
           setSecret(data.secret);
-          // Check if human also finished
+          // Check if human also finished - both lost scenario
           if (status !== 'in-progress') {
             setTimeout(() => setShowResultModal(true), 800);
           }
@@ -233,21 +233,20 @@ const GameBoard: React.FC<GameBoardProps> = ({
       if (data.status === 'won') {
         setMessage(`Congratulations! You solved it in ${guesses.length + 1} guess${guesses.length + 1 === 1 ? '' : 'es'}!`);
         setSecret(data.secret);
+
         if (gameMode === 'race') {
           setHumanWins(prev => prev + 1);
-          // Stop AI from playing when human wins
           setAiStatus('lost');
-          // Always show modal when race ends
-          setTimeout(() => setShowResultModal(true), 800);
-        } else {
-          // Show modal on win for non-race modes
-          setTimeout(() => setShowResultModal(true), 800);
         }
+
+        // Show modal on win with same delay for all modes
+        setTimeout(() => setShowResultModal(true), 800);
       } else if (data.status === 'lost') {
         setMessage(`Game over!`);
         setSecret(data.secret);
+
         if (gameMode === 'race') {
-          // Show modal only if AI also finished
+          // In race mode, show modal only if AI also finished (both lost)
           if (aiStatus !== 'in-progress') {
             setTimeout(() => setShowResultModal(true), 800);
           }
@@ -464,11 +463,18 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
       {/* Result Modal */}
       {showResultModal && secret && (
-        <div className="modal-overlay" onClick={() => setShowResultModal(false)}>
+        <div className="modal-overlay" onClick={(e) => {
+          // In race mode, prevent closing by clicking overlay - must use buttons
+          if (gameMode !== 'race') {
+            setShowResultModal(false);
+          }
+        }}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setShowResultModal(false)}>
-              ×
-            </button>
+            {gameMode !== 'race' && (
+              <button className="modal-close" onClick={() => setShowResultModal(false)}>
+                ×
+              </button>
+            )}
             <div className="modal-header">
               <h2>{getResultMessage()}</h2>
             </div>
@@ -498,11 +504,16 @@ const GameBoard: React.FC<GameBoardProps> = ({
               )}
             </div>
             <div className="modal-actions">
+              {gameMode === 'race' && (
+                <button className="modal-button home" onClick={onNewGame}>
+                  Home
+                </button>
+              )}
               <button className="modal-button replay" onClick={handleReplay}>
                 Play Again
               </button>
               <button className="modal-button new-game" onClick={onNewGame}>
-                New Game
+                {gameMode === 'race' ? 'New Race' : 'New Game'}
               </button>
             </div>
           </div>

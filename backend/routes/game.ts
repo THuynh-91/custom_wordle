@@ -197,7 +197,7 @@ router.post('/:gameId/guess', async (req, res) => {
         status: raceGame.humanStatus,
         guessNumber: raceGame.humanGuesses.length,
         remainingGuesses: raceGame.maxGuesses - raceGame.humanGuesses.length,
-        secret: raceGame.humanStatus !== 'in-progress' && raceGame.aiStatus !== 'in-progress' ? raceGame.secret : undefined
+        secret: raceGame.humanStatus !== 'in-progress' ? raceGame.secret : undefined
       };
 
       return res.json(response);
@@ -404,7 +404,7 @@ router.get('/:gameId/ai-move', async (req, res) => {
         },
         remainingCandidates: newCandidates.length,
         status: raceGame.aiStatus,
-        secret: raceGame.humanStatus !== 'in-progress' && raceGame.aiStatus !== 'in-progress' ? raceGame.secret : undefined
+        secret: raceGame.aiStatus !== 'in-progress' ? raceGame.secret : undefined
       };
 
       return res.json(response);

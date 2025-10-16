@@ -34,7 +34,16 @@
       "WebFetch(domain:www.techradar.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:wordlehints.co.uk)",
-      "WebFetch(domain:www.nytimes.com)"
+      "WebFetch(domain:www.nytimes.com)",
+      "Bash(cmd /c \"tasklist | findstr node.exe\")",
+      "Bash(cmd /c taskkill /PID 21596 /F)",
+      "Bash(cmd /c \"taskkill /PID 21596 /F & taskkill /PID 8436 /F\")",
+      "Bash(cmd /c timeout /t 5)",
+      "Bash(cmd /c \"for /f \"\"tokens=5\"\" %a in (''netstat -ano ^| findstr :3000'') do taskkill /PID %a /F\")",
+      "Bash(cmd /c \"taskkill /F /IM node.exe\")",
+      "Bash(cmd /c timeout /t 7)",
+      "Bash(cmd /c \"taskkill /F /IM node.exe & timeout /t 2 & npm run dev\")",
+      "Bash(cmd /c timeout /t 10)"
     ],
     "deny": [],
     "ask": []

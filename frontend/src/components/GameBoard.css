@@ -535,6 +535,15 @@
   background: var(--color-footer-text);
 }
 
+.modal-button.home {
+  background: #3b82f6;
+  color: white;
+}
+
+.modal-button.home:hover {
+  background: #2563eb;
+}
+
 .modal-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
