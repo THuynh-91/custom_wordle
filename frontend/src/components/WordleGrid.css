@@ -53,10 +53,11 @@
 }
 
 .tile.empty {
-  background: transparent;
+  background: white;
 }
 
 .tile.filled {
+  background: white;
   border-color: var(--color-border);
   color: var(--color-text);
 }
