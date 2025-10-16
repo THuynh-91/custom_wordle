@@ -138,17 +138,45 @@ const GameBoard: React.FC<GameBoardProps> = ({
           const guessCount = aiGuesses.length + 1;
           setMessage(`AI won in ${guessCount} guess${guessCount === 1 ? '' : 'es'}!`);
           setSecret(data.secret);
-          setAiWins(prev => prev + 1);
-          setStatus('lost');
 
-          // Show modal immediately when AI wins, just like Human Play mode
-          setTimeout(() => setShowResultModal(true), 800);
+          // Check if human also finished
+          if (status !== 'in-progress') {
+            // Both finished - determine winner
+            if (status === 'won') {
+              // Both won - compare guess counts
+              if (guesses.length < guessCount) {
+                setHumanWins(prev => prev + 1);
+              } else if (guessCount < guesses.length) {
+                setAiWins(prev => prev + 1);
+              } else {
+                setTies(prev => prev + 1);
+              }
+            } else {
+              // Human lost, AI won
+              setAiWins(prev => prev + 1);
+            }
+            setTimeout(() => setShowResultModal(true), 800);
+          } else {
+            // Human still playing, switch turn
+            setCurrentTurn('human');
+          }
         } else if (newAiStatus === 'lost') {
           setMessage(`AI failed to solve!`);
           setSecret(data.secret);
-          // Check if human also finished - both lost scenario
+
+          // Check if human also finished
           if (status !== 'in-progress') {
+            // Both finished
+            if (status === 'won') {
+              setHumanWins(prev => prev + 1);
+            } else {
+              // Both lost
+              setTies(prev => prev + 1);
+            }
             setTimeout(() => setShowResultModal(true), 800);
+          } else {
+            // Human still playing, switch turn
+            setCurrentTurn('human');
           }
         } else {
           // AI hasn't finished yet, switch turn back to human
@@ -237,21 +265,46 @@ const GameBoard: React.FC<GameBoardProps> = ({
         setSecret(data.secret);
 
         if (gameMode === 'race') {
-          setHumanWins(prev => prev + 1);
-          setAiStatus('lost');
+          // Check if AI also finished
+          if (aiStatus !== 'in-progress') {
+            // Both finished - determine winner
+            if (aiStatus === 'won') {
+              // Both won - compare guess counts
+              if (guesses.length + 1 < aiGuesses.length) {
+                setHumanWins(prev => prev + 1);
+              } else if (aiGuesses.length < guesses.length + 1) {
+                setAiWins(prev => prev + 1);
+              } else {
+                setTies(prev => prev + 1);
+              }
+            } else {
+              // AI lost, human won
+              setHumanWins(prev => prev + 1);
+            }
+            setTimeout(() => setShowResultModal(true), 800);
+          }
+          // If AI still playing, don't show modal yet - let AI continue
+        } else {
+          // Show modal on win for non-race modes
+          setTimeout(() => setShowResultModal(true), 800);
         }
-
-        // Show modal on win with same delay for all modes
-        setTimeout(() => setShowResultModal(true), 800);
       } else if (data.status === 'lost') {
         setMessage(`Game over!`);
         setSecret(data.secret);
 
         if (gameMode === 'race') {
-          // In race mode, show modal only if AI also finished (both lost)
+          // Check if AI also finished
           if (aiStatus !== 'in-progress') {
+            // Both finished
+            if (aiStatus === 'won') {
+              setAiWins(prev => prev + 1);
+            } else {
+              // Both lost
+              setTies(prev => prev + 1);
+            }
             setTimeout(() => setShowResultModal(true), 800);
           }
+          // If AI still playing, don't show modal yet - let AI continue
         } else {
           // Show modal immediately for non-race modes
           setTimeout(() => setShowResultModal(true), 800);
