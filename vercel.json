@@ -2,7 +2,7 @@
   "version": 2,
   "buildCommand": "npm run build",
   "installCommand": "npm install",
-  "outputDirectory": "dist",
+  "outputDirectory": "dist/frontend",
   "functions": {
     "api/index.js": {
       "includeFiles": "dist/**"
@@ -18,12 +18,8 @@
       "dest": "api/index.js"
     },
     {
-      "src": "^/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))$",
-      "dest": "/frontend/$1"
-    },
-    {
       "src": "^/(.*)$",
-      "dest": "/frontend/index.html"
+      "dest": "/index.html"
     }
   ]
 }
