@@ -59,7 +59,7 @@
 .tile.filled {
   background: white;
   border-color: var(--color-border);
-  color: var(--color-text);
+  color: #000000;
 }
 
 .tile.correct {

@@ -6,6 +6,7 @@ interface KeyboardProps {
   onKeyPress: (key: string) => void;
   letterStates: Record<string, TileState>;
   disabled?: boolean;
+  currentGuess?: string;
 }
 
 const KEYBOARD_ROWS = [
@@ -14,7 +15,7 @@ const KEYBOARD_ROWS = [
   ['ENTER', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'BACKSPACE']
 ];
 
-const Keyboard: React.FC<KeyboardProps> = ({ onKeyPress, letterStates, disabled = false }) => {
+const Keyboard: React.FC<KeyboardProps> = ({ onKeyPress, letterStates, disabled = false, currentGuess = '' }) => {
   useEffect(() => {
     const handlePhysicalKeyPress = (event: KeyboardEvent) => {
       if (disabled) return;
@@ -37,6 +38,11 @@ const Keyboard: React.FC<KeyboardProps> = ({ onKeyPress, letterStates, disabled 
   const getKeyClass = (key: string) => {
     if (key === 'ENTER' || key === 'BACKSPACE') {
       return 'key key-wide';
+    }
+
+    // Check if this key is in the current guess (being typed)
+    if (currentGuess.includes(key.toLowerCase())) {
+      return 'key key-typing';
     }
 
     const state = letterStates[key];

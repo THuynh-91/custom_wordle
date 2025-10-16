@@ -101,7 +101,7 @@ async function start() {
         console.log(`  ${length} letters: ${counts.answers} answers, ${counts.guesses} valid guesses`);
       }
 
-      console.log(`\n✅ Server ready!\n`);
+      console.log(`\nServer ready!\n`);
     });
   } catch (error) {
     console.error('Failed to start server:', error);

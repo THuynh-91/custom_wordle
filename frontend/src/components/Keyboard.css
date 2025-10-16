@@ -69,6 +69,26 @@
   opacity: 0.5;
 }
 
+.key-typing {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+  font-weight: 900;
+  transform: scale(1.05);
+  animation: blink-key 0.8s ease-in-out infinite;
+}
+
+@keyframes blink-key {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+}
+
 @media (max-width: 768px) {
   .keyboard {
     max-width: 100%;
