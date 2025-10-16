@@ -390,10 +390,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
         <div className={`turn-indicator ${currentTurn === 'human' ? 'your-turn' : 'ai-turn'}`}>
           {status === 'in-progress' && aiStatus === 'in-progress' ? (
             currentTurn === 'human' ? (
-              "Your Turn! (Use opponent's feedback)"
+              "Your Turn!"
             ) : (
               <span className="ai-thinking">
-                AI's Turn... <span className="dots">...</span>
+                AI's Turn <span className="dots">...</span>
               </span>
             )
           ) : (
@@ -550,17 +550,25 @@ const GameBoard: React.FC<GameBoardProps> = ({
               )}
             </div>
             <div className="modal-actions">
-              {gameMode === 'race' && (
+              {gameMode === 'todays-wordle' ? (
                 <button className="modal-button home" onClick={onNewGame}>
                   Home
                 </button>
+              ) : (
+                <>
+                  {gameMode === 'race' && (
+                    <button className="modal-button home" onClick={onNewGame}>
+                      Home
+                    </button>
+                  )}
+                  <button className="modal-button replay" onClick={handleReplay}>
+                    {gameMode === 'custom-challenge' ? 'Challenge AI' : 'Play Again'}
+                  </button>
+                  <button className="modal-button new-game" onClick={onNewGame}>
+                    {gameMode === 'race' ? 'New Race' : 'New Game'}
+                  </button>
+                </>
               )}
-              <button className="modal-button replay" onClick={handleReplay}>
-                {gameMode === 'custom-challenge' ? 'Challenge AI' : 'Play Again'}
-              </button>
-              <button className="modal-button new-game" onClick={onNewGame}>
-                {gameMode === 'race' ? 'New Race' : 'New Game'}
-              </button>
             </div>
           </div>
         </div>
