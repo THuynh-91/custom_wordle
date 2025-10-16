@@ -43,7 +43,13 @@
       "Bash(cmd /c \"taskkill /F /IM node.exe\")",
       "Bash(cmd /c timeout /t 7)",
       "Bash(cmd /c \"taskkill /F /IM node.exe & timeout /t 2 & npm run dev\")",
-      "Bash(cmd /c timeout /t 10)"
+      "Bash(cmd /c timeout /t 10)",
+      "Bash(cmd /c dir /b)",
+      "Bash(cat:*)",
+      "Bash(cmd /c \"taskkill /F /IM node.exe & timeout /t 2 & npm start\")",
+      "Bash(cmd /c timeout /t 8)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
