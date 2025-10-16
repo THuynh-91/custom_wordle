@@ -1,7 +1,7 @@
 {
   "version": 2,
   "buildCommand": "npm run build",
-  "outputDirectory": "dist/frontend",
+  "outputDirectory": "dist",
   "functions": {
     "api/index.js": {
       "includeFiles": "dist/data/**"
@@ -26,4 +26,3 @@
     }
   ]
 }
-
