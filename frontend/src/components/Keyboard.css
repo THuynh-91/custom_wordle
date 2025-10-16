@@ -17,19 +17,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
-  border: 2px solid #d3d6da;
+  background: var(--color-key-bg);
+  border: 2px solid var(--color-border);
   border-radius: 4px;
   font-size: 1rem;
   font-weight: 800;
   cursor: pointer;
   transition: all 0.1s;
   text-transform: uppercase;
-  color: #1a1a1a;
+  color: var(--color-key-text);
 }
 
 .key:hover:not(:disabled) {
-  background: #f5f5f5;
+  background: var(--color-panel-border);
   transform: scale(1.05);
 }
 
@@ -63,8 +63,8 @@
 }
 
 .key-absent {
-  background: #787c7e;
-  border-color: #787c7e;
+  background: var(--color-absent);
+  border-color: var(--color-absent);
   color: white;
   opacity: 0.5;
 }

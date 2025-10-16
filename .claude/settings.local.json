@@ -20,7 +20,21 @@
       "Bash(node:*)",
       "Bash(cmd //c taskkill:*)",
       "Bash(cmd //c \"tasklist | findstr node.exe\")",
-      "Bash(cmd //c:*)"
+      "Bash(cmd //c:*)",
+      "WebSearch",
+      "WebFetch(domain:wordraiders.com)",
+      "WebFetch(domain:tryhardguides.com)",
+      "WebFetch(domain:medium.com)",
+      "WebFetch(domain:gist.github.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:wordle.fandom.com)",
+      "WebFetch(domain:wordfinder.yourdictionary.com)",
+      "WebFetch(domain:gamerant.com)",
+      "WebFetch(domain:techwiser.com)",
+      "WebFetch(domain:www.techradar.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:wordlehints.co.uk)",
+      "WebFetch(domain:www.nytimes.com)"
     ],
     "deny": [],
     "ask": []

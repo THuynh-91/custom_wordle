@@ -57,7 +57,8 @@
 }
 
 .tile.filled {
-  border-color: #878a8c;
+  border-color: var(--color-border);
+  color: var(--color-text);
 }
 
 .tile.correct {

@@ -74,8 +74,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
   }, [gameId, gameMode, isFirstLoad]);
 
   useEffect(() => {
-    // Auto-play for custom challenge mode with natural delay
-    if (gameMode === 'custom-challenge' && status === 'in-progress') {
+    // Auto-play for custom challenge mode and today's wordle with natural delay
+    if ((gameMode === 'custom-challenge' || gameMode === 'todays-wordle') && status === 'in-progress') {
       const delay = guesses.length === 0 ? 1000 : 2000; // Shorter delay for first move
       const timer = setTimeout(() => {
         playAIMove();
@@ -112,13 +112,14 @@ const GameBoard: React.FC<GameBoardProps> = ({
         timestamp: Date.now()
       };
 
-      if (gameMode === 'custom-challenge') {
+      if (gameMode === 'custom-challenge' || gameMode === 'todays-wordle') {
         setGuesses(prev => [...prev, newGuess]);
         setStatus(data.status);
 
         if (data.status === 'won') {
           const guessCount = guesses.length + 1;
-          setMessage(`AI solved it in ${guessCount} guess${guessCount === 1 ? '' : 'es'}!`);
+          const modeText = gameMode === 'todays-wordle' ? "Today's Wordle" : 'it';
+          setMessage(`AI solved ${modeText} in ${guessCount} guess${guessCount === 1 ? '' : 'es'}!`);
           setSecret(data.secret);
           setTimeout(() => setShowResultModal(true), 500);
         } else if (data.status === 'lost') {
@@ -303,9 +304,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
       } else {
         return 'Both Lost!';
       }
-    } else if (gameMode === 'custom-challenge') {
+    } else if (gameMode === 'custom-challenge' || gameMode === 'todays-wordle') {
+      const modeLabel = gameMode === 'todays-wordle' ? "Today's Wordle" : 'It';
       if (status === 'won') {
-        return 'AI Solved It!';
+        return `AI Solved ${modeLabel}!`;
       } else {
         return 'AI Failed!';
       }
@@ -365,7 +367,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
         </div>
       )}
 
-      {loading && gameMode === 'custom-challenge' && (
+      {loading && (gameMode === 'custom-challenge' || gameMode === 'todays-wordle') && (
         <div className="loading-indicator">
           <div className="spinner"></div>
           <p>AI is thinking...</p>
@@ -409,7 +411,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
               maxGuesses={maxGuesses}
               isInvalidWord={isInvalidWord}
             />
-            {gameMode !== 'custom-challenge' && (
+            {gameMode !== 'custom-challenge' && gameMode !== 'todays-wordle' && (
               <Keyboard
                 onKeyPress={handleKeyPress}
                 letterStates={getLetterStates()}
@@ -460,7 +462,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
               ) : (
                 <div className="game-summary">
                   <div className="summary-row">
-                    <span>{gameMode === 'custom-challenge' ? 'AI Guesses:' : 'Your Guesses:'}</span>
+                    <span>{(gameMode === 'custom-challenge' || gameMode === 'todays-wordle') ? 'AI Guesses:' : 'Your Guesses:'}</span>
                     <span className="summary-value">{guesses.length} / {maxGuesses}</span>
                   </div>
                 </div>

@@ -9,7 +9,7 @@ export type TileState = 'correct' | 'present' | 'absent' | 'empty';
 export type WordLength = 3 | 4 | 5 | 6 | 7;
 
 // Game modes
-export type GameMode = 'custom-challenge' | 'human-play' | 'race' | 'ai-vs-ai';
+export type GameMode = 'custom-challenge' | 'human-play' | 'race' | 'ai-vs-ai' | 'todays-wordle';
 
 // AI solver types
 export type SolverType = 'frequency' | 'entropy' | 'ml' | 'rl' | 'hybrid';

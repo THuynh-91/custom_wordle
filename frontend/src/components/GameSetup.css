@@ -53,8 +53,8 @@
   padding: 0.75rem 1rem;
   border: 2px solid var(--color-border);
   border-radius: 8px;
-  background: var(--color-bg);
-  color: var(--color-text);
+  background: var(--color-button-unselected-bg);
+  color: var(--color-button-unselected-text);
   font-weight: 600;
   font-size: 1rem;
   transition: all 0.2s;
@@ -62,18 +62,17 @@
 
 .mode-buttons button:hover,
 .length-buttons button:hover {
-  border-color: var(--color-header-gradient-1);
-  background: var(--color-panel-bg);
+  border-color: var(--color-text);
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .mode-buttons button.active,
 .length-buttons button.active {
-  border-color: var(--color-header-gradient-1);
-  background: linear-gradient(135deg, var(--color-header-gradient-1) 0%, var(--color-header-gradient-2) 100%);
-  color: white;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  border-color: var(--color-button-selected-bg);
+  background: var(--color-button-selected-bg);
+  color: var(--color-button-selected-text);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .setup-section select,

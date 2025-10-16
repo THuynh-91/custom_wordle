@@ -7,10 +7,15 @@ import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { WordService } from './services/word-service.js';
 import gameRoutes from './routes/game.js';
 import wordRoutes from './routes/words.js';
 import leaderboardRoutes from './routes/leaderboard.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Load environment variables
 dotenv.config();
@@ -20,13 +25,25 @@ const PORT = parseInt(process.env.PORT || '3000', 10);
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 // Middleware
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"],
+    },
+  },
+  crossOriginEmbedderPolicy: false,
+}));
 app.use(compression());
 app.use(cors({
   origin: FRONTEND_URL.split(','),
-  credentials: true
+  credentials: true,
+  optionsSuccessStatus: 200
 }));
-app.use(express.json());
+app.use(express.json({ limit: '10kb' })); // Limit JSON payload size
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // Request logging
 app.use((req, res, next) => {
@@ -44,9 +61,13 @@ app.use('/api/game', gameRoutes);
 app.use('/api/words', wordRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);
 
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({ error: 'Not Found', message: `Route ${req.path} not found` });
+// Serve static files from frontend build
+const frontendPath = path.join(__dirname, '..', 'frontend');
+app.use(express.static(frontendPath));
+
+// Serve index.html for all non-API routes (SPA fallback)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
 // Error handler

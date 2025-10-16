@@ -8,6 +8,7 @@ import { WordService } from '../services/word-service.js';
 import { GameEngine } from '../services/game-engine.js';
 import { FrequencySolver } from '../services/solvers/frequency-solver.js';
 import { EntropySolver } from '../services/solvers/entropy-solver.js';
+import { TodaysWordleService } from '../services/todays-wordle-service.js';
 import {
   CreateGameRequest,
   CreateGameResponse,
@@ -48,7 +49,11 @@ router.post('/create', async (req, res) => {
     // Determine secret word
     let secretWord: string;
 
-    if (mode === 'custom-challenge' && secret) {
+    if (mode === 'todays-wordle') {
+      // Get today's official Wordle answer
+      secretWord = await TodaysWordleService.getTodaysAnswer();
+      secretWord = secretWord.toLowerCase();
+    } else if (mode === 'custom-challenge' && secret) {
       // Validate custom secret
       if (!WordService.isValidAnswer(secret, length)) {
         return res.status(400).json({

@@ -70,23 +70,34 @@ const GameSetup: React.FC<GameSetupProps> = ({ onGameStart }) => {
           >
             Human Play
           </button>
+          <button
+            className={mode === 'todays-wordle' ? 'active' : ''}
+            onClick={() => {
+              setMode('todays-wordle');
+              setLength(5); // Today's Wordle is always 5 letters
+            }}
+          >
+            Today's Wordle
+          </button>
         </div>
       </div>
 
-      <div className="setup-section">
-        <label>Word Length</label>
-        <div className="length-buttons">
-          {[3, 4, 5, 6, 7].map((len) => (
-            <button
-              key={len}
-              className={length === len ? 'active' : ''}
-              onClick={() => setLength(len as WordLength)}
-            >
-              {len}
-            </button>
-          ))}
+      {mode !== 'todays-wordle' && (
+        <div className="setup-section">
+          <label>Word Length</label>
+          <div className="length-buttons">
+            {[3, 4, 5, 6, 7].map((len) => (
+              <button
+                key={len}
+                className={length === len ? 'active' : ''}
+                onClick={() => setLength(len as WordLength)}
+              >
+                {len}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="setup-section ai-info-box">
         <h3>AI Opponent</h3>
@@ -124,6 +135,7 @@ const GameSetup: React.FC<GameSetupProps> = ({ onGameStart }) => {
       <div className="game-modes-info">
         <h3>Game Modes</h3>
         <ul>
+          <li><strong>Today's Wordle:</strong> Watch the AI solve today's official Wordle puzzle</li>
           <li><strong>Challenge AI:</strong> Submit a custom word and watch the AI solve it</li>
           <li><strong>Race Mode:</strong> Compete against AI on the same secret word</li>
           <li><strong>Human Play:</strong> Classic Wordle - guess the secret word</li>

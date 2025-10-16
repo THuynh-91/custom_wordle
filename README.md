@@ -1,24 +1,27 @@
 # AI Wordle Duel
 
-A sophisticated Wordle-style duel game where players can challenge AI solvers, race against them, or watch AI-vs-AI matches. Supports variable word lengths from 3 to 7 letters with multiple AI strategies including entropy-based solvers and machine learning policies.
+A sophisticated word-guessing game where you can compete against advanced AI solvers. Challenge yourself with variable word lengths and multiple game modes powered by intelligent algorithms.
 
 ## Features
 
+### Game Modes
+- **Human Play**: Classic Wordle gameplay - guess the secret word
+- **Challenge AI**: Choose a word and watch the AI try to guess it
+- **Race Mode**: Compete head-to-head against the AI solver
 - **Variable Word Lengths**: Play with 3, 4, 5, 6, or 7-letter words
-- **Multiple Game Modes**:
-  - Custom Challenge: Submit a secret word and watch the AI solve it
-  - Human Play: Classic Wordle gameplay with AI hints
-  - Race Mode: Compete against AI on the same secret word
-  - AI vs AI: Watch different AI strategies compete
-- **Advanced AI Solvers**:
-  - Frequency-based heuristic solver
-  - Entropy/Information-gain solver
-  - Supervised ML policy (trained on expert trajectories)
-  - Optional RL fine-tuned policy
-- **AI Explanation Panel**: See the AI's reasoning, top candidates, and expected information gain
-- **Hard Mode**: Discovered letters must be used in subsequent guesses
-- **Shareable Challenges**: Generate challenge links with specific seeds or custom secrets
-- **Leaderboards**: Track performance across different word lengths and game modes
+- **Hard Mode**: Use discovered letters in all subsequent guesses
+
+### AI Technology
+- **Entropy-Based Solver**: Uses information theory to maximize guess efficiency
+- **Frequency-Based Solver**: Leverages letter patterns and positional statistics
+- **Real-Time Feedback**: See the AI's reasoning and strategy
+
+### User Experience
+- Clean, Wordle-inspired interface
+- Dark mode support
+- Keyboard support for quick gameplay
+- Visual feedback with color-coded tiles
+- Scoreboard tracking in Race Mode
 
 ## Architecture
 
@@ -88,6 +91,30 @@ npm run build
 npm start
 ```
 
+### Deploying to Vercel
+
+1. Install Vercel CLI:
+```bash
+npm install -g vercel
+```
+
+2. Login to Vercel:
+```bash
+vercel login
+```
+
+3. Deploy to Vercel:
+```bash
+vercel
+```
+
+4. For production deployment:
+```bash
+vercel --prod
+```
+
+The deployment is configured in `vercel.json`. The backend serves both the API and the static frontend files.
+
 ## Project Structure
 
 ```
@@ -136,15 +163,15 @@ Custom_Wordle/
     └── frontend/
 ```
 
-## Game Rules
+## How to Play
 
-- Players have 6 attempts to guess the secret word
+- Players have **6 attempts** to guess the secret word
 - After each guess, tiles show feedback:
-  - 🟩 **Green**: Correct letter in correct position
-  - 🟨 **Yellow**: Correct letter in wrong position
-  - ⬜ **Gray**: Letter not in the word
-- Duplicate letters are handled correctly (greens take priority, then yellows)
-- In Hard Mode, revealed hints must be used in subsequent guesses
+  - **Green**: Correct letter in the correct position
+  - **Yellow**: Letter is in the word but wrong position
+  - **Gray**: Letter is not in the word
+- Duplicate letters are handled correctly
+- **Hard Mode**: All revealed letters must be used in subsequent guesses
 
 ## AI Solvers
 
