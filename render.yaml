@@ -5,7 +5,7 @@ services:
     env: node
     region: oregon
     plan: free
-    buildCommand: npm install && npm run build:backend
+    buildCommand: npm install && npm run build:backend && node scripts/copy-runtime-assets.cjs
     startCommand: node dist/backend/server.js
     healthCheckPath: /health
     envVars:
