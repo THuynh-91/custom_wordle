@@ -21,7 +21,7 @@
     },
     {
       "src": "^/(.*)$",
-      "dest": "/dist/frontend/index.html"
+      "dest": "/index.html"
     }
   ],
   "outputDirectory": "dist/frontend"
