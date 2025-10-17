@@ -84,8 +84,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
       }, delay);
       return () => clearTimeout(timer);
     }
-    // Auto-play AI in race mode only when it's AI's turn and both players are still playing
-    if (gameMode === 'race' && aiStatus === 'in-progress' && status === 'in-progress' && currentTurn === 'ai') {
+    // Auto-play AI in race mode only when it's AI's turn and AI is still playing
+    if (gameMode === 'race' && aiStatus === 'in-progress' && currentTurn === 'ai') {
       const delay = aiGuesses.length === 0 ? 800 : 600; // Faster in race mode
       const timer = setTimeout(() => {
         playAIMove();
