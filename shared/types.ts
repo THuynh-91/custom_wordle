@@ -58,6 +58,7 @@ export interface AIMoveExplanation {
   candidateCountBefore: number;
   candidateCountAfter?: number;
   expectedPartitionSize?: number;
+  remainingCandidates?: string[]; // Limited to first 50 for performance
   topAlternatives: Array<{
     word: string;
     score: number;

@@ -30,6 +30,7 @@ export class FrequencySolver extends BaseSolver {
           chosenGuess: candidatesRemaining[0],
           reasoning: 'Only one possible word remaining',
           candidateCountBefore: 1,
+          remainingCandidates: candidatesRemaining,
           topAlternatives: [],
           computationTimeMs: Date.now() - startTime
         }
@@ -58,6 +59,7 @@ export class FrequencySolver extends BaseSolver {
         chosenGuess,
         reasoning: this.generateReasoning(chosenGuess, candidatesRemaining, guessHistory),
         candidateCountBefore: candidatesRemaining.length,
+        remainingCandidates: candidatesRemaining.slice(0, 50),
         topAlternatives,
         computationTimeMs: Date.now() - startTime
       }

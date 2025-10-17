@@ -41,6 +41,7 @@ export class EntropySolver extends BaseSolver {
           chosenGuess: candidatesRemaining[0],
           reasoning: 'Only one possible word remaining',
           candidateCountBefore: 1,
+          remainingCandidates: candidatesRemaining,
           expectedPartitionSize: 0,
           topAlternatives: [],
           computationTimeMs: Date.now() - startTime
@@ -60,6 +61,7 @@ export class EntropySolver extends BaseSolver {
           chosenGuess: bestFirstGuess,
           reasoning: `Selected "${bestFirstGuess}" as the pre-optimized starting word. This word maximizes information gain across the entire ${this.length}-letter word space.`,
           candidateCountBefore: candidatesRemaining.length,
+          remainingCandidates: candidatesRemaining.slice(0, 50),
           expectedPartitionSize: expectedSize,
           topAlternatives: [],
           computationTimeMs: Date.now() - startTime
@@ -79,6 +81,7 @@ export class EntropySolver extends BaseSolver {
           chosenGuess: chosen,
           reasoning: 'Only one possible word remaining',
           candidateCountBefore: 1,
+          remainingCandidates: candidatesRemaining,
           expectedPartitionSize: 0,
           topAlternatives: [],
           computationTimeMs: Date.now() - startTime
@@ -93,6 +96,7 @@ export class EntropySolver extends BaseSolver {
           chosenGuess: chosen,
           reasoning: `Only 2 candidates remain: ${candidatesRemaining.join(', ')}. Guessing one of them.`,
           candidateCountBefore: 2,
+          remainingCandidates: candidatesRemaining,
           expectedPartitionSize: 1,
           topAlternatives: candidatesRemaining.slice(1).map(word => ({
             word,
@@ -163,6 +167,7 @@ export class EntropySolver extends BaseSolver {
         chosenGuess: chosen.word,
         reasoning: this.generateReasoning(chosen, candidatesRemaining, guessHistory),
         candidateCountBefore: candidatesRemaining.length,
+        remainingCandidates: candidatesRemaining.slice(0, 50),
         expectedPartitionSize: chosen.expectedSize,
         topAlternatives,
         computationTimeMs: Date.now() - startTime
