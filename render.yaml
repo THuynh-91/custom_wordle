@@ -12,6 +12,6 @@ services:
       - key: NODE_ENV
         value: production
       - key: FRONTEND_URL
-        value: https://ai-wordle-duel.vercel.app
+        value: https://custom-ai-wordle.vercel.app
       - key: PORT
         value: 10000
