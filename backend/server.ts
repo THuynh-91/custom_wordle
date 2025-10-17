@@ -13,6 +13,7 @@ import { WordService } from './services/word-service.js';
 import gameRoutes from './routes/game.js';
 import wordRoutes from './routes/words.js';
 import leaderboardRoutes from './routes/leaderboard.js';
+import feedbackRoutes from './routes/feedback.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -100,6 +101,7 @@ app.get('/health', (req, res) => {
 app.use('/api/game', gameRoutes);
 app.use('/api/words', wordRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);
+app.use('/api/feedback', feedbackRoutes);
 
 // Frontend is hosted separately on Vercel
 // No need to serve static files from backend

@@ -18,6 +18,12 @@ function App() {
     const hasVisited = localStorage.getItem('hasVisited');
     return !hasVisited;
   });
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [feedbackText, setFeedbackText] = useState('');
+  const [feedbackEmail, setFeedbackEmail] = useState('');
+  const [feedbackSubmitting, setFeedbackSubmitting] = useState(false);
+  const [feedbackError, setFeedbackError] = useState('');
+  const [feedbackSuccess, setFeedbackSuccess] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     // Check localStorage or system preference
     const saved = localStorage.getItem('darkMode');
@@ -87,6 +93,55 @@ function App() {
     setShowWelcomeModal(true);
   };
 
+  const handleOpenFeedback = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowFeedbackModal(true);
+    setFeedbackError('');
+    setFeedbackSuccess(false);
+  };
+
+  const handleCloseFeedback = () => {
+    setShowFeedbackModal(false);
+    setFeedbackText('');
+    setFeedbackEmail('');
+    setFeedbackError('');
+    setFeedbackSuccess(false);
+  };
+
+  const handleSubmitFeedback = async () => {
+    if (!feedbackText.trim()) {
+      setFeedbackError('Please enter your feedback');
+      return;
+    }
+
+    setFeedbackSubmitting(true);
+    setFeedbackError('');
+
+    try {
+      const response = await apiFetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          feedback: feedbackText,
+          email: feedbackEmail || undefined
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit feedback');
+      }
+
+      setFeedbackSuccess(true);
+      setTimeout(() => {
+        handleCloseFeedback();
+      }, 2000);
+    } catch (error) {
+      setFeedbackError('Failed to submit feedback. Please try again.');
+    } finally {
+      setFeedbackSubmitting(false);
+    }
+  };
+
   return (
     <div className="App">
       <header className="app-header">
@@ -98,17 +153,15 @@ function App() {
         <h1>AI Wordle Duel</h1>
         <p className="tagline">Challenge AI solvers across multiple word lengths</p>
         <div className="header-buttons">
-          <a
-            href="https://github.com/THuynh-91/custom_wordle/issues"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={handleOpenFeedback}
             className="feedback-button"
             title="Send feedback"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
             </svg>
-          </a>
+          </button>
           <button className="theme-toggle" onClick={toggleDarkMode} aria-label="Toggle dark mode">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
               {isDarkMode ? (
@@ -184,6 +237,67 @@ function App() {
                 Let's Play!
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Feedback Modal */}
+      {showFeedbackModal && (
+        <div className="modal-overlay" onClick={handleCloseFeedback}>
+          <div className="modal-content feedback-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Send Feedback</h2>
+              <button className="modal-close" onClick={handleCloseFeedback}>×</button>
+            </div>
+            <div className="modal-body">
+              {feedbackSuccess ? (
+                <div className="feedback-success">
+                  <p>✓ Thank you for your feedback!</p>
+                  <p>Your feedback has been submitted successfully.</p>
+                </div>
+              ) : (
+                <>
+                  <p className="feedback-description">
+                    Help us improve AI Wordle Duel! Share your thoughts, report bugs, or suggest features.
+                  </p>
+                  <div className="form-group">
+                    <label htmlFor="feedback-text">Your Feedback *</label>
+                    <textarea
+                      id="feedback-text"
+                      value={feedbackText}
+                      onChange={(e) => setFeedbackText(e.target.value)}
+                      placeholder="Tell us what you think..."
+                      rows={6}
+                      disabled={feedbackSubmitting}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="feedback-email">Email (optional)</label>
+                    <input
+                      id="feedback-email"
+                      type="email"
+                      value={feedbackEmail}
+                      onChange={(e) => setFeedbackEmail(e.target.value)}
+                      placeholder="your@email.com (if you'd like a response)"
+                      disabled={feedbackSubmitting}
+                    />
+                  </div>
+                  {feedbackError && (
+                    <div className="feedback-error">{feedbackError}</div>
+                  )}
+                </>
+              )}
+            </div>
+            {!feedbackSuccess && (
+              <div className="modal-actions">
+                <button className="modal-button secondary" onClick={handleCloseFeedback} disabled={feedbackSubmitting}>
+                  Cancel
+                </button>
+                <button className="modal-button primary" onClick={handleSubmitFeedback} disabled={feedbackSubmitting}>
+                  {feedbackSubmitting ? 'Submitting...' : 'Submit Feedback'}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
