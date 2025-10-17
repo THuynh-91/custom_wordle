@@ -73,14 +73,17 @@ app.use('/api/game', gameRoutes);
 app.use('/api/words', wordRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);
 
-// Serve static files from frontend build
-const frontendPath = path.join(__dirname, '..', 'frontend');
-app.use(express.static(frontendPath));
+// In Vercel, static files and SPA routing are handled by vercel.json
+// Only serve static files in local development
+if (!process.env.VERCEL) {
+  const frontendPath = path.join(__dirname, '..', 'frontend');
+  app.use(express.static(frontendPath));
 
-// Serve index.html for all non-API routes (SPA fallback)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(frontendPath, 'index.html'));
-});
+  // Serve index.html for all non-API routes (SPA fallback)
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'));
+  });
+}
 
 // Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
