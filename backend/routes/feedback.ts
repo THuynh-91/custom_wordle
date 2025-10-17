@@ -24,15 +24,30 @@ router.post('/', async (req, res) => {
       return res.status(500).json({ message: 'Feedback system not configured' });
     }
 
+    // Get the next issue number by fetching existing issues
+    let issueNumber = 1;
+    try {
+      const issuesResponse = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/issues?labels=feedback&state=all&per_page=100`, {
+        headers: {
+          'Authorization': `Bearer ${GITHUB_TOKEN}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'User-Agent': 'AI-Wordle-Duel-Feedback'
+        }
+      });
+      if (issuesResponse.ok) {
+        const issues = await issuesResponse.json();
+        issueNumber = issues.length + 1;
+      }
+    } catch (error) {
+      console.log('Could not fetch issue count, using default');
+    }
+
     // Create issue title
-    const title = `User Feedback: ${feedback.substring(0, 50)}${feedback.length > 50 ? '...' : ''}`;
+    const title = `Feedback #${issueNumber}`;
 
     // Create issue body
-    let body = `## User Feedback\n\n${feedback}`;
-    if (email) {
-      body += `\n\n---\n**Contact:** ${email}`;
-    }
-    body += `\n\n---\n*Submitted: ${new Date().toISOString()}*`;
+    let body = feedback;
+    body += `\n\n---\n**Email:** ${email || 'N/A'}`;
 
     // Submit to GitHub Issues API
     const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/issues`, {
