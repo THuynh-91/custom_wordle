@@ -54,7 +54,8 @@
       "Bash(cmd /c \"dir dist /s /b\")",
       "WebFetch(domain:custom-wordle.onrender.com)",
       "Bash(git push)",
-      "Bash(git remote:*)"
+      "Bash(git remote:*)",
+      "WebFetch(domain:custom-ai-wordle.vercel.app)"
     ],
     "deny": [],
     "ask": []

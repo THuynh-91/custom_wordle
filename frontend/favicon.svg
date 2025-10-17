@@ -1,10 +1,28 @@
 <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-  <!-- AI letter tiles as favicon -->
-  <!-- A -->
-  <rect x="4" y="12" width="24" height="40" rx="2" fill="#6aaa64"/>
-  <text x="16" y="40" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">A</text>
+  <!-- 3x3 Wordle board favicon -->
+  <defs>
+    <style>
+      .correct { fill: #6aaa64; }
+      .present { fill: #c9b458; }
+      .absent { fill: #787c7e; }
+    </style>
+  </defs>
 
-  <!-- I -->
-  <rect x="36" y="12" width="24" height="40" rx="2" fill="#6aaa64"/>
-  <text x="48" y="40" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">I</text>
+  <!-- Light background matching app theme -->
+  <rect width="64" height="64" fill="#E3E3E1"/>
+
+  <!-- Row 1 - Top -->
+  <rect x="8" y="8" width="14" height="14" rx="1.5" class="absent"/>
+  <rect x="25" y="8" width="14" height="14" rx="1.5" class="present"/>
+  <rect x="42" y="8" width="14" height="14" rx="1.5" class="absent"/>
+
+  <!-- Row 2 - Middle -->
+  <rect x="8" y="25" width="14" height="14" rx="1.5" class="correct"/>
+  <rect x="25" y="25" width="14" height="14" rx="1.5" class="correct"/>
+  <rect x="42" y="25" width="14" height="14" rx="1.5" class="present"/>
+
+  <!-- Row 3 - Bottom -->
+  <rect x="8" y="42" width="14" height="14" rx="1.5" class="correct"/>
+  <rect x="25" y="42" width="14" height="14" rx="1.5" class="correct"/>
+  <rect x="42" y="42" width="14" height="14" rx="1.5" class="correct"/>
 </svg>
