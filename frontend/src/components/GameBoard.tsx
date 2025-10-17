@@ -97,9 +97,14 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
   // Watch for both players finishing in race mode
   useEffect(() => {
+    console.log('Race mode check:', { gameMode, status, aiStatus, secret, showResultModal });
     if (gameMode === 'race' && status !== 'in-progress' && aiStatus !== 'in-progress' && secret && !showResultModal) {
+      console.log('Both players finished! Showing modal...');
       // Both players have finished, show the result modal
-      setTimeout(() => setShowResultModal(true), 800);
+      setTimeout(() => {
+        console.log('Setting showResultModal to true');
+        setShowResultModal(true);
+      }, 800);
     }
   }, [gameMode, status, aiStatus, secret, showResultModal]);
 
