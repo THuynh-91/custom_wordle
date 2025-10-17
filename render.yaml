@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: ai-wordle-backend
+    runtime: node
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install && npm run build:backend
+    startCommand: node dist/backend/server.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: FRONTEND_URL
+        value: https://ai-wordle-duel.vercel.app
+      - key: PORT
+        value: 10000
