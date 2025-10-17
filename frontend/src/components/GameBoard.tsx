@@ -135,15 +135,16 @@ const GameBoard: React.FC<GameBoardProps> = ({
         const newAiStatus = data.status;
         setAiStatus(newAiStatus);
 
-        if (newAiStatus === 'won') {
+        if (newAiStatus === 'won' || newAiStatus === 'lost') {
           const guessCount = aiGuesses.length + 1;
-          setMessage(`AI won in ${guessCount} guess${guessCount === 1 ? '' : 'es'}!`);
+          const wonOrLost = newAiStatus === 'won';
+          setMessage(wonOrLost ? `AI won in ${guessCount} guess${guessCount === 1 ? '' : 'es'}!` : `AI failed to solve!`);
           setSecret(data.secret);
 
           // Check if human also finished
           if (status !== 'in-progress') {
-            // Both finished - determine winner
-            if (status === 'won') {
+            // Both finished - determine winner and update scores
+            if (status === 'won' && newAiStatus === 'won') {
               // Both won - compare guess counts
               if (guesses.length < guessCount) {
                 setHumanWins(prev => prev + 1);
@@ -152,24 +153,12 @@ const GameBoard: React.FC<GameBoardProps> = ({
               } else {
                 setTies(prev => prev + 1);
               }
-            } else {
+            } else if (status === 'won' && newAiStatus === 'lost') {
+              // Human won, AI lost
+              setHumanWins(prev => prev + 1);
+            } else if (status === 'lost' && newAiStatus === 'won') {
               // Human lost, AI won
               setAiWins(prev => prev + 1);
-            }
-            setTimeout(() => setShowResultModal(true), 800);
-          } else {
-            // Human still playing, switch turn
-            setCurrentTurn('human');
-          }
-        } else if (newAiStatus === 'lost') {
-          setMessage(`AI failed to solve!`);
-          setSecret(data.secret);
-
-          // Check if human also finished
-          if (status !== 'in-progress') {
-            // Both finished
-            if (status === 'won') {
-              setHumanWins(prev => prev + 1);
             } else {
               // Both lost
               setTies(prev => prev + 1);
