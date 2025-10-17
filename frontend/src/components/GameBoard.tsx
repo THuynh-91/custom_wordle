@@ -95,19 +95,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
     }
   }, [gameMode, guesses.length, status, aiGuesses.length, aiStatus, currentTurn]);
 
-  // Watch for both players finishing in race mode
-  useEffect(() => {
-    console.log('Race mode check:', { gameMode, status, aiStatus, secret, showResultModal });
-    if (gameMode === 'race' && status !== 'in-progress' && aiStatus !== 'in-progress' && secret && !showResultModal) {
-      console.log('Both players finished! Showing modal...');
-      // Both players have finished, show the result modal
-      setTimeout(() => {
-        console.log('Setting showResultModal to true');
-        setShowResultModal(true);
-      }, 800);
-    }
-  }, [gameMode, status, aiStatus, secret, showResultModal]);
-
   const playAIMove = async () => {
     if (gameMode === 'race' && aiStatus !== 'in-progress') return;
     if (gameMode !== 'race' && status !== 'in-progress') return;
@@ -148,34 +135,22 @@ const GameBoard: React.FC<GameBoardProps> = ({
         const newAiStatus = data.status;
         setAiStatus(newAiStatus);
 
-        if (newAiStatus === 'won' || newAiStatus === 'lost') {
+        if (newAiStatus === 'won') {
           const guessCount = aiGuesses.length + 1;
-          const wonOrLost = newAiStatus === 'won';
-          setMessage(wonOrLost ? `AI won in ${guessCount} guess${guessCount === 1 ? '' : 'es'}!` : `AI failed to solve!`);
+          setMessage(`AI won in ${guessCount} guess${guessCount === 1 ? '' : 'es'}!`);
           setSecret(data.secret);
 
-          // Check if human also finished
-          if (status !== 'in-progress') {
-            // Both finished - determine winner and update scores
-            if (status === 'won' && newAiStatus === 'won') {
-              // Both won - compare guess counts
-              if (guesses.length < guessCount) {
-                setHumanWins(prev => prev + 1);
-              } else if (guessCount < guesses.length) {
-                setAiWins(prev => prev + 1);
-              } else {
-                setTies(prev => prev + 1);
-              }
-            } else if (status === 'won' && newAiStatus === 'lost') {
-              // Human won, AI lost
-              setHumanWins(prev => prev + 1);
-            } else if (status === 'lost' && newAiStatus === 'won') {
-              // Human lost, AI won
-              setAiWins(prev => prev + 1);
-            } else {
-              // Both lost
-              setTies(prev => prev + 1);
-            }
+          // AI won - game over immediately!
+          setAiWins(prev => prev + 1);
+          setTimeout(() => setShowResultModal(true), 800);
+        } else if (newAiStatus === 'lost') {
+          setMessage(`AI is out of guesses!`);
+          setSecret(data.secret);
+
+          // AI lost, check if human already lost too
+          if (status === 'lost') {
+            // Both lost - tie
+            setTies(prev => prev + 1);
             setTimeout(() => setShowResultModal(true), 800);
           } else {
             // Human still playing, switch turn
@@ -264,51 +239,27 @@ const GameBoard: React.FC<GameBoardProps> = ({
       }
 
       if (data.status === 'won') {
-        setMessage(`Congratulations! You solved it in ${guesses.length + 1} guess${guesses.length + 1 === 1 ? '' : 'es'}!`);
-        // Use existing secret if AI already set it, otherwise use the one from the response
-        if (!secret) {
-          setSecret(data.secret);
-        }
+        setMessage(`Congratulations! You won!`);
+        setSecret(data.secret);
 
         if (gameMode === 'race') {
-          console.log('Human won! Checking AI status:', aiStatus);
-          // Check if AI also finished
-          if (aiStatus !== 'in-progress') {
-            console.log('Both finished! AI status:', aiStatus, 'Human guesses:', guesses.length + 1, 'AI guesses:', aiGuesses.length);
-            // Both finished - determine winner
-            if (aiStatus === 'won') {
-              // Both won - compare guess counts
-              if (guesses.length + 1 < aiGuesses.length) {
-                setHumanWins(prev => prev + 1);
-              } else if (aiGuesses.length < guesses.length + 1) {
-                setAiWins(prev => prev + 1);
-              } else {
-                setTies(prev => prev + 1);
-              }
-            } else {
-              // AI lost, human won
-              setHumanWins(prev => prev + 1);
-            }
-            setTimeout(() => setShowResultModal(true), 800);
-          }
-          // If AI still playing, don't show modal yet - let AI continue
+          // Human won - game over immediately!
+          setHumanWins(prev => prev + 1);
+          setTimeout(() => setShowResultModal(true), 800);
         } else {
           // Show modal on win for non-race modes
           setTimeout(() => setShowResultModal(true), 800);
         }
       } else if (data.status === 'lost') {
-        setMessage(`Game over!`);
-        // Use existing secret if AI already set it, otherwise use the one from the response
-        if (!secret) {
-          setSecret(data.secret);
-        }
+        setMessage(`You're out of guesses!`);
+        setSecret(data.secret);
 
         if (gameMode === 'race') {
-          console.log('Human lost! Checking AI status:', aiStatus);
-          // Check if AI also finished
-          if (aiStatus !== 'in-progress') {
-            console.log('Both finished! AI status:', aiStatus);
-            // Both finished
+          // Human lost, give AI one more turn if they haven't finished
+          if (aiStatus === 'in-progress') {
+            setCurrentTurn('ai');
+          } else {
+            // AI already finished, determine winner
             if (aiStatus === 'won') {
               setAiWins(prev => prev + 1);
             } else {
@@ -317,7 +268,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
             }
             setTimeout(() => setShowResultModal(true), 800);
           }
-          // If AI still playing, don't show modal yet - let AI continue
         } else {
           // Show modal immediately for non-race modes
           setTimeout(() => setShowResultModal(true), 800);
