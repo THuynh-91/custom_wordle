@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import GameSetup from './components/GameSetup';
 import GameBoard from './components/GameBoard';
 import { GameMode, WordLength, SolverType } from '@shared/types';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import './App.css';
 
 function App() {
@@ -110,6 +112,8 @@ function App() {
 
       <footer className="app-footer">
       </footer>
+      <Analytics />
+      <SpeedInsights />
     </div>
   );
 }
