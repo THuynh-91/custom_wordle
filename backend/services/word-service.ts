@@ -10,7 +10,51 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+
 const ROOT_DIR = path.join(__dirname, '..', '..');
+const PROJECT_ROOT = process.cwd();
+const DATA_ROOT_CANDIDATES: string[] = [
+  process.env.DATA_DIR ? path.resolve(process.env.DATA_DIR) : null,
+  path.resolve(PROJECT_ROOT, 'dist', 'data'),
+  path.resolve(PROJECT_ROOT, 'dist', 'backend'),
+  path.resolve(PROJECT_ROOT, 'dist'),
+  path.resolve(PROJECT_ROOT, 'data'),
+  PROJECT_ROOT,
+  ROOT_DIR
+].filter((candidate): candidate is string => Boolean(candidate));
+
+function resolveDataFile(relativePath: string): string {
+  let normalized = relativePath.replace(/^(?:\.\/)+/, '');
+  normalized = normalized.replace(/^[\\/]+/, '');
+
+  const suffixes = [
+    normalized,
+    relativePath,
+    path.join('dist', normalized),
+    path.join('dist', 'backend', normalized),
+    path.join('dist', 'data', normalized),
+    path.join('data', normalized)
+  ];
+
+  for (const base of DATA_ROOT_CANDIDATES) {
+    for (const suffix of suffixes) {
+      const candidate = path.resolve(base, suffix);
+      if (fs.existsSync(candidate)) {
+        return candidate;
+      }
+    }
+  }
+
+  const absoluteFromProject = path.resolve(PROJECT_ROOT, normalized);
+  if (fs.existsSync(absoluteFromProject)) {
+    return absoluteFromProject;
+  }
+
+  throw new Error(`Data file not found: ${relativePath}`);
+}
+
+
 
 export class WordService {
   private static answerLists: Map<WordLength, Set<string>> = new Map();
@@ -30,7 +74,7 @@ export class WordService {
 
     for (const length of lengths) {
       // Load answer list
-      const answerPath = path.join(ROOT_DIR, WORD_LIST_FILES.ANSWER(length));
+      const answerPath = resolveDataFile(WORD_LIST_FILES.ANSWER(length));
       const answerWords = fs.readFileSync(answerPath, 'utf-8')
         .split('\n')
         .map(w => w.trim().toLowerCase())
@@ -38,7 +82,7 @@ export class WordService {
       this.answerLists.set(length, new Set(answerWords));
 
       // Load guess list
-      const guessPath = path.join(ROOT_DIR, WORD_LIST_FILES.GUESS(length));
+      const guessPath = resolveDataFile(WORD_LIST_FILES.GUESS(length));
       const guessWords = fs.readFileSync(guessPath, 'utf-8')
         .split('\n')
         .map(w => w.trim().toLowerCase())
@@ -46,7 +90,7 @@ export class WordService {
       this.guessLists.set(length, new Set(guessWords));
 
       // Load frequencies
-      const freqPath = path.join(ROOT_DIR, WORD_LIST_FILES.FREQUENCY(length));
+      const freqPath = resolveDataFile(WORD_LIST_FILES.FREQUENCY(length));
       const freqData = JSON.parse(fs.readFileSync(freqPath, 'utf-8'));
       this.frequencies.set(length, freqData);
 
