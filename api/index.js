@@ -1,13 +1,25 @@
-﻿let appPromise;
+import express from 'express';
+
+let app;
 
 async function getApp() {
-  if (!appPromise) {
-    appPromise = import('../dist/backend/server.js').then(mod => mod.default);
+  if (!app) {
+    const serverModule = await import('../dist/backend/server.js');
+    app = serverModule.default;
   }
-  return appPromise;
+  return app;
 }
 
 export default async function handler(req, res) {
-  const app = await getApp();
-  return app(req, res);
+  try {
+    const expressApp = await getApp();
+    expressApp(req, res);
+  } catch (error) {
+    console.error('Handler error:', error);
+    res.status(500).json({
+      error: 'Internal Server Error',
+      message: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
+  }
 }
