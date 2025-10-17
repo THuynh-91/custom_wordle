@@ -53,7 +53,8 @@
       "Bash(cmd /c \"dir dist /s /b | findstr /i frontend\")",
       "Bash(cmd /c \"dir dist /s /b\")",
       "WebFetch(domain:custom-wordle.onrender.com)",
-      "Bash(git push)"
+      "Bash(git push)",
+      "Bash(git remote:*)"
     ],
     "deny": [],
     "ask": []

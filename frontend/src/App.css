@@ -62,11 +62,18 @@
   border-color: var(--color-text);
 }
 
-.theme-toggle {
+.header-buttons {
   position: absolute;
   top: 50%;
   right: 1rem;
   transform: translateY(-50%);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.feedback-button,
+.theme-toggle {
   background: transparent;
   border: 1px solid var(--color-border);
   border-radius: 4px;
@@ -79,8 +86,10 @@
   cursor: pointer;
   transition: all 0.2s ease;
   color: var(--color-text);
+  text-decoration: none;
 }
 
+.feedback-button:hover,
 .theme-toggle:hover {
   background: var(--color-panel-bg);
   border-color: var(--color-text);
@@ -162,12 +171,12 @@
 .loading-note {
   margin-top: 1.5rem;
   padding: 1rem;
-  background: var(--color-modal-panel-bg);
+  background: var(--color-bg);
   border-radius: 8px;
   font-size: 0.9rem;
-  color: var(--color-modal-text);
+  color: var(--color-text);
   text-align: center;
-  border-left: 4px solid var(--color-modal-accent);
+  border-left: 4px solid var(--color-accent);
 }
 
 .modal-button.primary {
