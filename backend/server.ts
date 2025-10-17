@@ -24,6 +24,11 @@ const app = express();
 const PORT = parseInt(process.env.PORT || '3000', 10);
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
+console.log('🔧 Server Configuration:');
+console.log('  PORT:', PORT);
+console.log('  FRONTEND_URL:', FRONTEND_URL);
+console.log('  NODE_ENV:', process.env.NODE_ENV);
+
 const wordServiceReady = WordService.initialize();
 
 // Ensure word data is loaded before handling requests
@@ -50,7 +55,15 @@ app.use(helmet({
 }));
 app.use(compression());
 app.use(cors({
-  origin: FRONTEND_URL.split(','),
+  origin: (origin, callback) => {
+    const allowedOrigins = FRONTEND_URL.split(',');
+    console.log('CORS check - Origin:', origin, 'Allowed:', allowedOrigins);
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200
 }));
