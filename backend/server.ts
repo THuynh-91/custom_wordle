@@ -95,40 +95,37 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
   });
 });
 
-// Initialize and start server
-async function start() {
-  try {
-    console.log('Initializing word service...');
-    await wordServiceReady;
+// Initialize and start server (only in non-Vercel environments)
+if (!process.env.VERCEL) {
+  async function start() {
+    try {
+      console.log('Initializing word service...');
+      await wordServiceReady;
 
-    if (process.env.VERCEL) {
-      console.log('Running in Vercel - exporting app for serverless function');
-      return;
+      app.listen(PORT, '0.0.0.0', () => {
+        console.log(`\n${'='.repeat(50)}`);
+        console.log(`🎮 AI Wordle Duel Server`);
+        console.log(`${'='.repeat(50)}`);
+        console.log(`Server running on port ${PORT}`);
+        console.log(`Access at: http://localhost:${PORT} or http://0.0.0.0:${PORT}`);
+        console.log(`Frontend URL: ${FRONTEND_URL}`);
+        console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+        console.log(`\nWord lists loaded:`);
+
+        const info = WordService.getWordListInfo();
+        for (const [length, counts] of Object.entries(info)) {
+          console.log(`  ${length} letters: ${counts.answers} answers, ${counts.guesses} valid guesses`);
+        }
+
+        console.log(`\nServer ready!\n`);
+      });
+    } catch (error) {
+      console.error('Failed to start server:', error);
+      process.exit(1);
     }
-
-    app.listen(PORT, '0.0.0.0', () => {
-      console.log(`\n${'='.repeat(50)}`);
-      console.log(`🎮 AI Wordle Duel Server`);
-      console.log(`${'='.repeat(50)}`);
-      console.log(`Server running on port ${PORT}`);
-      console.log(`Access at: http://localhost:${PORT} or http://0.0.0.0:${PORT}`);
-      console.log(`Frontend URL: ${FRONTEND_URL}`);
-      console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-      console.log(`\nWord lists loaded:`);
-
-      const info = WordService.getWordListInfo();
-      for (const [length, counts] of Object.entries(info)) {
-        console.log(`  ${length} letters: ${counts.answers} answers, ${counts.guesses} valid guesses`);
-      }
-
-      console.log(`\nServer ready!\n`);
-    });
-  } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
   }
-}
 
-start();
+  start();
+}
 
 export default app;
