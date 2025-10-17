@@ -1,0 +1,29 @@
+<svg width="400" height="120" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="120" fill="none"/>
+
+  <!-- Letter tiles - "AI" in green (correct), "WORD" in gray -->
+  <!-- A -->
+  <rect x="10" y="25" width="60" height="70" rx="4" fill="#6aaa64" stroke="#6aaa64" stroke-width="2"/>
+  <text x="40" y="73" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="white" text-anchor="middle">A</text>
+
+  <!-- I -->
+  <rect x="80" y="25" width="60" height="70" rx="4" fill="#6aaa64" stroke="#6aaa64" stroke-width="2"/>
+  <text x="110" y="73" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="white" text-anchor="middle">I</text>
+
+  <!-- W -->
+  <rect x="160" y="25" width="60" height="70" rx="4" fill="#787c7e" stroke="#787c7e" stroke-width="2"/>
+  <text x="190" y="73" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="white" text-anchor="middle">W</text>
+
+  <!-- O -->
+  <rect x="230" y="25" width="60" height="70" rx="4" fill="#787c7e" stroke="#787c7e" stroke-width="2"/>
+  <text x="260" y="73" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="white" text-anchor="middle">O</text>
+
+  <!-- R -->
+  <rect x="300" y="25" width="60" height="70" rx="4" fill="#787c7e" stroke="#787c7e" stroke-width="2"/>
+  <text x="330" y="73" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="white" text-anchor="middle">R</text>
+
+  <!-- D -->
+  <rect x="370" y="25" width="60" height="70" rx="4" fill="#787c7e" stroke="#787c7e" stroke-width="2"/>
+  <text x="400" y="73" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="white" text-anchor="middle">D</text>
+</svg>
