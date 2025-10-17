@@ -5,6 +5,7 @@ import { GameMode, WordLength, SolverType } from '@shared/types';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import './App.css';
+import { apiFetch } from './lib/apiClient';
 
 function App() {
   const [gameId, setGameId] = useState<string | null>(null);
@@ -51,7 +52,7 @@ function App() {
   const handleReplay = async (newWord?: string) => {
     // Create new game with current settings
     try {
-      const response = await fetch('/api/game/create', {
+      const response = await apiFetch('/api/game/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -4,6 +4,7 @@ import Keyboard from './Keyboard';
 import AIPanel from './AIPanel';
 import { GameMode, WordLength, SolverType, GuessFeedback, TileState, AIMoveExplanation } from '@shared/types';
 import './GameBoard.css';
+import { apiFetch } from '../lib/apiClient';
 
 interface GameBoardProps {
   gameId: string;
@@ -50,7 +51,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
     const fetchGameState = async () => {
       if (gameMode === 'race' && isFirstLoad) {
         try {
-          const response = await fetch(`/api/game/${gameId}`);
+          const response = await apiFetch(`/api/game/${gameId}`);
           if (response.ok) {
             const data = await response.json();
             if (data.currentTurn) {
@@ -100,7 +101,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
     setLoading(true);
     try {
-      const response = await fetch(`/api/game/${gameId}/ai-move?solverType=${solverType}`);
+      const response = await apiFetch(`/api/game/${gameId}/ai-move?solverType=${solverType}`);
 
       if (!response.ok) {
         throw new Error('Failed to get AI move');
@@ -231,7 +232,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
     setLoading(true);
     setIsInvalidWord(false);
     try {
-      const response = await fetch(`/api/game/${gameId}/guess`, {
+      const response = await apiFetch(`/api/game/${gameId}/guess`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ word: currentGuess })

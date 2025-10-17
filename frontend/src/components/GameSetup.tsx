@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { GameMode, WordLength, SolverType } from '@shared/types';
 import './GameSetup.css';
+import { apiFetch } from '../lib/apiClient';
 
 interface GameSetupProps {
   onGameStart: (gameId: string, mode: GameMode, length: WordLength, solver: SolverType, hardMode: boolean) => void;
@@ -19,7 +20,7 @@ const GameSetup: React.FC<GameSetupProps> = ({ onGameStart }) => {
     setError('');
 
     try {
-      const response = await fetch('/api/game/create', {
+      const response = await apiFetch('/api/game/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
