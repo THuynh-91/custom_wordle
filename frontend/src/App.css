@@ -193,13 +193,19 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Feedback Modal Styles */
+/* Feedback Modal Styles - Inverted colors like welcome modal */
 .feedback-modal {
   max-width: 500px;
+  background: var(--color-modal-bg) !important;
+  border: 1px solid var(--color-modal-border);
+}
+
+.feedback-modal .modal-header h2 {
+  color: var(--color-modal-text);
 }
 
 .feedback-description {
-  color: var(--color-text);
+  color: var(--color-modal-text);
   margin-bottom: 1.5rem;
   font-size: 0.95rem;
   line-height: 1.5;
@@ -212,7 +218,7 @@
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  color: var(--color-text);
+  color: var(--color-modal-text);
   font-weight: 600;
   font-size: 0.95rem;
 }
@@ -221,10 +227,10 @@
 .form-group input {
   width: 100%;
   padding: 0.75rem;
-  border: 2px solid var(--color-border);
+  border: 2px solid var(--color-modal-border);
   border-radius: 8px;
-  background: var(--color-bg);
-  color: var(--color-text);
+  background: var(--color-modal-panel-bg);
+  color: var(--color-modal-text);
   font-family: inherit;
   font-size: 0.95rem;
   transition: border-color 0.2s;
@@ -233,7 +239,7 @@
 .form-group textarea:focus,
 .form-group input:focus {
   outline: none;
-  border-color: var(--color-accent);
+  border-color: var(--color-modal-accent);
 }
 
 .form-group textarea:disabled,
@@ -264,28 +270,28 @@
 
 .feedback-success p:first-child {
   font-size: 1.5rem;
-  color: var(--color-accent);
+  color: var(--color-modal-accent);
   margin-bottom: 0.5rem;
   font-weight: 600;
 }
 
 .feedback-success p:last-child {
-  color: var(--color-text);
+  color: var(--color-modal-text);
   font-size: 0.95rem;
 }
 
 .modal-button.secondary {
   background: transparent;
-  border: 2px solid var(--color-border);
-  color: var(--color-text);
+  border: 2px solid var(--color-modal-border);
+  color: var(--color-modal-text);
   font-weight: 600;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
 }
 
 .modal-button.secondary:hover:not(:disabled) {
-  background: var(--color-panel-bg);
-  border-color: var(--color-text);
+  background: var(--color-modal-panel-bg);
+  border-color: var(--color-modal-accent);
 }
 
 .modal-button:disabled {

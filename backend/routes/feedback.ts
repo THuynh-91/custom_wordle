@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
         }
       });
       if (issuesResponse.ok) {
-        const issues = await issuesResponse.json();
+        const issues = await issuesResponse.json() as any[];
         issueNumber = issues.length + 1;
       }
     } catch (error) {
@@ -71,7 +71,7 @@ router.post('/', async (req, res) => {
       throw new Error('Failed to submit feedback to GitHub');
     }
 
-    const issue = await response.json();
+    const issue = await response.json() as { number: number; html_url: string };
     console.log(`Feedback submitted as issue #${issue.number}`);
 
     res.json({
