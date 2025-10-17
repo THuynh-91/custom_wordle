@@ -58,11 +58,26 @@ app.use(cors({
   origin: (origin, callback) => {
     const allowedOrigins = FRONTEND_URL.split(',');
     console.log('CORS check - Origin:', origin, 'Allowed:', allowedOrigins);
-    if (!origin || allowedOrigins.includes(origin)) {
+
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) {
       callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
+      return;
     }
+
+    // Check if origin matches allowed origins exactly
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+      return;
+    }
+
+    // Allow Vercel preview deployments (*.vercel.app)
+    if (origin.endsWith('.vercel.app')) {
+      callback(null, true);
+      return;
+    }
+
+    callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
   optionsSuccessStatus: 200
