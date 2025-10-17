@@ -13,6 +13,11 @@ function App() {
   const [wordLength, setWordLength] = useState<WordLength>(5);
   const [solverType, setSolverType] = useState<SolverType>('entropy');
   const [hardMode, setHardMode] = useState(false);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(() => {
+    // Show welcome modal only on first visit
+    const hasVisited = localStorage.getItem('hasVisited');
+    return !hasVisited;
+  });
   const [isDarkMode, setIsDarkMode] = useState(() => {
     // Check localStorage or system preference
     const saved = localStorage.getItem('darkMode');
@@ -73,6 +78,15 @@ function App() {
     }
   };
 
+  const handleCloseWelcomeModal = () => {
+    localStorage.setItem('hasVisited', 'true');
+    setShowWelcomeModal(false);
+  };
+
+  const handleShowInstructions = () => {
+    setShowWelcomeModal(true);
+  };
+
   return (
     <div className="App">
       <header className="app-header">
@@ -96,7 +110,7 @@ function App() {
 
       <main className="app-main container">
         {!gameId ? (
-          <GameSetup onGameStart={handleGameStart} />
+          <GameSetup onGameStart={handleGameStart} onShowInstructions={handleShowInstructions} />
         ) : (
           <GameBoard
             key={gameId}
@@ -113,6 +127,54 @@ function App() {
 
       <footer className="app-footer">
       </footer>
+
+      {/* Welcome Modal */}
+      {showWelcomeModal && (
+        <div className="modal-overlay">
+          <div className="modal-content welcome-modal">
+            <div className="modal-header">
+              <h2>Welcome to AI Wordle Duel!</h2>
+            </div>
+            <div className="modal-body">
+
+              <div className="instructions-section">
+                <h3>Game Modes:</h3>
+                <ul className="instructions-list">
+                  <li><strong>Human Play:</strong> Classic Wordle - solve the puzzle on your own</li>
+                  <li><strong>Race AI:</strong> Compete head-to-head with AI to solve first</li>
+                  <li><strong>Challenge AI:</strong> Pick a word and watch the AI try to solve it</li>
+                  <li><strong>Today's Wordle:</strong> Watch AI solve the daily puzzle</li>
+                </ul>
+              </div>
+
+              <div className="instructions-section">
+                <h3>How to Play:</h3>
+                <ul className="instructions-list">
+                  <li>Guess the word in 6 tries or less</li>
+                  <li>Green tiles mean the letter is correct and in the right position</li>
+                  <li>Yellow tiles mean the letter is in the word but wrong position</li>
+                  <li>Gray tiles mean the letter is not in the word</li>
+                </ul>
+              </div>
+
+              <div className="instructions-section">
+                <h3>Choose Your Settings:</h3>
+                <ul className="instructions-list">
+                  <li><strong>Word Length:</strong> 3 to 7 letters</li>
+                </ul>
+              </div>
+
+              <p className="loading-note">Note: First load may take a moment as the server initializes. Thank you for your patience!</p>
+            </div>
+            <div className="modal-actions">
+              <button className="modal-button primary" onClick={handleCloseWelcomeModal}>
+                Let's Play!
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Analytics />
       <SpeedInsights />
     </div>

@@ -51,7 +51,9 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(cmd /c \"dir dist /s /b | findstr /i frontend\")",
-      "Bash(cmd /c \"dir dist /s /b\")"
+      "Bash(cmd /c \"dir dist /s /b\")",
+      "WebFetch(domain:custom-wordle.onrender.com)",
+      "Bash(git push)"
     ],
     "deny": [],
     "ask": []

@@ -37,14 +37,37 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [currentTurn, setCurrentTurn] = useState<'human' | 'ai'>('human');
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [showResultModal, setShowResultModal] = useState(false);
-  const [humanWins, setHumanWins] = useState(0);
-  const [aiWins, setAiWins] = useState(0);
-  const [ties, setTies] = useState(0);
   const [isInvalidWord, setIsInvalidWord] = useState(false);
   const [newChallengeWord, setNewChallengeWord] = useState('');
   const [challengeWordError, setChallengeWordError] = useState('');
+  const [aiThinkingGuess, setAiThinkingGuess] = useState('');
 
   const maxGuesses = 6;
+
+  // Load race mode scores from localStorage
+  const getRaceScores = () => {
+    const saved = localStorage.getItem('raceScores');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch {
+        return { humanWins: 0, aiWins: 0, ties: 0 };
+      }
+    }
+    return { humanWins: 0, aiWins: 0, ties: 0 };
+  };
+
+  // Initialize scores from localStorage for race mode
+  const [humanWins, setHumanWins] = useState(() => gameMode === 'race' ? getRaceScores().humanWins : 0);
+  const [aiWins, setAiWins] = useState(() => gameMode === 'race' ? getRaceScores().aiWins : 0);
+  const [ties, setTies] = useState(() => gameMode === 'race' ? getRaceScores().ties : 0);
+
+  // Save scores to localStorage whenever they change in race mode
+  useEffect(() => {
+    if (gameMode === 'race') {
+      localStorage.setItem('raceScores', JSON.stringify({ humanWins, aiWins, ties }));
+    }
+  }, [humanWins, aiWins, ties, gameMode]);
 
   // Fetch initial game state for race mode
   useEffect(() => {
@@ -75,6 +98,39 @@ const GameBoard: React.FC<GameBoardProps> = ({
     };
     fetchGameState();
   }, [gameId, gameMode, isFirstLoad]);
+
+  // Slot machine animation for AI thinking in all modes
+  useEffect(() => {
+    // Show animation when AI is thinking in any mode
+    const shouldAnimate = loading && (
+      (gameMode === 'race' && currentTurn === 'ai' && aiStatus === 'in-progress') ||
+      (gameMode === 'custom-challenge' && status === 'in-progress') ||
+      (gameMode === 'todays-wordle' && status === 'in-progress')
+    );
+
+    if (shouldAnimate) {
+      const letters = 'abcdefghijklmnopqrstuvwxyz';
+      let intervalId: NodeJS.Timeout;
+
+      const animateSlots = () => {
+        let randomWord = '';
+        for (let i = 0; i < wordLength; i++) {
+          randomWord += letters[Math.floor(Math.random() * letters.length)];
+        }
+        setAiThinkingGuess(randomWord);
+      };
+
+      // Start animation
+      intervalId = setInterval(animateSlots, 100);
+
+      return () => {
+        clearInterval(intervalId);
+        setAiThinkingGuess('');
+      };
+    } else {
+      setAiThinkingGuess('');
+    }
+  }, [gameMode, currentTurn, aiStatus, loading, wordLength, status]);
 
   useEffect(() => {
     // Auto-play for custom challenge mode and today's wordle with natural delay
@@ -299,6 +355,18 @@ const GameBoard: React.FC<GameBoardProps> = ({
       }
     }
 
+    // In race mode, also show AI's guessed letters as 'absent' if not already set
+    if (gameMode === 'race') {
+      for (const { guess } of aiGuesses) {
+        for (let i = 0; i < guess.length; i++) {
+          const letter = guess[i];
+          if (!states[letter]) {
+            states[letter] = 'absent';
+          }
+        }
+      }
+    }
+
     return states;
   };
 
@@ -313,6 +381,18 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
         if (!states[letter] || state === 'correct' || (state === 'present' && states[letter] !== 'correct')) {
           states[letter] = state;
+        }
+      }
+    }
+
+    // In race mode, also show human's guessed letters as 'absent' if not already set
+    if (gameMode === 'race') {
+      for (const { guess } of guesses) {
+        for (let i = 0; i < guess.length; i++) {
+          const letter = guess[i];
+          if (!states[letter]) {
+            states[letter] = 'absent';
+          }
         }
       }
     }
@@ -448,7 +528,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
               <h3>AI</h3>
               <WordleGrid
                 guesses={aiGuesses}
-                currentGuess=""
+                currentGuess={aiThinkingGuess}
                 wordLength={wordLength}
                 maxGuesses={maxGuesses}
               />
@@ -463,7 +543,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
           <>
             <WordleGrid
               guesses={guesses}
-              currentGuess={currentGuess}
+              currentGuess={(gameMode === 'custom-challenge' || gameMode === 'todays-wordle') ? aiThinkingGuess : currentGuess}
               wordLength={wordLength}
               maxGuesses={maxGuesses}
               isInvalidWord={isInvalidWord}

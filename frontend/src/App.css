@@ -112,6 +112,78 @@
   margin-top: auto;
 }
 
+/* Welcome Modal Styles - Inverted colors */
+.welcome-modal {
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--color-modal-bg) !important;
+  border: 1px solid var(--color-modal-border);
+}
+
+.welcome-modal .modal-header h2 {
+  color: var(--color-modal-text);
+}
+
+.welcome-intro {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--color-modal-text);
+}
+
+.instructions-section {
+  margin-bottom: 1.5rem;
+}
+
+.instructions-section h3 {
+  color: var(--color-modal-text);
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.instructions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.instructions-list li {
+  padding: 0.5rem 0;
+  color: var(--color-modal-text);
+  line-height: 1.5;
+}
+
+.instructions-list li strong {
+  color: var(--color-modal-accent);
+}
+
+.loading-note {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: var(--color-modal-panel-bg);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--color-modal-text);
+  text-align: center;
+  border-left: 4px solid var(--color-modal-accent);
+}
+
+.modal-button.primary {
+  background: var(--color-modal-accent);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+}
+
+.modal-button.primary:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
 @media (max-width: 768px) {
   .app-header h1 {
     font-size: 1.8rem;
@@ -119,5 +191,18 @@
 
   .tagline {
     font-size: 1rem;
+  }
+
+  .welcome-modal {
+    max-width: 95%;
+    padding: 1.5rem;
+  }
+
+  .instructions-section h3 {
+    font-size: 1rem;
+  }
+
+  .instructions-list li {
+    font-size: 0.9rem;
   }
 }

@@ -5,9 +5,10 @@ import { apiFetch } from '../lib/apiClient';
 
 interface GameSetupProps {
   onGameStart: (gameId: string, mode: GameMode, length: WordLength, solver: SolverType, hardMode: boolean) => void;
+  onShowInstructions?: () => void;
 }
 
-const GameSetup: React.FC<GameSetupProps> = ({ onGameStart }) => {
+const GameSetup: React.FC<GameSetupProps> = ({ onGameStart, onShowInstructions }) => {
   const [mode, setMode] = useState<GameMode>('custom-challenge');
   const [length, setLength] = useState<WordLength>(5);
   const solver: SolverType = 'entropy'; // Always use entropy solver (best performance)
@@ -48,7 +49,19 @@ const GameSetup: React.FC<GameSetupProps> = ({ onGameStart }) => {
 
   return (
     <div className="game-setup">
-      <h2>Setup Your Game</h2>
+      <div className="setup-header">
+        <h2>Setup Your Game</h2>
+        {onShowInstructions && (
+          <button className="help-button" onClick={onShowInstructions} title="Show instructions">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            Help
+          </button>
+        )}
+      </div>
 
       <div className="setup-section">
         <label>Game Mode</label>
