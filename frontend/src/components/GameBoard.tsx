@@ -265,11 +265,16 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
       if (data.status === 'won') {
         setMessage(`Congratulations! You solved it in ${guesses.length + 1} guess${guesses.length + 1 === 1 ? '' : 'es'}!`);
-        setSecret(data.secret);
+        // Use existing secret if AI already set it, otherwise use the one from the response
+        if (!secret) {
+          setSecret(data.secret);
+        }
 
         if (gameMode === 'race') {
+          console.log('Human won! Checking AI status:', aiStatus);
           // Check if AI also finished
           if (aiStatus !== 'in-progress') {
+            console.log('Both finished! AI status:', aiStatus, 'Human guesses:', guesses.length + 1, 'AI guesses:', aiGuesses.length);
             // Both finished - determine winner
             if (aiStatus === 'won') {
               // Both won - compare guess counts
@@ -293,11 +298,16 @@ const GameBoard: React.FC<GameBoardProps> = ({
         }
       } else if (data.status === 'lost') {
         setMessage(`Game over!`);
-        setSecret(data.secret);
+        // Use existing secret if AI already set it, otherwise use the one from the response
+        if (!secret) {
+          setSecret(data.secret);
+        }
 
         if (gameMode === 'race') {
+          console.log('Human lost! Checking AI status:', aiStatus);
           // Check if AI also finished
           if (aiStatus !== 'in-progress') {
+            console.log('Both finished! AI status:', aiStatus);
             // Both finished
             if (aiStatus === 'won') {
               setAiWins(prev => prev + 1);
