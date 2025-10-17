@@ -49,13 +49,17 @@ const KNOWN_WORDLE_ANSWERS: string[] = [
 export class TodaysWordleService {
   /**
    * Get the current day's index (days since Wordle epoch)
+   * NYT Wordle uses Eastern Time, so we need to calculate based on ET
    */
   private static getDayIndex(): number {
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    // Get current time in Eastern Time (ET)
+    const nowET = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+    const today = new Date(nowET);
+    const todayET = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
     const epoch = new Date(WORDLE_EPOCH.getFullYear(), WORDLE_EPOCH.getMonth(), WORDLE_EPOCH.getDate());
 
-    const diffTime = today.getTime() - epoch.getTime();
+    const diffTime = todayET.getTime() - epoch.getTime();
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
     return diffDays;
@@ -67,7 +71,9 @@ export class TodaysWordleService {
    */
   private static async fetchTodaysAnswerFromAPI(): Promise<string | null> {
     try {
-      const today = new Date();
+      // Get current date in Eastern Time
+      const nowET = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+      const today = new Date(nowET);
       const year = today.getFullYear();
       const month = String(today.getMonth() + 1).padStart(2, '0');
       const day = String(today.getDate()).padStart(2, '0');
