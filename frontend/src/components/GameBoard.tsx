@@ -570,18 +570,22 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 <button className="modal-button home" onClick={onNewGame}>
                   Home
                 </button>
+              ) : gameMode === 'race' ? (
+                <>
+                  <button className="modal-button home" onClick={onNewGame}>
+                    Home
+                  </button>
+                  <button className="modal-button replay" onClick={handleReplay}>
+                    Play Again
+                  </button>
+                </>
               ) : (
                 <>
-                  {gameMode === 'race' && (
-                    <button className="modal-button home" onClick={onNewGame}>
-                      Home
-                    </button>
-                  )}
                   <button className="modal-button replay" onClick={handleReplay}>
                     {gameMode === 'custom-challenge' ? 'Challenge AI' : 'Play Again'}
                   </button>
                   <button className="modal-button new-game" onClick={onNewGame}>
-                    {gameMode === 'race' ? 'New Race' : 'New Game'}
+                    New Game
                   </button>
                 </>
               )}
