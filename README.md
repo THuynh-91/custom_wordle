@@ -78,4 +78,4 @@ MIT License - Feel free to use this project for learning, modification, or comme
 
 ---
 
-**Built with ❤️ using TypeScript, React, and Node.js**
+**Built with ❤️ using TypeScript, React, Python, and Node.js**
