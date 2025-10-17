@@ -95,6 +95,14 @@ const GameBoard: React.FC<GameBoardProps> = ({
     }
   }, [gameMode, guesses.length, status, aiGuesses.length, aiStatus, currentTurn]);
 
+  // Watch for both players finishing in race mode
+  useEffect(() => {
+    if (gameMode === 'race' && status !== 'in-progress' && aiStatus !== 'in-progress' && secret && !showResultModal) {
+      // Both players have finished, show the result modal
+      setTimeout(() => setShowResultModal(true), 800);
+    }
+  }, [gameMode, status, aiStatus, secret, showResultModal]);
+
   const playAIMove = async () => {
     if (gameMode === 'race' && aiStatus !== 'in-progress') return;
     if (gameMode !== 'race' && status !== 'in-progress') return;
