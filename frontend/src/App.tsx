@@ -24,6 +24,7 @@ function App() {
   const [feedbackSubmitting, setFeedbackSubmitting] = useState(false);
   const [feedbackError, setFeedbackError] = useState('');
   const [feedbackSuccess, setFeedbackSuccess] = useState(false);
+  const [showPingPongModal, setShowPingPongModal] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     // Check localStorage or system preference
     const saved = localStorage.getItem('darkMode');
@@ -43,6 +44,151 @@ function App() {
     // Save preference
     localStorage.setItem('darkMode', isDarkMode.toString());
   }, [isDarkMode]);
+
+  useEffect(() => {
+    if (!showPingPongModal) return;
+
+    const canvas = document.getElementById('pingPongCanvas');
+    const ball = document.getElementById('pingPongBall');
+    const paddleLeft = document.getElementById('pingPongPaddleLeft');
+    const paddleRight = document.getElementById('pingPongPaddleRight');
+    const scoreLeftEl = document.getElementById('pingPongScoreLeft');
+    const scoreRightEl = document.getElementById('pingPongScoreRight');
+    const pauseBtn = document.getElementById('pingPongPauseBtn');
+
+    if (!canvas || !ball || !paddleLeft || !paddleRight || !scoreLeftEl || !scoreRightEl || !pauseBtn) return;
+
+    let gameActive = true;
+    let isPaused = false;
+    let scoreLeft = 0;
+    let scoreRight = 0;
+
+    // Get canvas width dynamically
+    const canvasWidth = canvas.clientWidth;
+    const canvasHeight = canvas.clientHeight;
+
+    // Ball properties
+    let ballX = canvasWidth / 2;
+    let ballY = canvasHeight / 2;
+    let ballSpeedX = 3;
+    let ballSpeedY = 2;
+
+    // Paddle properties
+    let paddleLeftY = (canvasHeight - 50) / 2;
+    let paddleRightY = (canvasHeight - 50) / 2;
+    const paddleHeight = 50;
+
+    // Mouse/touch position
+    let mouseY = canvasHeight / 2;
+
+    // Reset ball
+    function resetBall(direction: 'left' | 'right') {
+      ballX = canvasWidth / 2;
+      ballY = canvasHeight / 2;
+      ballSpeedX = (direction === 'left' ? -3 : 3);
+      ballSpeedY = (Math.random() - 0.5) * 4;
+    }
+
+    // Update game
+    function update() {
+      if (!gameActive || isPaused) return;
+
+      // Move ball
+      ballX += ballSpeedX;
+      ballY += ballSpeedY;
+
+      // Ball collision with top/bottom
+      if (ballY <= 0 || ballY >= canvasHeight - 12) {
+        ballSpeedY = -ballSpeedY;
+      }
+
+      // Ball collision with left paddle
+      if (ballX <= 20 && ballX >= 15 &&
+          ballY >= paddleLeftY - 6 && ballY <= paddleLeftY + paddleHeight + 6) {
+        ballSpeedX = Math.abs(ballSpeedX) + 0.3;
+        ballSpeedY += (ballY - (paddleLeftY + paddleHeight / 2)) * 0.15;
+      }
+
+      // Ball collision with right paddle
+      if (ballX >= canvasWidth - 22 && ballX <= canvasWidth - 17 &&
+          ballY >= paddleRightY - 6 && ballY <= paddleRightY + paddleHeight + 6) {
+        ballSpeedX = -Math.abs(ballSpeedX) - 0.3;
+        ballSpeedY += (ballY - (paddleRightY + paddleHeight / 2)) * 0.15;
+      }
+
+      // Score points
+      if (ballX < 0) {
+        scoreRight++;
+        scoreRightEl.textContent = scoreRight.toString();
+        resetBall('right');
+      } else if (ballX > canvasWidth) {
+        scoreLeft++;
+        scoreLeftEl.textContent = scoreLeft.toString();
+        resetBall('left');
+      }
+
+      // Update ball position
+      ball.style.left = ballX + 'px';
+      ball.style.top = ballY + 'px';
+
+      // Move left paddle (player controlled)
+      const targetY = mouseY - paddleHeight / 2;
+      if (Math.abs(paddleLeftY - targetY) > 2) {
+        paddleLeftY += (targetY - paddleLeftY) * 0.15;
+      }
+      paddleLeftY = Math.max(0, Math.min(canvasHeight - paddleHeight, paddleLeftY));
+      paddleLeft.style.top = paddleLeftY + 'px';
+
+      // AI for right paddle
+      const aiTargetY = ballY - paddleHeight / 2;
+      if (ballX > canvasWidth / 2) {
+        if (Math.abs(paddleRightY - aiTargetY) > 1) {
+          paddleRightY += (aiTargetY - paddleRightY) * 0.08;
+        }
+      } else {
+        const centerY = (canvasHeight - paddleHeight) / 2;
+        paddleRightY += (centerY - paddleRightY) * 0.05;
+      }
+      paddleRightY = Math.max(0, Math.min(canvasHeight - paddleHeight, paddleRightY));
+      paddleRight.style.top = paddleRightY + 'px';
+    }
+
+    // Mouse movement
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseY = e.clientY - rect.top;
+    };
+
+    // Touch movement
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      mouseY = e.touches[0].clientY - rect.top;
+    };
+
+    // Pause button
+    const handlePause = (e: MouseEvent) => {
+      e.stopPropagation();
+      isPaused = !isPaused;
+      pauseBtn.textContent = isPaused ? '▶' : '⏸';
+    };
+
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('touchmove', handleTouchMove);
+    pauseBtn.addEventListener('click', handlePause);
+
+    // Start game
+    const gameLoop = setInterval(update, 1000 / 60);
+
+    // Cleanup
+    return () => {
+      gameActive = false;
+      clearInterval(gameLoop);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('touchmove', handleTouchMove);
+      pauseBtn.removeEventListener('click', handlePause);
+    };
+  }, [showPingPongModal]);
 
   const toggleDarkMode = () => {
     setIsDarkMode(prev => !prev);
@@ -112,6 +258,14 @@ function App() {
     setFeedbackSuccess(false);
   };
 
+  const handleOpenPingPong = () => {
+    setShowPingPongModal(true);
+  };
+
+  const handleClosePingPong = () => {
+    setShowPingPongModal(false);
+  };
+
   const handleSubmitFeedback = async () => {
     if (!feedbackText.trim()) {
       setFeedbackError('Please enter your feedback');
@@ -157,6 +311,13 @@ function App() {
         <h1>AI Wordle Duel</h1>
         <p className="tagline">Challenge AI solvers across multiple word lengths</p>
         <div className="header-buttons">
+          <button
+            onClick={handleOpenPingPong}
+            className="pingpong-button"
+            title="Play Ping Pong"
+          >
+            🏓
+          </button>
           <button
             onClick={handleOpenFeedback}
             className="feedback-button"
@@ -240,6 +401,29 @@ function App() {
               <button className="modal-button primary" onClick={handleCloseWelcomeModal}>
                 Let's Play!
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Ping Pong Modal */}
+      {showPingPongModal && (
+        <div className="modal-overlay" onClick={handleClosePingPong}>
+          <div className="modal-content pingpong-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Ping Pong Game</h2>
+              <button className="modal-close" onClick={handleClosePingPong}>×</button>
+            </div>
+            <div className="modal-body pingpong-body">
+              <p className="pingpong-instructions">Move your mouse or tap to control the left paddle!</p>
+              <div className="pingpong-game-canvas" id="pingPongCanvas">
+                <div className="pingpong-pause-btn" id="pingPongPauseBtn">⏸</div>
+                <div className="pingpong-center-line"></div>
+                <div className="pingpong-paddle pingpong-paddle-left" id="pingPongPaddleLeft"></div>
+                <div className="pingpong-paddle pingpong-paddle-right" id="pingPongPaddleRight"></div>
+                <div className="pingpong-ball" id="pingPongBall"></div>
+              </div>
+              <div className="pingpong-game-score">You: <span id="pingPongScoreLeft">0</span> | AI: <span id="pingPongScoreRight">0</span></div>
             </div>
           </div>
         </div>

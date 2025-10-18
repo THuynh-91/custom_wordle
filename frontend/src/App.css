@@ -72,6 +72,7 @@
   align-items: center;
 }
 
+.pingpong-button,
 .feedback-button,
 .theme-toggle {
   background: transparent;
@@ -89,6 +90,7 @@
   text-decoration: none;
 }
 
+.pingpong-button:hover,
 .feedback-button:hover,
 .theme-toggle:hover {
   background: var(--color-panel-bg);
@@ -324,4 +326,101 @@
   .instructions-list li {
     font-size: 0.9rem;
   }
+}
+
+/* Ping Pong Modal */
+.pingpong-modal {
+  max-width: 500px;
+}
+
+.pingpong-body {
+  padding: 1rem;
+}
+
+.pingpong-instructions {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+.pingpong-game-canvas {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 250px;
+  background: rgba(128, 128, 128, 0.1);
+  border: 2px solid var(--color-border);
+  border-radius: 12px;
+  margin: 0 auto 1rem;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.pingpong-paddle {
+  position: absolute;
+  width: 10px;
+  height: 50px;
+  background: var(--color-text);
+  border-radius: 2px;
+}
+
+.pingpong-paddle-left {
+  left: 10px;
+}
+
+.pingpong-paddle-right {
+  right: 10px;
+}
+
+.pingpong-ball {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--color-text);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.pingpong-center-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-border);
+  opacity: 0.3;
+  transform: translateX(-50%);
+}
+
+.pingpong-pause-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  background: rgba(128, 128, 128, 0.2);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  font-size: 0.75rem;
+  z-index: 10;
+  transition: background 0.2s;
+}
+
+.pingpong-pause-btn:hover {
+  background: rgba(128, 128, 128, 0.3);
+}
+
+.pingpong-game-score {
+  text-align: center;
+  color: var(--color-text);
+  font-size: 1rem;
+  font-family: 'Inter', monospace;
+  font-weight: 600;
 }
