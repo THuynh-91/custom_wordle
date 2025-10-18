@@ -75,6 +75,7 @@ MIT License - Feel free to use this project for learning, modification, or comme
 ## Acknowledgments
 
 - **Original Wordle** by Josh Wardle - Inspiration for this project
+- **Ring Loader Animation** by Christopher Powroznik - CSS loading animation used in the application
 
 ---
 
