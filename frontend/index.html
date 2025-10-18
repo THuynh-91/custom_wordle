@@ -41,7 +41,7 @@
       position: relative;
       width: 3.5rem;
       height: 3.5rem;
-      margin-bottom: 2rem;
+      margin: 0;
     }
     .ring {
       position: absolute;
@@ -70,19 +70,240 @@
       font-weight: 400;
       text-align: center;
       opacity: 0.9;
+      margin-bottom: 2rem;
+      order: -1;
+    }
+    .mini-game {
+      margin-top: 2rem;
+      text-align: center;
+      user-select: none;
+    }
+    .game-canvas {
+      position: relative;
+      width: 300px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      margin: 1rem auto;
+      overflow: hidden;
+      touch-action: none;
+    }
+    .paddle {
+      position: absolute;
+      width: 10px;
+      height: 50px;
+      background: white;
+      border-radius: 2px;
+    }
+    .paddle-left {
+      left: 10px;
+    }
+    .paddle-right {
+      right: 10px;
+    }
+    .ball {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    .center-line {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(-50%);
+    }
+    .game-score {
+      color: white;
+      font-size: 0.9rem;
+      font-family: 'Inter', monospace;
+      opacity: 0.8;
+    }
+    .game-title {
+      color: white;
+      font-size: 0.85rem;
+      font-family: 'Inter', sans-serif;
+      opacity: 0.6;
+      margin-bottom: 0.5rem;
+    }
+    .game-over {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .game-over.show {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
   <div id="loading-screen">
+    <p class="loading-message">Allow one moment for the backend to boot</p>
+
     <div class="loader-container">
       <div class="ring"></div>
       <div class="ring"></div>
       <div class="ring"></div>
     </div>
-    <p class="loading-message">Allow one moment for the backend to boot</p>
+
+    <div class="mini-game">
+      <div class="game-title">Move mouse or tap to play!</div>
+      <div class="game-canvas" id="gameCanvas">
+        <div class="center-line"></div>
+        <div class="paddle paddle-left" id="paddleLeft"></div>
+        <div class="paddle paddle-right" id="paddleRight"></div>
+        <div class="ball" id="ball"></div>
+      </div>
+      <div class="game-score">You: <span id="scoreLeft">0</span> | AI: <span id="scoreRight">0</span></div>
+    </div>
   </div>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
+  <script>
+    // Ping Pong game
+    (function() {
+      const canvas = document.getElementById('gameCanvas');
+      const ball = document.getElementById('ball');
+      const paddleLeft = document.getElementById('paddleLeft');
+      const paddleRight = document.getElementById('paddleRight');
+      const scoreLeftEl = document.getElementById('scoreLeft');
+      const scoreRightEl = document.getElementById('scoreRight');
+
+      let gameActive = true;
+      let scoreLeft = 0;
+      let scoreRight = 0;
+
+      // Ball properties
+      let ballX = 150;
+      let ballY = 100;
+      let ballSpeedX = 3;
+      let ballSpeedY = 2;
+
+      // Paddle properties
+      let paddleLeftY = 75;
+      let paddleRightY = 75;
+      const paddleHeight = 50;
+      const paddleSpeed = 4;
+
+      // Mouse/touch position
+      let mouseY = 100;
+
+      // Reset ball
+      function resetBall(direction) {
+        ballX = 150;
+        ballY = 100;
+        ballSpeedX = (direction === 'left' ? -3 : 3);
+        ballSpeedY = (Math.random() - 0.5) * 4;
+      }
+
+      // Update game
+      function update() {
+        if (!gameActive) return;
+
+        // Move ball
+        ballX += ballSpeedX;
+        ballY += ballSpeedY;
+
+        // Ball collision with top/bottom
+        if (ballY <= 0 || ballY >= 188) {
+          ballSpeedY = -ballSpeedY;
+        }
+
+        // Ball collision with left paddle
+        if (ballX <= 20 && ballX >= 15 &&
+            ballY >= paddleLeftY - 6 && ballY <= paddleLeftY + paddleHeight + 6) {
+          ballSpeedX = Math.abs(ballSpeedX) + 0.3;
+          ballSpeedY += (ballY - (paddleLeftY + paddleHeight / 2)) * 0.15;
+        }
+
+        // Ball collision with right paddle
+        if (ballX >= 268 && ballX <= 273 &&
+            ballY >= paddleRightY - 6 && ballY <= paddleRightY + paddleHeight + 6) {
+          ballSpeedX = -Math.abs(ballSpeedX) - 0.3;
+          ballSpeedY += (ballY - (paddleRightY + paddleHeight / 2)) * 0.15;
+        }
+
+        // Score points
+        if (ballX < 0) {
+          scoreRight++;
+          scoreRightEl.textContent = scoreRight;
+          resetBall('right');
+        } else if (ballX > 300) {
+          scoreLeft++;
+          scoreLeftEl.textContent = scoreLeft;
+          resetBall('left');
+        }
+
+        // Update ball position
+        ball.style.left = ballX + 'px';
+        ball.style.top = ballY + 'px';
+
+        // Move left paddle (player controlled)
+        const targetY = mouseY - paddleHeight / 2;
+        if (Math.abs(paddleLeftY - targetY) > 2) {
+          paddleLeftY += (targetY - paddleLeftY) * 0.15;
+        }
+        paddleLeftY = Math.max(0, Math.min(150, paddleLeftY));
+        paddleLeft.style.top = paddleLeftY + 'px';
+
+        // AI for right paddle
+        const aiTargetY = ballY - paddleHeight / 2;
+        if (ballX > 150) {
+          if (Math.abs(paddleRightY - aiTargetY) > 1) {
+            paddleRightY += (aiTargetY - paddleRightY) * 0.08;
+          }
+        } else {
+          const centerY = 75;
+          paddleRightY += (centerY - paddleRightY) * 0.05;
+        }
+        paddleRightY = Math.max(0, Math.min(150, paddleRightY));
+        paddleRight.style.top = paddleRightY + 'px';
+      }
+
+      // Mouse movement
+      canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouseY = e.clientY - rect.top;
+      });
+
+      // Touch movement
+      canvas.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        const rect = canvas.getBoundingClientRect();
+        mouseY = e.touches[0].clientY - rect.top;
+      });
+
+      // Start game
+      const gameLoop = setInterval(update, 1000 / 60);
+
+      // Stop game when loading screen is hidden
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.target.classList.contains('hidden')) {
+            gameActive = false;
+            clearInterval(gameLoop);
+          }
+        });
+      });
+
+      const loadingScreen = document.getElementById('loading-screen');
+      if (loadingScreen) {
+        observer.observe(loadingScreen, { attributes: true, attributeFilter: ['class'] });
+      }
+    })();
+  </script>
 </body>
 </html>
