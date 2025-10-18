@@ -55,7 +55,18 @@
       "WebFetch(domain:custom-wordle.onrender.com)",
       "Bash(git push)",
       "Bash(git remote:*)",
-      "WebFetch(domain:custom-ai-wordle.vercel.app)"
+      "WebFetch(domain:custom-ai-wordle.vercel.app)",
+      "Bash(cmd /c \"netstat -ano | findstr :3000\")",
+      "Bash(cmd /c timeout /t 2)",
+      "Bash(cmd /c timeout /t 3)",
+      "Bash(cmd /c \"netstat -ano | findstr LISTENING\")",
+      "Bash(cmd /c \"taskkill /PID 36500 /F & taskkill /PID 31668 /F\")",
+      "Bash(cmd /c \"taskkill /F /PID 36500 && taskkill /F /PID 31668\")",
+      "Bash(cmd /c \"taskkill /F /IM node.exe /T\")",
+      "Bash(wmic process where ProcessId=36500 get CommandLine,ProcessId)",
+      "Bash(wmic process where ProcessId=31668 get CommandLine,ProcessId)",
+      "Bash(cmd /c \"taskkill /F /PID 31668\")",
+      "Bash(cmd /c \"taskkill /F /PID 36500\")"
     ],
     "deny": [],
     "ask": []
