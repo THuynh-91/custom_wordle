@@ -57,6 +57,10 @@ function App() {
   };
 
   const handleNewGame = () => {
+    // Reset race mode scores when exiting to home
+    if (gameMode === 'race') {
+      localStorage.setItem('raceScores', JSON.stringify({ humanWins: 0, aiWins: 0, ties: 0 }));
+    }
     setGameId(null);
   };
 

@@ -418,6 +418,17 @@ const GameBoard: React.FC<GameBoardProps> = ({
     }
   };
 
+  const handleHomeClick = () => {
+    // Reset scores when leaving race mode
+    if (gameMode === 'race') {
+      setHumanWins(0);
+      setAiWins(0);
+      setTies(0);
+      localStorage.setItem('raceScores', JSON.stringify({ humanWins: 0, aiWins: 0, ties: 0 }));
+    }
+    onNewGame();
+  };
+
   const getResultMessage = () => {
     if (gameMode === 'race') {
       if (status === 'won' && aiStatus !== 'won') {
@@ -647,12 +658,12 @@ const GameBoard: React.FC<GameBoardProps> = ({
             </div>
             <div className="modal-actions">
               {gameMode === 'todays-wordle' ? (
-                <button className="modal-button home" onClick={onNewGame}>
+                <button className="modal-button home" onClick={handleHomeClick}>
                   Home
                 </button>
               ) : gameMode === 'race' ? (
                 <>
-                  <button className="modal-button home" onClick={onNewGame}>
+                  <button className="modal-button home" onClick={handleHomeClick}>
                     Home
                   </button>
                   <button className="modal-button replay" onClick={handleReplay}>
@@ -664,7 +675,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                   <button className="modal-button replay" onClick={handleReplay}>
                     {gameMode === 'custom-challenge' ? 'Challenge AI' : 'Play Again'}
                   </button>
-                  <button className="modal-button new-game" onClick={onNewGame}>
+                  <button className="modal-button new-game" onClick={handleHomeClick}>
                     New Game
                   </button>
                 </>
