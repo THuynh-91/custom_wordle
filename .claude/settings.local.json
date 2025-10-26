@@ -66,7 +66,11 @@
       "Bash(wmic process where ProcessId=36500 get CommandLine,ProcessId)",
       "Bash(wmic process where ProcessId=31668 get CommandLine,ProcessId)",
       "Bash(cmd /c \"taskkill /F /PID 31668\")",
-      "Bash(cmd /c \"taskkill /F /PID 36500\")"
+      "Bash(cmd /c \"taskkill /F /PID 36500\")",
+      "Bash(cmd /c \"findstr /i \"^doily$\" \"datawords5-letters-guess.txt\"\")",
+      "Bash(cmd /c \"findstr /i \"^clump$|^climb$|^guild$|^mould$|^poilu$|^could$\" \"datawords5-letters-guess.txt\"\")",
+      "Bash(cmd /c \"findstr /i \"^cling$|^clown$|^found$|^could$|^child$|^loopy$|^olin$|^blind$|^flood$|^dimly$\" \"datawords5-letters-answer.txt\"\")",
+      "Bash(cmd /c \"findstr /i \"^olin|^pondi|^podil|^louis|^plong|^uncoy|^plumb|^coypu|^lumpy|^fully|^folly|^golly|^holly|^joyful|^gully|^gumbo|^lymph|^blimp|^climb|^clunk|^would|^blind|^flung|^clung|^slung\" \"datawords5-letters-guess.txt\" | cmd /c \"findstr /v \"[tares]\" \")"
     ],
     "deny": [],
     "ask": []

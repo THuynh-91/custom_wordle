@@ -16,6 +16,26 @@ const BEST_FIRST_GUESSES: Record<WordLength, string> = {
   7: 'stainer' // Optimal for 7-letter words
 };
 
+// Pre-computed second guesses when first guess returns all grey
+// These words maximize coverage of letters NOT in the first guess
+const SECOND_GUESS_AFTER_ALL_GREY: Record<WordLength, Record<string, string>> = {
+  3: {
+    'ale': 'nit'  // Covers n, i, t (avoids a, l, e)
+  },
+  4: {
+    'tale': 'iron'  // Covers i, r, o, n (avoids t, a, l, e)
+  },
+  5: {
+    'tares': 'blind'  // Covers b, l, i, n, d (avoids t, a, r, e, s)
+  },
+  6: {
+    'sainer': 'comply'  // Covers c, o, m, p, l, y (avoids s, a, i, n, e, r)
+  },
+  7: {
+    'stainer': 'scourge'  // Covers s, c, o, u, r, g, e (avoids s, t, a, i, n, e, r)
+  }
+};
+
 export class EntropySolver extends BaseSolver {
   private useAllGuesses: boolean;
   private entropyCache: Map<string, { entropy: number; expectedSize: number }>;
@@ -67,6 +87,34 @@ export class EntropySolver extends BaseSolver {
           computationTimeMs: Date.now() - startTime
         }
       };
+    }
+
+    // Fast-path: If first guess returned all grey tiles, use pre-computed second guess
+    if (guessHistory.length === 1) {
+      const firstGuess = guessHistory[0];
+      const isAllGrey = firstGuess.feedback.every(tile => tile === 'absent');
+
+      if (isAllGrey) {
+        const firstWord = firstGuess.guess;
+        const precomputedSecond = SECOND_GUESS_AFTER_ALL_GREY[this.length]?.[firstWord];
+
+        if (precomputedSecond && this.allGuesses.includes(precomputedSecond)) {
+          const expectedSize = candidatesRemaining.length / 15;
+
+          return {
+            guess: precomputedSecond,
+            explanation: {
+              chosenGuess: precomputedSecond,
+              reasoning: `Previous guess "${firstWord}" yielded no correct letters. Selected "${precomputedSecond}" as the optimal follow-up, maximizing coverage of unused letters. This should narrow down from ${candidatesRemaining.length} to approximately ${expectedSize.toFixed(0)} candidates.`,
+              candidateCountBefore: candidatesRemaining.length,
+              remainingCandidates: candidatesRemaining.slice(0, 50),
+              expectedPartitionSize: expectedSize,
+              topAlternatives: [],
+              computationTimeMs: Date.now() - startTime
+            }
+          };
+        }
+      }
     }
 
     // Determine which words to evaluate for optimal play
