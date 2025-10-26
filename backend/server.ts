@@ -120,6 +120,55 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
   });
 });
 
+/**
+ * Self-ping mechanism to keep Render backend alive
+ * Pings its own health endpoint every 10 minutes
+ */
+function startSelfPing() {
+  const PING_INTERVAL = 10 * 60 * 1000; // 10 minutes
+  const RENDER_URL = process.env.RENDER_EXTERNAL_URL; // Render sets this automatically
+
+  // Only enable self-ping in production (on Render)
+  if (!RENDER_URL) {
+    console.log('⏭️  Self-ping disabled (not running on Render)');
+    return;
+  }
+
+  const healthUrl = `${RENDER_URL}/health`;
+  console.log(`🔄 Self-ping enabled: ${healthUrl} every 10 minutes`);
+
+  // Ping immediately on startup
+  setTimeout(() => {
+    fetch(healthUrl)
+      .then(res => {
+        if (res.ok) {
+          console.log(`[Self-Ping] ✓ Initial ping successful at ${new Date().toISOString()}`);
+        }
+      })
+      .catch(err => {
+        console.debug('[Self-Ping] Initial ping failed:', err.message);
+      });
+  }, 5000); // Wait 5 seconds after startup
+
+  // Set up recurring pings
+  setInterval(async () => {
+    try {
+      const response = await fetch(healthUrl, {
+        method: 'GET',
+        signal: AbortSignal.timeout(10000) // 10 second timeout
+      });
+
+      if (response.ok) {
+        console.log(`[Self-Ping] ✓ Ping successful at ${new Date().toISOString()}`);
+      } else {
+        console.warn(`[Self-Ping] ⚠️  Ping returned status ${response.status}`);
+      }
+    } catch (error: any) {
+      console.debug(`[Self-Ping] ✗ Ping failed: ${error.message}`);
+    }
+  }, PING_INTERVAL);
+}
+
 // Initialize and start server
 async function start() {
   try {
@@ -142,6 +191,9 @@ async function start() {
       }
 
       console.log(`\nServer ready!\n`);
+
+      // Start self-ping to prevent Render from sleeping
+      startSelfPing();
     });
   } catch (error) {
     console.error('Failed to start server:', error);

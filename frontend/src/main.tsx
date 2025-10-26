@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 import { apiFetch } from './lib/apiClient';
+import { startKeepAlive } from './services/keepAlive';
 
 // Function to check if backend is ready
 async function checkBackendHealth(): Promise<boolean> {
@@ -48,6 +49,9 @@ function hideLoadingScreen() {
 async function initializeApp() {
   await checkBackendHealth();
   hideLoadingScreen();
+
+  // Start keep-alive service to prevent Render backend from sleeping
+  startKeepAlive();
 
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
