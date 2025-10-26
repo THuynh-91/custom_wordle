@@ -157,6 +157,7 @@ export class EntropySolver extends BaseSolver {
     } else if (this.useAllGuesses && candidatesRemaining.length > 10) {
       // For larger sets, consider all possible guesses (including non-answers) for optimal play
       // This may be slower but gives better average performance
+      // Strategic guesses (that don't match constraints) can eliminate many candidates at once
       wordsToEvaluate = this.allGuesses;
     } else {
       // For smaller sets, just evaluate candidates
@@ -254,9 +255,18 @@ export class EntropySolver extends BaseSolver {
     const { word, entropy, expectedSize } = chosen;
     const isCandidate = candidates.includes(word);
 
+    // Check if this is a strategic guess (doesn't match known constraints)
+    let isStrategicGuess = false;
+    if (guessHistory.length > 0) {
+      const constraints = GameEngine.buildConstraints(guessHistory);
+      isStrategicGuess = !GameEngine.satisfiesConstraints(word, constraints);
+    }
+
     let reasoning = `Selected "${word}" as the optimal next guess. `;
 
-    if (guessHistory.length === 0) {
+    if (isStrategicGuess) {
+      reasoning += `This is a strategic elimination guess to maximize information gain. While it doesn't match all known constraints, it will help narrow down the ${candidates.length} remaining candidates to approximately ${expectedSize.toFixed(0)} words by testing new letter combinations.`;
+    } else if (guessHistory.length === 0) {
       reasoning += `This word should narrow down the ${candidates.length.toLocaleString()} possible words to approximately ${expectedSize.toFixed(0)} candidates.`;
     } else if (candidates.length <= 5) {
       if (isCandidate) {
