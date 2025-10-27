@@ -9,7 +9,7 @@ interface GameSetupProps {
 }
 
 const GameSetup: React.FC<GameSetupProps> = ({ onGameStart, onShowInstructions }) => {
-  const [mode, setMode] = useState<GameMode>('custom-challenge');
+  const [mode, setMode] = useState<GameMode>('todays-wordle');
   const [length, setLength] = useState<WordLength>(5);
   const solver: SolverType = 'entropy'; // Always use entropy solver (best performance)
   const [customWord, setCustomWord] = useState('');
