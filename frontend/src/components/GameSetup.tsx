@@ -63,6 +63,15 @@ const GameSetup: React.FC<GameSetupProps> = ({ onGameStart, onShowInstructions }
         <label>Game Mode</label>
         <div className="mode-buttons">
           <button
+            className={mode === 'todays-wordle' ? 'active' : ''}
+            onClick={() => {
+              setMode('todays-wordle');
+              setLength(5); // Today's Wordle is always 5 letters
+            }}
+          >
+            Today's Wordle
+          </button>
+          <button
             className={mode === 'custom-challenge' ? 'active' : ''}
             onClick={() => setMode('custom-challenge')}
           >
@@ -79,15 +88,6 @@ const GameSetup: React.FC<GameSetupProps> = ({ onGameStart, onShowInstructions }
             onClick={() => setMode('human-play')}
           >
             Human Play
-          </button>
-          <button
-            className={mode === 'todays-wordle' ? 'active' : ''}
-            onClick={() => {
-              setMode('todays-wordle');
-              setLength(5); // Today's Wordle is always 5 letters
-            }}
-          >
-            Today's Wordle
           </button>
         </div>
       </div>
