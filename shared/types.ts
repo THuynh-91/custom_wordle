@@ -9,7 +9,7 @@ export type TileState = 'correct' | 'present' | 'absent' | 'empty';
 export type WordLength = 3 | 4 | 5 | 6 | 7;
 
 // Game modes
-export type GameMode = 'custom-challenge' | 'human-play' | 'race' | 'ai-vs-ai' | 'todays-wordle';
+export type GameMode = 'custom-challenge' | 'human-play' | 'race' | 'ai-vs-ai' | 'todays-wordle' | 'multiplayer-challenge';
 
 // AI solver types
 export type SolverType = 'frequency' | 'entropy' | 'ml' | 'rl' | 'hybrid';
@@ -201,6 +201,103 @@ export interface RaceState {
   startedAt: number;
   completedAt?: number;
 }
+
+// Multiplayer game mode type
+export type MultiplayerGameMode = 'turn-based' | 'simultaneous';
+
+// Multiplayer player info
+export interface MultiplayerPlayer {
+  id: string; // Socket ID
+  name: string;
+  isReady: boolean;
+  guesses: GuessFeedback[];
+  status: 'in-progress' | 'won' | 'lost';
+  disconnectedAt?: number; // Timestamp when player disconnected
+  isConnected: boolean;
+}
+
+// Multiplayer room state
+export interface MultiplayerRoomState {
+  roomId: string;
+  roomCode: string; // 6-character code for joining
+  length: WordLength;
+  secret: string;
+  gameMode: MultiplayerGameMode; // turn-based or simultaneous
+  maxGuesses: number;
+  hardMode: boolean;
+  players: [MultiplayerPlayer, MultiplayerPlayer?]; // Max 2 players
+  currentTurn?: string; // Socket ID of current player (turn-based only)
+  status: 'waiting' | 'in-progress' | 'completed';
+  winner?: string; // Socket ID of winner
+  createdAt: number;
+  startedAt?: number;
+  completedAt?: number;
+}
+
+// Create multiplayer room request
+export interface CreateMultiplayerRoomRequest {
+  length: WordLength;
+  gameMode: MultiplayerGameMode;
+  hardMode?: boolean;
+  playerName: string;
+  secret?: string; // Optional: if not provided, random word will be chosen
+}
+
+// Create multiplayer room response
+export interface CreateMultiplayerRoomResponse {
+  roomId: string;
+  roomCode: string;
+  shareableLink: string;
+  playerId: string;
+}
+
+// Join multiplayer room request
+export interface JoinMultiplayerRoomRequest {
+  roomCode: string;
+  playerName: string;
+}
+
+// Join multiplayer room response
+export interface JoinMultiplayerRoomResponse {
+  roomId: string;
+  roomState: MultiplayerRoomState;
+  playerId: string;
+}
+
+// Socket event types
+export type SocketEvents = {
+  // Client -> Server
+  'create-room': (data: CreateMultiplayerRoomRequest) => void;
+  'join-room': (data: JoinMultiplayerRoomRequest) => void;
+  'leave-room': (data: { roomId: string }) => void;
+  'player-ready': (data: { roomId: string }) => void;
+  'player-unready': (data: { roomId: string }) => void;
+  'submit-guess': (data: { roomId: string; word: string }) => void;
+  'disconnect': () => void;
+
+  // Server -> Client
+  'room-created': (data: CreateMultiplayerRoomResponse) => void;
+  'room-joined': (data: JoinMultiplayerRoomResponse) => void;
+  'player-joined': (data: { player: MultiplayerPlayer }) => void;
+  'player-left': (data: { playerId: string; reason: string }) => void;
+  'player-disconnected': (data: { playerId: string }) => void;
+  'player-reconnected': (data: { playerId: string }) => void;
+  'player-ready-updated': (data: { playerId: string; playerName: string; isReady: boolean }) => void;
+  'game-started': (data: { roomState: MultiplayerRoomState }) => void;
+  'guess-submitted': (data: {
+    playerId: string;
+    guess: string;
+    feedback: TileState[];
+    playerStatus: 'in-progress' | 'won' | 'lost';
+  }) => void;
+  'turn-changed': (data: { currentTurn: string }) => void;
+  'game-over': (data: {
+    winner?: string;
+    reason: string;
+    secret: string;
+  }) => void;
+  'error': (data: { message: string }) => void;
+};
 
 // Error response
 export interface ErrorResponse {

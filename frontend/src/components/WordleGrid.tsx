@@ -8,9 +8,10 @@ interface WordleGridProps {
   wordLength: WordLength;
   maxGuesses: number;
   isInvalidWord?: boolean;
+  hideLetters?: boolean; // Hide letters, only show colors (for opponent view in simultaneous mode)
 }
 
-const WordleGrid: React.FC<WordleGridProps> = ({ guesses, currentGuess, wordLength, maxGuesses, isInvalidWord = false }) => {
+const WordleGrid: React.FC<WordleGridProps> = ({ guesses, currentGuess, wordLength, maxGuesses, isInvalidWord = false, hideLetters = false }) => {
   const renderTile = (letter: string, state: TileState, index: number, rowIndex: number) => {
     const delay = index * 100; // Stagger animation
     return (
@@ -19,7 +20,7 @@ const WordleGrid: React.FC<WordleGridProps> = ({ guesses, currentGuess, wordLeng
         className={`tile ${state} ${state !== 'empty' ? 'tile-flip' : ''}`}
         style={{ animationDelay: `${delay}ms` }}
       >
-        {letter.toUpperCase()}
+        {hideLetters && state !== 'empty' ? '' : letter.toUpperCase()}
       </div>
     );
   };

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import GameSetup from './components/GameSetup';
 import GameBoard from './components/GameBoard';
-import { GameMode, WordLength, SolverType } from '@shared/types';
+import MultiplayerLobby from './components/MultiplayerLobby';
+import MultiplayerGameBoard from './components/MultiplayerGameBoard';
+import { GameMode, WordLength, SolverType, MultiplayerRoomState } from '@shared/types';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import './App.css';
@@ -13,11 +15,27 @@ function App() {
   const [wordLength, setWordLength] = useState<WordLength>(5);
   const [solverType, setSolverType] = useState<SolverType>('entropy');
   const [hardMode, setHardMode] = useState(false);
+
+  // Multiplayer state
+  const [showMultiplayerLobby, setShowMultiplayerLobby] = useState(false);
+  const [multiplayerRoomId, setMultiplayerRoomId] = useState<string | null>(null);
+  const [multiplayerPlayerId, setMultiplayerPlayerId] = useState<string | null>(null);
+  const [isMultiplayerHost, setIsMultiplayerHost] = useState(false);
+  const [multiplayerRoomState, setMultiplayerRoomState] = useState<MultiplayerRoomState | null>(null);
   const [showWelcomeModal, setShowWelcomeModal] = useState(() => {
     // Show welcome modal only on first visit
     const hasVisited = localStorage.getItem('hasVisited');
     return !hasVisited;
   });
+
+  // Debug multiplayer state changes
+  useEffect(() => {
+    console.log('=== MULTIPLAYER STATE CHANGED ===');
+    console.log('showMultiplayerLobby:', showMultiplayerLobby);
+    console.log('multiplayerRoomId:', multiplayerRoomId);
+    console.log('multiplayerPlayerId:', multiplayerPlayerId);
+    console.log('multiplayerRoomState:', multiplayerRoomState);
+  }, [showMultiplayerLobby, multiplayerRoomId, multiplayerPlayerId, multiplayerRoomState]);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [feedbackText, setFeedbackText] = useState('');
   const [feedbackEmail, setFeedbackEmail] = useState('');
@@ -203,11 +221,80 @@ function App() {
   };
 
   const handleNewGame = () => {
+    console.log('[App] handleNewGame called - resetting all game state');
+
     // Reset race mode scores when exiting to home
     if (gameMode === 'race') {
       localStorage.setItem('raceScores', JSON.stringify({ humanWins: 0, aiWins: 0, ties: 0 }));
     }
+
+    // Clear URL parameters
+    const url = new URL(window.location.href);
+    url.search = '';
+    window.history.replaceState({}, '', url.toString());
+
+    // Reset all game state
     setGameId(null);
+    setShowMultiplayerLobby(false);
+    setMultiplayerRoomId(null);
+    setMultiplayerPlayerId(null);
+    setIsMultiplayerHost(false);
+    setMultiplayerRoomState(null);
+
+    console.log('[App] Game state reset complete');
+  };
+
+  const handleShowMultiplayer = () => {
+    setShowMultiplayerLobby(true);
+  };
+
+  const handleMultiplayerBack = () => {
+    setShowMultiplayerLobby(false);
+  };
+
+  const handleMultiplayerGameStart = (
+    roomId: string,
+    playerId: string,
+    isHost: boolean,
+    roomState: MultiplayerRoomState
+  ) => {
+    console.log('[App] ========== GAME START HANDLER ==========');
+    console.log('[App] Starting multiplayer game with:');
+    console.log('  roomId:', roomId);
+    console.log('  playerId:', playerId);
+    console.log('  isHost:', isHost);
+    console.log('  roomState:', roomState);
+
+    // Validate inputs
+    if (!roomId || !playerId || !roomState) {
+      console.error('[App] ERROR: Missing required data for game start!');
+      alert('Error: Missing game data. Please try again.');
+      handleNewGame();
+      return;
+    }
+
+    // Use React's startTransition to batch state updates
+    React.startTransition(() => {
+      console.log('[App] Setting multiplayer state...');
+      setShowMultiplayerLobby(false);
+      setMultiplayerRoomId(roomId);
+      setMultiplayerPlayerId(playerId);
+      setIsMultiplayerHost(isHost);
+      setMultiplayerRoomState(roomState);
+      console.log('[App] State update dispatched');
+    });
+
+    // Update URL after state is set (in next tick)
+    setTimeout(() => {
+      if (roomState && roomState.roomCode) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('mode', 'multiplayer');
+        url.searchParams.set('code', roomState.roomCode);
+        url.searchParams.set('game', 'active');
+        window.history.replaceState({}, '', url.toString());
+        console.log('[App] URL updated to:', url.toString());
+      }
+    }, 0);
   };
 
   const handleReplay = async (newWord?: string) => {
@@ -340,20 +427,99 @@ function App() {
       </header>
 
       <main className="app-main container">
-        {!gameId ? (
-          <GameSetup onGameStart={handleGameStart} onShowInstructions={handleShowInstructions} />
-        ) : (
-          <GameBoard
-            key={gameId}
-            gameId={gameId}
-            gameMode={gameMode}
-            wordLength={wordLength}
-            solverType={solverType}
-            hardMode={hardMode}
-            onNewGame={handleNewGame}
-            onReplay={handleReplay}
-          />
-        )}
+        {(() => {
+          console.log('[App] ========== RENDER DECISION ==========');
+          console.log('[App] State check:');
+          console.log('  showMultiplayerLobby:', showMultiplayerLobby);
+          console.log('  multiplayerRoomId:', multiplayerRoomId);
+          console.log('  multiplayerPlayerId:', multiplayerPlayerId);
+          console.log('  multiplayerRoomState:', multiplayerRoomState ? 'EXISTS' : 'NULL');
+          console.log('  gameId:', gameId);
+
+          // Multiplayer game in progress
+          if (multiplayerRoomId && multiplayerPlayerId && multiplayerRoomState) {
+            console.log('[App] ✅ Rendering MultiplayerGameBoard');
+            return (
+              <MultiplayerGameBoard
+                roomId={multiplayerRoomId}
+                playerId={multiplayerPlayerId}
+                isHost={isMultiplayerHost}
+                initialRoomState={multiplayerRoomState}
+                onNewGame={handleNewGame}
+              />
+            );
+          }
+
+          // Check if we're waiting for multiplayer state to load
+          if (multiplayerRoomId || multiplayerPlayerId) {
+            console.log('[App] ⏳ Waiting for multiplayer state to fully load...');
+            return (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: '400px',
+                gap: '20px'
+              }}>
+                <div style={{ fontSize: '2rem' }}>🎮</div>
+                <div style={{ fontSize: '1.2rem' }}>Loading multiplayer game...</div>
+                <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                  Room: {multiplayerRoomId ? 'Connected' : 'Connecting...'}
+                </div>
+                <button
+                  onClick={handleNewGame}
+                  style={{
+                    marginTop: '20px',
+                    padding: '10px 20px',
+                    fontSize: '1rem',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Cancel and Return Home
+                </button>
+              </div>
+            );
+          }
+
+          // Multiplayer lobby
+          if (showMultiplayerLobby) {
+            console.log('[App] ✅ Rendering MultiplayerLobby');
+            return (
+              <MultiplayerLobby
+                onGameStart={handleMultiplayerGameStart}
+                onBack={handleMultiplayerBack}
+              />
+            );
+          }
+
+          // Single player game in progress
+          if (gameId) {
+            console.log('[App] ✅ Rendering GameBoard');
+            return (
+              <GameBoard
+                key={gameId}
+                gameId={gameId}
+                gameMode={gameMode}
+                wordLength={wordLength}
+                solverType={solverType}
+                hardMode={hardMode}
+                onNewGame={handleNewGame}
+                onReplay={handleReplay}
+              />
+            );
+          }
+
+          // Default: Game setup screen
+          console.log('[App] ✅ Rendering GameSetup (default)');
+          return (
+            <GameSetup
+              onGameStart={handleGameStart}
+              onShowInstructions={handleShowInstructions}
+              onShowMultiplayer={handleShowMultiplayer}
+            />
+          );
+        })()}
       </main>
 
       <footer className="app-footer">

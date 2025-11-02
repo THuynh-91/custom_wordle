@@ -1,0 +1,408 @@
+.multiplayer-game-board {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: var(--color-inverted-bg);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--color-inverted-border);
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.game-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Scoreboard */
+.scoreboard {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--color-inverted-panel-bg);
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: 2px solid var(--color-inverted-border);
+}
+
+.score-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.score-label {
+  font-size: 0.75rem;
+  color: var(--color-inverted-text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.score-value {
+  font-size: 1.5rem;
+  color: var(--color-correct);
+  font-weight: bold;
+}
+
+.score-divider {
+  font-size: 1.5rem;
+  color: var(--color-inverted-text-secondary);
+  font-weight: bold;
+}
+
+.game-info h2 {
+  margin: 0;
+  color: var(--color-inverted-text);
+}
+
+.game-mode-badge {
+  padding: 0.4rem 0.8rem;
+  background: var(--color-present);
+  color: white;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.new-game-button {
+  padding: 0.6rem 1.2rem;
+  background: var(--color-correct);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.new-game-button:hover {
+  opacity: 0.9;
+}
+
+.game-message {
+  text-align: center;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  background: var(--color-present);
+  color: white;
+  border-radius: 4px;
+  font-weight: 600;
+  animation: slideDown 0.3s ease;
+}
+
+.game-message.error {
+  background: #ff4444;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.players-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.player-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.player-header h3 {
+  margin: 0;
+  color: var(--color-inverted-text);
+  font-size: 1.2rem;
+}
+
+.status-badge {
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-badge.in-progress {
+  background: var(--color-present);
+  color: white;
+}
+
+.status-badge.won {
+  background: var(--color-correct);
+  color: white;
+}
+
+.status-badge.lost {
+  background: var(--color-absent);
+  color: white;
+}
+
+.turn-indicator {
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  background: var(--color-inverted-panel-bg);
+  border: 2px solid var(--color-inverted-border);
+  color: var(--color-inverted-text-secondary);
+  transition: all 0.3s;
+}
+
+.turn-indicator.active {
+  background: var(--color-correct);
+  border-color: var(--color-correct);
+  color: white;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.keyboard-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Game Over Modal */
+.game-over-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background: var(--color-inverted-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  animation: scaleIn 0.3s ease;
+  border: 1px solid var(--color-inverted-border);
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  color: var(--color-inverted-text);
+  font-size: 2rem;
+}
+
+.secret-word {
+  margin: 1.5rem 0;
+  font-size: 1.1rem;
+  color: var(--color-inverted-text-secondary);
+}
+
+.secret-word strong {
+  color: var(--color-correct);
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+}
+
+.game-stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 2rem 0;
+  padding: 1rem;
+  background: var(--color-inverted-panel-bg);
+  border: 2px solid var(--color-inverted-border);
+  border-radius: 8px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stat-label {
+  color: var(--color-inverted-text-secondary);
+  font-size: 0.9rem;
+}
+
+.stat-value {
+  color: var(--color-correct);
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Final Scoreboard in Modal */
+.final-scoreboard {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--color-inverted-panel-bg);
+  border: 2px solid var(--color-correct);
+  border-radius: 8px;
+}
+
+.final-scoreboard h3 {
+  margin: 0 0 1rem 0;
+  color: var(--color-inverted-text);
+  font-size: 1.1rem;
+}
+
+.final-score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.final-score-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.player-name {
+  color: var(--color-inverted-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.final-score-value {
+  color: var(--color-correct);
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.score-separator {
+  font-size: 2rem;
+  color: var(--color-inverted-text-secondary);
+  font-weight: bold;
+}
+
+/* Game Over Actions */
+.game-over-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.rematch-button {
+  padding: 0.8rem 1.5rem;
+  background: var(--color-present);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.rematch-button:hover {
+  opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .players-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .game-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .game-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .modal-content {
+    padding: 1.5rem;
+  }
+
+  .modal-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .secret-word strong {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .multiplayer-game-board {
+    padding: 0.5rem;
+  }
+
+  .player-header h3 {
+    font-size: 1rem;
+  }
+
+  .game-stats {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

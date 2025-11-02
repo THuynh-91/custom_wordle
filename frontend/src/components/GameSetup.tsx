@@ -6,9 +6,10 @@ import { apiFetch } from '../lib/apiClient';
 interface GameSetupProps {
   onGameStart: (gameId: string, mode: GameMode, length: WordLength, solver: SolverType, hardMode: boolean) => void;
   onShowInstructions?: () => void;
+  onShowMultiplayer?: () => void;
 }
 
-const GameSetup: React.FC<GameSetupProps> = ({ onGameStart, onShowInstructions }) => {
+const GameSetup: React.FC<GameSetupProps> = ({ onGameStart, onShowInstructions, onShowMultiplayer }) => {
   const [mode, setMode] = useState<GameMode>('todays-wordle');
   const [length, setLength] = useState<WordLength>(5);
   const solver: SolverType = 'entropy'; // Always use entropy solver (best performance)
@@ -91,6 +92,21 @@ const GameSetup: React.FC<GameSetupProps> = ({ onGameStart, onShowInstructions }
           </button>
         </div>
       </div>
+
+      {onShowMultiplayer && (
+        <div className="setup-section multiplayer-section">
+          <button
+            className="multiplayer-button"
+            onClick={onShowMultiplayer}
+          >
+            <span className="multiplayer-icon">👥</span>
+            <div className="multiplayer-text">
+              <strong>Challenge Human</strong>
+              <p>Play against another person online</p>
+            </div>
+          </button>
+        </div>
+      )}
 
       {mode !== 'todays-wordle' && (
         <div className="setup-section">

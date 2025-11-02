@@ -4,6 +4,7 @@ import path from 'path';
 
 export default defineConfig({
   root: './frontend',
+  envDir: '..',  // Look for .env files in parent directory
   plugins: [react()],
   resolve: {
     alias: {

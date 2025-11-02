@@ -294,6 +294,57 @@
   opacity: 0.8;
 }
 
+/* Multiplayer Section */
+.multiplayer-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--color-border);
+}
+
+.multiplayer-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.multiplayer-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.multiplayer-icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.multiplayer-text {
+  flex: 1;
+  text-align: left;
+}
+
+.multiplayer-text strong {
+  display: block;
+  color: white;
+  font-size: 1.3rem;
+  margin-bottom: 0.25rem;
+  font-weight: 700;
+}
+
+.multiplayer-text p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
 @media (max-width: 768px) {
   .game-setup {
     padding: 1.5rem;

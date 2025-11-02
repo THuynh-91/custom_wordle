@@ -9,11 +9,14 @@ import compression from 'compression';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { createServer } from 'http';
+import { Server as SocketIOServer } from 'socket.io';
 import { WordService } from './services/word-service.js';
 import gameRoutes from './routes/game.js';
 import wordRoutes from './routes/words.js';
 import leaderboardRoutes from './routes/leaderboard.js';
 import feedbackRoutes from './routes/feedback.js';
+import { setupMultiplayerHandlers } from './routes/multiplayer.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -175,7 +178,35 @@ async function start() {
     console.log('Initializing word service...');
     await wordServiceReady;
 
-    app.listen(PORT, '0.0.0.0', () => {
+    // Create HTTP server
+    const httpServer = createServer(app);
+
+    // Initialize Socket.io
+    const io = new SocketIOServer(httpServer, {
+      cors: {
+        origin: (origin, callback) => {
+          const allowedOrigins = FRONTEND_URL.split(',');
+
+          if (!origin) {
+            callback(null, true);
+            return;
+          }
+
+          if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+            callback(null, true);
+            return;
+          }
+
+          callback(new Error('Not allowed by CORS'));
+        },
+        credentials: true,
+      },
+    });
+
+    // Set up multiplayer socket handlers
+    setupMultiplayerHandlers(io);
+
+    httpServer.listen(PORT, '0.0.0.0', () => {
       console.log(`\n${'='.repeat(50)}`);
       console.log(`🎮 AI Wordle Duel Server`);
       console.log(`${'='.repeat(50)}`);
@@ -190,6 +221,7 @@ async function start() {
         console.log(`  ${length} letters: ${counts.answers} answers, ${counts.guesses} valid guesses`);
       }
 
+      console.log(`\n🔌 Socket.io enabled for multiplayer`);
       console.log(`\nServer ready!\n`);
 
       // Start self-ping to prevent Render from sleeping
