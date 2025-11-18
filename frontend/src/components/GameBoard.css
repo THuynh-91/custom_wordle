@@ -551,16 +551,16 @@
   margin-bottom: 1.5rem;
 }
 
-.secret-label {
+.secret-word-reveal .secret-label {
   color: rgba(255, 255, 255, 0.95);
   font-size: 0.9rem;
   margin: 0 0 0.5rem 0;
   font-weight: 600;
 }
 
-.secret-word {
-  color: white;
-  font-size: 2.5rem;
+.secret-word-reveal .secret-word {
+  color: #ffffff !important;
+  font-size: 2.5rem !important;
   font-weight: 700;
   margin: 0;
   letter-spacing: 0.3rem;
@@ -671,9 +671,9 @@
     padding: 1.5rem;
   }
 
-  .secret-word {
-    font-size: 2rem;
-    letter-spacing: 0.2rem;
+  .secret-word-reveal .secret-word {
+    font-size: 2.5rem !important;
+    letter-spacing: 0.3rem;
   }
 
   .game-actions {

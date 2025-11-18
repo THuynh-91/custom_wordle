@@ -194,10 +194,16 @@ const MultiplayerGameBoard: React.FC<MultiplayerGameBoardProps> = ({
   };
 
   // Calculate letter states for keyboard
+  // In turn-based mode, combine both players' guesses since they share the same puzzle
   const getLetterStates = (): Record<string, TileState> => {
     const states: Record<string, TileState> = {};
 
-    for (const { guess, feedback } of myGuesses) {
+    // Combine guesses from both players in turn-based mode
+    const guessesToConsider = gameMode === 'turn-based'
+      ? [...myGuesses, ...opponentGuesses]
+      : myGuesses;
+
+    for (const { guess, feedback } of guessesToConsider) {
       for (let i = 0; i < guess.length; i++) {
         const letter = guess[i];
         const state = feedback[i];
@@ -350,7 +356,21 @@ const MultiplayerGameBoard: React.FC<MultiplayerGameBoardProps> = ({
           <div className="modal-content">
             <h2>{message}</h2>
             <p className="secret-word">
-              The word was: <strong>{secret.toUpperCase()}</strong>
+              The word was: <strong
+                ref={(el) => {
+                  if (el) {
+                    console.log('=== SECRET WORD DEBUG ===');
+                    console.log('Element:', el);
+                    const styles = window.getComputedStyle(el);
+                    console.log('Font Size:', styles.fontSize);
+                    console.log('Color:', styles.color);
+                    console.log('Display:', styles.display);
+                    const rootStyles = window.getComputedStyle(document.documentElement);
+                    console.log('--color-accent:', rootStyles.getPropertyValue('--color-accent').trim());
+                    console.log('========================');
+                  }
+                }}
+              >{secret.toUpperCase()}</strong>
             </p>
             <div className="game-stats">
               <div className="stat">

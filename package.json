@@ -15,6 +15,7 @@
     "test:watch": "jest --watch",
     "lint": "eslint . --ext .ts,.tsx",
     "prepare-data": "node --loader ts-node/esm scripts/prepare-word-lists.ts",
+    "precompute-second-guess": "tsx backend/scripts/precompute-second-guess.ts",
     "train-ml": "python ml/train_policy.py",
     "generate-trajectories": "node --loader ts-node/esm scripts/generate-trajectories.ts",
     "postbuild": "node scripts/flatten-backend.cjs && node scripts/copy-runtime-assets.cjs",

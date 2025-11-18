@@ -4,8 +4,14 @@
  */
 
 import { BaseSolver, SolverMove } from './base-solver.js';
-import { WordLength, GuessFeedback } from '../../../shared/types.js';
+import { WordLength, GuessFeedback, TileState } from '../../../shared/types.js';
 import { GameEngine } from '../game-engine.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Cache for pre-computed optimal first guesses (based on entropy analysis)
 const BEST_FIRST_GUESSES: Record<WordLength, string> = {
@@ -36,6 +42,67 @@ const SECOND_GUESS_AFTER_ALL_GREY: Record<WordLength, Record<string, string>> = 
   }
 };
 
+// Interface for pre-computed second guess data
+interface PrecomputedEntry {
+  pattern: string;
+  bestGuess: string;
+  candidatesRemaining: number;
+  entropy: number;
+  expectedPartitionSize: number;
+}
+
+interface PrecomputedData {
+  firstGuess: string;
+  length: number;
+  entries: PrecomputedEntry[];
+}
+
+// Cache for loaded pre-computed data
+const PRECOMPUTED_SECOND_GUESSES: Map<WordLength, Map<string, PrecomputedEntry>> = new Map();
+
+/**
+ * Convert feedback array to pattern string for lookup
+ * 0 = absent, 1 = present, 2 = correct
+ */
+function feedbackToPattern(feedback: TileState[]): string {
+  return feedback.map(state => {
+    if (state === 'absent') return '0';
+    if (state === 'present') return '1';
+    if (state === 'correct') return '2';
+    return '0';
+  }).join('');
+}
+
+/**
+ * Load pre-computed second guess data for a given word length
+ */
+function loadPrecomputedData(length: WordLength): void {
+  if (PRECOMPUTED_SECOND_GUESSES.has(length)) {
+    return; // Already loaded
+  }
+
+  try {
+    const dataPath = path.join(__dirname, '..', '..', 'data', 'precomputed', `second-guess-${length}.json`);
+
+    if (!fs.existsSync(dataPath)) {
+      console.log(`[EntropySolver] No pre-computed data found for length ${length} at ${dataPath}`);
+      return;
+    }
+
+    const data: PrecomputedData = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+
+    const patternMap = new Map<string, PrecomputedEntry>();
+    for (const entry of data.entries) {
+      patternMap.set(entry.pattern, entry);
+    }
+
+    PRECOMPUTED_SECOND_GUESSES.set(length, patternMap);
+    console.log(`[EntropySolver] Loaded ${data.entries.length} pre-computed second guesses for ${length}-letter words`);
+  } catch (error) {
+    console.error(`[EntropySolver] Failed to load pre-computed data for length ${length}:`, error);
+  }
+}
+
 export class EntropySolver extends BaseSolver {
   private useAllGuesses: boolean;
   private entropyCache: Map<string, { entropy: number; expectedSize: number }>;
@@ -44,6 +111,9 @@ export class EntropySolver extends BaseSolver {
     super(length, candidates, allGuesses);
     this.useAllGuesses = useAllGuesses;
     this.entropyCache = new Map();
+
+    // Load pre-computed second guess data
+    loadPrecomputedData(length);
   }
 
   getName(): string {
@@ -89,13 +159,41 @@ export class EntropySolver extends BaseSolver {
       };
     }
 
-    // Fast-path: If first guess returned all grey tiles, use pre-computed second guess
+    // OPTIMIZATION: Use pre-computed second guess for ALL scenarios after the first guess
+    // This dramatically speeds up computation by avoiding real-time entropy calculation
     if (guessHistory.length === 1) {
       const firstGuess = guessHistory[0];
-      const isAllGrey = firstGuess.feedback.every(tile => tile === 'absent');
+      const firstWord = firstGuess.guess;
+      const bestFirstGuess = BEST_FIRST_GUESSES[this.length];
 
+      // Check if we used the optimal first guess and have pre-computed data
+      if (firstWord === bestFirstGuess) {
+        const precomputedMap = PRECOMPUTED_SECOND_GUESSES.get(this.length);
+
+        if (precomputedMap) {
+          const pattern = feedbackToPattern(firstGuess.feedback);
+          const precomputed = precomputedMap.get(pattern);
+
+          if (precomputed && this.allGuesses.includes(precomputed.bestGuess)) {
+            return {
+              guess: precomputed.bestGuess,
+              explanation: {
+                chosenGuess: precomputed.bestGuess,
+                reasoning: `Using pre-computed optimal second guess. After "${firstWord}" with feedback pattern ${pattern}, "${precomputed.bestGuess}" is the mathematically optimal choice. This should narrow down from ${candidatesRemaining.length} candidates to approximately ${precomputed.expectedPartitionSize.toFixed(0)} words (pre-computed entropy: ${precomputed.entropy.toFixed(2)}).`,
+                candidateCountBefore: candidatesRemaining.length,
+                remainingCandidates: candidatesRemaining.slice(0, 50),
+                expectedPartitionSize: precomputed.expectedPartitionSize,
+                topAlternatives: [],
+                computationTimeMs: Date.now() - startTime
+              }
+            };
+          }
+        }
+      }
+
+      // Fallback: Old all-grey optimization for non-standard first guesses
+      const isAllGrey = firstGuess.feedback.every(tile => tile === 'absent');
       if (isAllGrey) {
-        const firstWord = firstGuess.guess;
         const precomputedSecond = SECOND_GUESS_AFTER_ALL_GREY[this.length]?.[firstWord];
 
         if (precomputedSecond && this.allGuesses.includes(precomputedSecond)) {

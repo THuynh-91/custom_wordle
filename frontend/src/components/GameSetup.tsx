@@ -94,17 +94,16 @@ const GameSetup: React.FC<GameSetupProps> = ({ onGameStart, onShowInstructions, 
       </div>
 
       {onShowMultiplayer && (
-        <div className="setup-section multiplayer-section">
-          <button
-            className="multiplayer-button"
-            onClick={onShowMultiplayer}
-          >
-            <span className="multiplayer-icon">👥</span>
-            <div className="multiplayer-text">
-              <strong>Challenge Human</strong>
-              <p>Play against another person online</p>
-            </div>
-          </button>
+        <div className="setup-section">
+          <label>Multiplayer</label>
+          <div className="mode-buttons">
+            <button
+              className="multiplayer-mode-button"
+              onClick={onShowMultiplayer}
+            >
+              Challenge Human
+            </button>
+          </div>
         </div>
       )}
 

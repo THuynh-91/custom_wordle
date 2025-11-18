@@ -2,10 +2,10 @@
   max-width: 600px;
   margin: 0 auto;
   padding: 2rem;
-  background: var(--color-inverted-bg);
+  background: var(--color-panel-bg);
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  border: 1px solid var(--color-inverted-border);
+  border: 1px solid var(--color-border);
 }
 
 .lobby-header {
@@ -19,7 +19,7 @@
   flex: 1;
   text-align: center;
   margin: 0;
-  color: var(--color-inverted-text);
+  color: var(--color-text);
 }
 
 .back-button {
@@ -47,8 +47,8 @@
 
 .choice-button {
   padding: 2rem 1rem;
-  background: var(--color-inverted-panel-bg);
-  border: 2px solid var(--color-inverted-border);
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
@@ -69,12 +69,12 @@
 
 .choice-button h3 {
   margin: 0.5rem 0;
-  color: var(--color-inverted-text);
+  color: var(--color-text);
 }
 
 .choice-button p {
   margin: 0;
-  color: var(--color-inverted-text-secondary);
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
 }
 
@@ -87,17 +87,17 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
-  color: var(--color-inverted-text);
+  color: var(--color-text);
 }
 
 .setup-section input[type="text"] {
   width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
-  border: 2px solid var(--color-inverted-border);
+  border: 2px solid var(--color-border);
   border-radius: 4px;
-  background: var(--color-inverted-panel-bg);
-  color: var(--color-inverted-text);
+  background: var(--color-bg);
+  color: var(--color-text);
   box-sizing: border-box;
 }
 
@@ -108,7 +108,7 @@
 
 /* Info Box */
 .info-box {
-  background: var(--color-inverted-panel-bg);
+  background: var(--color-bg);
   border: 2px solid var(--color-present);
   border-radius: 8px;
   padding: 1rem;
@@ -116,7 +116,7 @@
 
 .info-text {
   margin: 0;
-  color: var(--color-inverted-text);
+  color: var(--color-text);
   font-size: 1rem;
   text-align: center;
   font-weight: 500;
@@ -133,37 +133,41 @@
 .mode-buttons button {
   flex: 1;
   padding: 0.75rem 1rem;
-  background: var(--color-inverted-panel-bg);
-  border: 2px solid var(--color-inverted-border);
-  border-radius: 4px;
+  background: var(--color-button-unselected-bg);
+  border: 2px solid var(--color-border);
+  border-radius: 12px;
   cursor: pointer;
   font-size: 1rem;
-  color: var(--color-inverted-text);
+  color: var(--color-button-unselected-text);
+  font-weight: 600;
   transition: all 0.2s;
 }
 
 .length-buttons button:hover,
 .mode-buttons button:hover {
-  border-color: var(--color-present);
+  border-color: var(--color-text);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .length-buttons button.active,
 .mode-buttons button.active {
-  background: var(--color-correct);
-  color: white;
-  border-color: var(--color-correct);
+  background: var(--color-button-selected-bg);
+  color: var(--color-button-selected-text);
+  border-color: var(--color-button-selected-bg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .mode-description {
   margin-top: 0.5rem;
-  color: var(--color-inverted-text-secondary);
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
   font-style: italic;
 }
 
 .help-text {
   margin-top: 0.5rem;
-  color: var(--color-inverted-text-secondary);
+  color: var(--color-text-secondary);
   font-size: 0.85rem;
 }
 
@@ -179,7 +183,7 @@
 
 .room-code-display h3 {
   margin-bottom: 0.5rem;
-  color: var(--color-inverted-text);
+  color: var(--color-text);
 }
 
 .code-box {
@@ -195,7 +199,7 @@
   letter-spacing: 0.3em;
   color: var(--color-correct);
   padding: 0.5rem 1rem;
-  background: var(--color-inverted-panel-bg);
+  background: var(--color-bg);
   border: 2px solid var(--color-correct);
   border-radius: 8px;
   font-family: 'Courier New', monospace;
@@ -222,7 +226,7 @@
 
 .share-link h3 {
   margin-bottom: 0.5rem;
-  color: var(--color-inverted-text);
+  color: var(--color-text);
 }
 
 .link-box {
@@ -234,10 +238,10 @@
   flex: 1;
   padding: 0.75rem;
   font-size: 0.9rem;
-  border: 2px solid var(--color-inverted-border);
+  border: 2px solid var(--color-border);
   border-radius: 4px;
-  background: var(--color-inverted-panel-bg);
-  color: var(--color-inverted-text);
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
 .player-status {
@@ -246,7 +250,7 @@
 
 .player-status h3 {
   margin-bottom: 1rem;
-  color: var(--color-inverted-text);
+  color: var(--color-text);
 }
 
 .players-list {
@@ -260,14 +264,14 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background: var(--color-inverted-panel-bg);
-  border: 2px solid var(--color-inverted-border);
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
   border-radius: 4px;
 }
 
 .player-name {
   font-weight: 600;
-  color: var(--color-inverted-text);
+  color: var(--color-text);
 }
 
 .status {
@@ -290,10 +294,10 @@
 .waiting-message {
   text-align: center;
   padding: 1rem;
-  background: var(--color-inverted-panel-bg);
+  background: var(--color-bg);
   border: 2px dashed var(--color-present);
   border-radius: 4px;
-  color: var(--color-inverted-text-secondary);
+  color: var(--color-text-secondary);
   font-style: italic;
 }
 
@@ -302,7 +306,7 @@
   position: relative;
   text-align: center;
   padding: 3rem 1rem;
-  background: linear-gradient(135deg, var(--color-correct) 0%, var(--color-present) 100%);
+  background: var(--color-correct);
   border-radius: 12px;
   margin: 1rem 0;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
@@ -385,31 +389,25 @@
 /* Game Modes Info */
 .game-modes-info {
   margin-top: 2rem;
-  padding: 1.5rem;
-  background: var(--color-inverted-panel-bg);
-  border: 2px solid var(--color-inverted-border);
-  border-radius: 8px;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-border);
 }
 
 .game-modes-info h3 {
-  margin-top: 0;
   margin-bottom: 1rem;
-  color: var(--color-inverted-text);
+  color: var(--color-text);
+  font-size: 1.1rem;
 }
 
 .game-modes-info ul {
-  margin: 0;
-  padding-left: 1.5rem;
+  list-style: none;
+  padding: 0;
 }
 
 .game-modes-info li {
-  margin-bottom: 0.5rem;
-  color: var(--color-inverted-text-secondary);
-  line-height: 1.5;
-}
-
-.game-modes-info strong {
-  color: var(--color-inverted-text);
+  padding: 0.5rem 0;
+  color: var(--color-text);
+  opacity: 0.8;
 }
 
 /* Responsive Design */

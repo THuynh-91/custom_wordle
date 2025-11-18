@@ -618,7 +618,20 @@ const GameBoard: React.FC<GameBoardProps> = ({
               )}
               <div className="secret-word-reveal">
                 <p className="secret-label">The word was:</p>
-                <p className="secret-word">{secret.toUpperCase()}</p>
+                <p
+                  className="secret-word"
+                  ref={(el) => {
+                    if (el) {
+                      console.log('=== GAMEBOARD SECRET WORD DEBUG ===');
+                      console.log('Element:', el);
+                      const styles = window.getComputedStyle(el);
+                      console.log('Font Size:', styles.fontSize);
+                      console.log('Color:', styles.color);
+                      console.log('Background:', styles.backgroundColor);
+                      console.log('========================');
+                    }
+                  }}
+                >{secret.toUpperCase()}</p>
               </div>
               {gameMode === 'race' ? (
                 <div className="game-summary">

@@ -103,7 +103,7 @@
   flex: 1;
   padding: 0.75rem 1rem;
   border: 2px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: 12px;
   background: var(--color-button-unselected-bg);
   color: var(--color-button-unselected-text);
   font-weight: 600;
@@ -271,78 +271,25 @@
   margin-bottom: 1rem;
 }
 
-.game-modes-info {
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--color-border);
-}
 
-.game-modes-info h3 {
-  margin-bottom: 1rem;
-  color: var(--color-text);
-  font-size: 1.1rem;
-}
-
-.game-modes-info ul {
-  list-style: none;
-  padding: 0;
-}
-
-.game-modes-info li {
-  padding: 0.5rem 0;
-  color: var(--color-text);
-  opacity: 0.8;
-}
-
-/* Multiplayer Section */
-.multiplayer-section {
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 2px solid var(--color-border);
-}
-
-.multiplayer-button {
+/* Multiplayer Mode Button */
+.multiplayer-mode-button {
   width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-}
-
-.multiplayer-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-}
-
-.multiplayer-icon {
-  font-size: 3rem;
-  line-height: 1;
-}
-
-.multiplayer-text {
-  flex: 1;
-  text-align: left;
-}
-
-.multiplayer-text strong {
-  display: block;
-  color: white;
-  font-size: 1.3rem;
-  margin-bottom: 0.25rem;
-  font-weight: 700;
-}
-
-.multiplayer-text p {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.9);
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-button-unselected-bg);
+  color: var(--color-button-unselected-text);
+  font-weight: 600;
   font-size: 1rem;
-  font-weight: 500;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.multiplayer-mode-button:hover {
+  border-color: var(--color-text);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 @media (max-width: 768px) {

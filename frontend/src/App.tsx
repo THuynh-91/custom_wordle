@@ -61,6 +61,19 @@ function App() {
     }
     // Save preference
     localStorage.setItem('darkMode', isDarkMode.toString());
+
+    // DEBUG: Log CSS variables to verify they're loading correctly
+    setTimeout(() => {
+      const root = document.documentElement;
+      const styles = getComputedStyle(root);
+      console.log('=== CSS VARIABLES DEBUG ===');
+      console.log('Dark Mode:', isDarkMode);
+      console.log('Selected Button BG:', styles.getPropertyValue('--color-button-selected-bg').trim());
+      console.log('Selected Button Text:', styles.getPropertyValue('--color-button-selected-text').trim());
+      console.log('Accent Color:', styles.getPropertyValue('--color-accent').trim());
+      console.log('Border Color:', styles.getPropertyValue('--color-border').trim());
+      console.log('========================');
+    }, 100);
   }, [isDarkMode]);
 
   useEffect(() => {
@@ -462,7 +475,7 @@ function App() {
                 minHeight: '400px',
                 gap: '20px'
               }}>
-                <div style={{ fontSize: '2rem' }}>🎮</div>
+                <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>MP</div>
                 <div style={{ fontSize: '1.2rem' }}>Loading multiplayer game...</div>
                 <div style={{ fontSize: '0.9rem', color: '#666' }}>
                   Room: {multiplayerRoomId ? 'Connected' : 'Connecting...'}

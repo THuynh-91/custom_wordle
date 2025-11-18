@@ -2,10 +2,10 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  background: var(--color-inverted-bg);
+  background: var(--color-panel-bg);
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  border: 1px solid var(--color-inverted-border);
+  border: 1px solid var(--color-border);
 }
 
 .game-header {
@@ -28,10 +28,10 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: var(--color-inverted-panel-bg);
+  background: var(--color-bg);
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
-  border: 2px solid var(--color-inverted-border);
+  border: none;
 }
 
 .score-item {
@@ -43,7 +43,7 @@
 
 .score-label {
   font-size: 0.75rem;
-  color: var(--color-inverted-text-secondary);
+  color: var(--color-text-secondary);
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -56,13 +56,13 @@
 
 .score-divider {
   font-size: 1.5rem;
-  color: var(--color-inverted-text-secondary);
+  color: var(--color-text-secondary);
   font-weight: bold;
 }
 
 .game-info h2 {
   margin: 0;
-  color: var(--color-inverted-text);
+  color: var(--color-text);
 }
 
 .game-mode-badge {
@@ -139,7 +139,7 @@
 
 .player-header h3 {
   margin: 0;
-  color: var(--color-inverted-text);
+  color: var(--color-text);
   font-size: 1.2rem;
 }
 
@@ -172,15 +172,15 @@
   margin-bottom: 0.5rem;
   border-radius: 4px;
   font-weight: 600;
-  background: var(--color-inverted-panel-bg);
-  border: 2px solid var(--color-inverted-border);
-  color: var(--color-inverted-text-secondary);
+  background: var(--color-bg);
+  border: none;
+  color: var(--color-text-secondary);
   transition: all 0.3s;
 }
 
 .turn-indicator.active {
   background: var(--color-correct);
-  border-color: var(--color-correct);
+  border-color: transparent;
   color: white;
   animation: pulse 1.5s infinite;
 }
@@ -224,14 +224,14 @@
 }
 
 .modal-content {
-  background: var(--color-inverted-bg);
+  background: var(--color-panel-bg);
   padding: 2rem;
   border-radius: 12px;
   max-width: 500px;
   width: 90%;
   text-align: center;
   animation: scaleIn 0.3s ease;
-  border: 1px solid var(--color-inverted-border);
+  border: 1px solid var(--color-border);
 }
 
 @keyframes scaleIn {
@@ -247,29 +247,30 @@
 
 .modal-content h2 {
   margin-top: 0;
-  color: var(--color-inverted-text);
+  color: var(--color-text);
   font-size: 2rem;
 }
 
 .secret-word {
   margin: 1.5rem 0;
   font-size: 1.1rem;
-  color: var(--color-inverted-text-secondary);
+  color: var(--color-text);
 }
 
 .secret-word strong {
-  color: var(--color-correct);
-  font-size: 1.5rem;
-  letter-spacing: 0.1em;
+  color: #ffffff !important;
+  font-size: 2.5rem !important;
+  letter-spacing: 0.3rem;
+  font-weight: 700;
+  display: block;
+  margin-top: 0.5rem;
 }
 
 .game-stats {
   display: flex;
   justify-content: space-around;
   margin: 2rem 0;
-  padding: 1rem;
-  background: var(--color-inverted-panel-bg);
-  border: 2px solid var(--color-inverted-border);
+  border: none;
   border-radius: 8px;
 }
 
@@ -281,7 +282,7 @@
 }
 
 .stat-label {
-  color: var(--color-inverted-text-secondary);
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
 }
 
@@ -295,14 +296,14 @@
 .final-scoreboard {
   margin: 2rem 0;
   padding: 1.5rem;
-  background: var(--color-inverted-panel-bg);
-  border: 2px solid var(--color-correct);
+  background: var(--color-bg);
+  border: none;
   border-radius: 8px;
 }
 
 .final-scoreboard h3 {
   margin: 0 0 1rem 0;
-  color: var(--color-inverted-text);
+  color: var(--color-text);
   font-size: 1.1rem;
 }
 
@@ -321,7 +322,7 @@
 }
 
 .player-name {
-  color: var(--color-inverted-text-secondary);
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
   font-weight: 600;
 }
@@ -334,7 +335,7 @@
 
 .score-separator {
   font-size: 2rem;
-  color: var(--color-inverted-text-secondary);
+  color: var(--color-text-secondary);
   font-weight: bold;
 }
 
@@ -379,16 +380,12 @@
     gap: 0.5rem;
   }
 
-  .modal-content {
-    padding: 1.5rem;
-  }
-
   .modal-content h2 {
     font-size: 1.5rem;
   }
 
   .secret-word strong {
-    font-size: 1.2rem;
+    font-size: 2.5rem;
   }
 }
 

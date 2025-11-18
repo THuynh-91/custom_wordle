@@ -37,6 +37,11 @@ function main() {
       label: 'frequency data',
       src: path.join(root, 'data', 'frequencies'),
       dest: path.join(root, 'dist', 'data', 'frequencies')
+    },
+    {
+      label: 'precomputed data',
+      src: path.join(root, 'backend', 'data', 'precomputed'),
+      dest: path.join(root, 'dist', 'backend', 'data', 'precomputed')
     }
   ];
 

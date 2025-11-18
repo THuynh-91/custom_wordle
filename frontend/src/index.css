@@ -11,6 +11,7 @@
   --color-empty: #d3d6da;
   --color-bg: #E3E3E1;
   --color-text: #1a1a1b;
+  --color-text-secondary: #787c7e;
   --color-border: #c0c0be;
   --color-key-bg: #d3d6da;
   --color-key-text: #1a1a1b;
@@ -51,6 +52,7 @@ html.dark-mode {
   --color-empty: #3a3a3c;
   --color-bg: #121213;
   --color-text: #d7dadc;
+  --color-text-secondary: #818384;
   --color-border: #3a3a3c;
   --color-key-bg: #818384;
   --color-key-text: #ffffff;

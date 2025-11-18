@@ -24,7 +24,21 @@
       "Bash(cmd //c taskkill //PID 17452 //F)",
       "Bash(del \"test-multiplayer-flow.mjs\")",
       "Bash(del \"test-browser.html\")",
-      "Bash(start test-browser-console.html)"
+      "Bash(start test-browser-console.html)",
+      "Bash(npm run precompute-second-guess:*)",
+      "Bash(npm run build:backend:*)",
+      "Bash(cmd //c taskkill //PID 20756 //F)",
+      "Bash(cmd //c taskkill //PID 26608 //F)",
+      "Bash(cmd //c taskkill //PID 20756 //F 2)",
+      "Bash(node test-algorithm-optimization.mjs:*)",
+      "Bash(del:*)",
+      "Bash(cmd //c del \"test-algorithm-optimization.mjs\")",
+      "Bash(cat:*)",
+      "Bash(find:*)",
+      "Bash(npm run build:frontend:*)",
+      "Bash(start cmd /k \"npm run dev:backend\")",
+      "Bash(start cmd /k \"npm run dev:frontend\")",
+      "Bash(git check-ignore:*)"
     ],
     "deny": [],
     "ask": []

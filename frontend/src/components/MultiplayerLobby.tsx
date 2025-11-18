@@ -343,7 +343,7 @@ const MultiplayerLobby: React.FC<MultiplayerLobbyProps> = ({
 
         <div className="setup-section info-box">
           <p className="info-text">
-            🎲 A random {length}-letter word will be chosen for the game
+            A random {length}-letter word will be chosen for the game
           </p>
         </div>
 
