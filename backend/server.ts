@@ -11,12 +11,18 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { createServer } from 'http';
 import { Server as SocketIOServer } from 'socket.io';
+import { RateLimiterMemory } from 'rate-limiter-flexible';
 import { WordService } from './services/word-service.js';
 import gameRoutes from './routes/game.js';
 import wordRoutes from './routes/words.js';
 import leaderboardRoutes from './routes/leaderboard.js';
 import feedbackRoutes from './routes/feedback.js';
 import { setupMultiplayerHandlers } from './routes/multiplayer.js';
+import {
+  RATE_LIMIT_MAX_REQUESTS,
+  RATE_LIMIT_WINDOW_MS,
+  ERROR_MESSAGES,
+} from '../shared/constants.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,10 +34,55 @@ const app = express();
 const PORT = parseInt(process.env.PORT || '3000', 10);
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
+// Comma-separated list of Vercel project slugs whose preview deployments are
+// trusted (e.g. "custom-wordle,custom-wordle-thuynh"). Vercel preview URLs look
+// like `https://<project>-<hash>-<scope>.vercel.app`, so we match on the slug
+// prefix. If unset, we fall back to a safe default derived from this project.
+const VERCEL_PROJECT_SLUGS = (process.env.VERCEL_PROJECT_SLUGS || 'custom-wordle')
+  .split(',')
+  .map((s) => s.trim().toLowerCase())
+  .filter(Boolean);
+
 console.log('🔧 Server Configuration:');
 console.log('  PORT:', PORT);
 console.log('  FRONTEND_URL:', FRONTEND_URL);
 console.log('  NODE_ENV:', process.env.NODE_ENV);
+console.log('  VERCEL_PROJECT_SLUGS:', VERCEL_PROJECT_SLUGS.join(', '));
+
+/**
+ * Decide whether an Origin header is allowed by CORS.
+ *
+ * CORS decision (see audit M5): previously ANY `*.vercel.app` origin was
+ * allowed WITH credentials, meaning any attacker-controlled Vercel preview
+ * passed. We keep the explicit FRONTEND_URL allowlist and still support Vercel
+ * previews, but restrict the wildcard to this project's own preview slugs
+ * (VERCEL_PROJECT_SLUGS). Hostnames like `evil.vercel.app` or
+ * `someoneelse-abc123.vercel.app` no longer match.
+ */
+function isAllowedOrigin(origin: string): boolean {
+  const allowedOrigins = FRONTEND_URL.split(',').map((o) => o.trim());
+
+  // Exact allowlist match (configured production/dev frontends)
+  if (allowedOrigins.includes(origin)) {
+    return true;
+  }
+
+  // Restricted Vercel preview support: only this project's preview domains.
+  try {
+    const url = new URL(origin);
+    if (url.protocol === 'https:' && url.hostname.endsWith('.vercel.app')) {
+      const host = url.hostname.toLowerCase();
+      return VERCEL_PROJECT_SLUGS.some(
+        (slug) => host === `${slug}.vercel.app` || host.startsWith(`${slug}-`)
+      );
+    }
+  } catch {
+    // Malformed origin -> reject
+    return false;
+  }
+
+  return false;
+}
 
 const wordServiceReady = WordService.initialize();
 
@@ -60,27 +111,18 @@ app.use(helmet({
 app.use(compression());
 app.use(cors({
   origin: (origin, callback) => {
-    const allowedOrigins = FRONTEND_URL.split(',');
-    console.log('CORS check - Origin:', origin, 'Allowed:', allowedOrigins);
-
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) {
       callback(null, true);
       return;
     }
 
-    // Check if origin matches allowed origins exactly
-    if (allowedOrigins.includes(origin)) {
+    if (isAllowedOrigin(origin)) {
       callback(null, true);
       return;
     }
 
-    // Allow Vercel preview deployments (*.vercel.app)
-    if (origin.endsWith('.vercel.app')) {
-      callback(null, true);
-      return;
-    }
-
+    console.warn('CORS check - rejected Origin:', origin);
     callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
@@ -88,6 +130,35 @@ app.use(cors({
 }));
 app.use(express.json({ limit: '10kb' })); // Limit JSON payload size
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+
+/**
+ * Global rate limiter (in-memory): 100 requests / minute / IP.
+ * Stricter per-endpoint limiters live in the route modules (AI move, feedback).
+ */
+const globalRateLimiter = new RateLimiterMemory({
+  points: RATE_LIMIT_MAX_REQUESTS, // 100 requests
+  duration: RATE_LIMIT_WINDOW_MS / 1000, // per 60 seconds
+});
+
+app.use((req, res, next) => {
+  // Health checks should never be throttled (used by Render self-ping)
+  if (req.path === '/health' || req.path === '/api/health') {
+    next();
+    return;
+  }
+
+  const key = req.ip || req.socket.remoteAddress || 'unknown';
+  globalRateLimiter
+    .consume(key)
+    .then(() => next())
+    .catch(() => {
+      res.status(429).json({
+        error: 'Too Many Requests',
+        message: ERROR_MESSAGES.RATE_LIMIT_EXCEEDED,
+        statusCode: 429,
+      });
+    });
+});
 
 // Request logging
 app.use((req, res, next) => {
@@ -185,14 +256,12 @@ async function start() {
     const io = new SocketIOServer(httpServer, {
       cors: {
         origin: (origin, callback) => {
-          const allowedOrigins = FRONTEND_URL.split(',');
-
           if (!origin) {
             callback(null, true);
             return;
           }
 
-          if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+          if (isAllowedOrigin(origin)) {
             callback(null, true);
             return;
           }

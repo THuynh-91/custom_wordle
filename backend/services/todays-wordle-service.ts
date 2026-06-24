@@ -39,7 +39,7 @@ const KNOWN_WORDLE_ANSWERS: string[] = [
   'clock', 'tilde', 'store', 'prove', 'bring', 'solve', 'cheat', 'grime',
   'exult', 'usher', 'epoch', 'triad', 'break', 'rhino', 'viral', 'conic',
   'masse', 'sonic', 'vital', 'trace', 'using', 'peach', 'champ', 'baton',
-  'brake', 'pluck', 'craze', 'sent', 'stoic', 'trope', 'agile', 'frame',
+  'brake', 'pluck', 'craze', 'stoic', 'trope', 'agile', 'frame',
   'thorn', 'those', 'pause', 'spasm', 'heist', 'reign', 'clown', 'enjoy',
   'shame', 'brawl', 'merry', 'bloke', 'brink', 'smelt', 'evade', 'movie',
   'flash', 'drive', 'aisle', 'plaza', 'boost', 'rebus', 'stoke', 'wryly'

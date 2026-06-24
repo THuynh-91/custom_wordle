@@ -23,19 +23,24 @@ describe('GameEngine', () => {
     });
 
     it('should handle duplicate letters correctly', () => {
-      // If secret has 1 'l' and guess has 2 'l's
-      const feedback = GameEngine.generateFeedback('llama', 'label');
-      // First 'l' is correct, second 'l' is absent (no more l's in secret)
+      // Secret 'loops' has 1 'l' (at position 0) and no 'a' or 'm'.
+      // Guess 'llama' has 2 'l's.
+      const feedback = GameEngine.generateFeedback('llama', 'loops');
+      // First 'l' is correct; the second 'l' is absent (only one 'l' in secret).
       expect(feedback[0]).toBe('correct'); // l at position 0
-      expect(feedback[2]).toBe('absent');  // l at position 2
+      expect(feedback[1]).toBe('absent');  // second l at position 1
     });
 
     it('should prioritize greens over yellows for duplicates', () => {
-      const feedback = GameEngine.generateFeedback('speed', 'erase');
-      // 'e' appears twice in guess, once in secret
-      // Should mark one correct and one absent
+      // Secret 'tinge' has exactly one 'e' (at the last position) and shares no
+      // other letters with the guess.
+      const feedback = GameEngine.generateFeedback('speed', 'tinge');
+      // 'e' appears twice in guess, once in secret; only one 'e' may be matched.
       const correctCount = feedback.filter(f => f === 'correct').length;
       const presentCount = feedback.filter(f => f === 'present').length;
+      // The two e's account for the only matches: one present + one absent.
+      expect(feedback.filter((f, i) => 'speed'[i] === 'e' && f === 'correct').length).toBe(0);
+      expect(feedback.filter((f, i) => 'speed'[i] === 'e' && f === 'present').length).toBe(1);
       expect(correctCount + presentCount).toBeLessThanOrEqual(1);
     });
 
@@ -80,12 +85,14 @@ describe('GameEngine', () => {
 
   describe('satisfiesConstraints', () => {
     it('should validate words against constraints', () => {
+      // Guess 'share' vs an answer like 'trace'/'crate': s,h absent;
+      // a correct@2; r present (in answer but not at 3); e correct@4.
       const guesses: GuessFeedback[] = [
-        { guess: 'slate', feedback: ['absent', 'absent', 'correct', 'absent', 'correct'], timestamp: 0 }
+        { guess: 'share', feedback: ['absent', 'absent', 'correct', 'present', 'correct'], timestamp: 0 }
       ];
       const constraints = GameEngine.buildConstraints(guesses);
 
-      // Word must have 'a' at position 2 and 'e' at position 4
+      // Word must have 'a' at position 2, 'e' at position 4, an 'r' (not at 3), and no 's'/'h'
       expect(GameEngine.satisfiesConstraints('trace', constraints)).toBe(true);
       expect(GameEngine.satisfiesConstraints('crate', constraints)).toBe(true);
       expect(GameEngine.satisfiesConstraints('slate', constraints)).toBe(false); // has 's' which is absent

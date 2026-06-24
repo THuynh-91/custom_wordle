@@ -1,20 +1,50 @@
 import express from 'express';
+import { z } from 'zod';
+import { RateLimiterMemory } from 'rate-limiter-flexible';
 
 const router = express.Router();
 
-interface FeedbackRequest {
-  feedback: string;
-  email?: string;
-}
+/**
+ * Strict rate limiter for the feedback -> GitHub proxy (abuse/spam vector).
+ * 5 submissions per minute per IP.
+ */
+const feedbackRateLimiter = new RateLimiterMemory({
+  points: 5,
+  duration: 60,
+});
+
+// Validation schema: feedback is required (non-empty after trim, capped),
+// email is optional but must be a valid address if provided.
+const feedbackSchema = z.object({
+  feedback: z
+    .string({ required_error: 'Feedback text is required' })
+    .trim()
+    .min(1, 'Feedback text is required')
+    .max(5000, 'Feedback must be 5000 characters or fewer'),
+  email: z.string().trim().email('Invalid email address').max(254).optional(),
+});
 
 // Submit feedback as a GitHub issue
 router.post('/', async (req, res) => {
   try {
-    const { feedback, email }: FeedbackRequest = req.body;
-
-    if (!feedback || feedback.trim().length === 0) {
-      return res.status(400).json({ message: 'Feedback text is required' });
+    // Per-IP rate limit before doing any outbound GitHub work
+    const key = req.ip || req.socket.remoteAddress || 'unknown';
+    try {
+      await feedbackRateLimiter.consume(key);
+    } catch {
+      return res.status(429).json({
+        message: 'Too many feedback submissions. Please try again later.',
+      });
     }
+
+    const parsed = feedbackSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({
+        message: parsed.error.errors[0]?.message || 'Invalid feedback payload',
+      });
+    }
+
+    const { feedback, email } = parsed.data;
 
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
     const GITHUB_REPO = 'THuynh-91/custom_wordle';

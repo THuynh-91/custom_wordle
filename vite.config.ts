@@ -29,6 +29,18 @@ export default defineConfig({
   build: {
     outDir: '../dist/frontend',
     emptyOutDir: true,
-    sourcemap: true
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Core React runtime in its own long-lived cacheable chunk
+          'react-vendor': ['react', 'react-dom'],
+          // Realtime/multiplayer transport split out so it only loads with MP code
+          'socket-vendor': ['socket.io-client'],
+          // Vercel analytics/insights kept off the critical path
+          'analytics-vendor': ['@vercel/analytics/react', '@vercel/speed-insights/react']
+        }
+      }
+    }
   }
 });

@@ -24,3 +24,6 @@ Thumbs.db
 
 # Windows device names (avoid ghost files)
 nul
+
+# Documentation (local only)
+ALGORITHM_EXPLANATION.md

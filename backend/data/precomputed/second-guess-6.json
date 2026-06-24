@@ -1,0 +1,7104 @@
+{
+  "firstGuess": "sainer",
+  "length": 6,
+  "totalPatterns": 729,
+  "validPatterns": 473,
+  "generatedAt": "2026-06-24T06:29:31.259Z",
+  "entries": [
+    {
+      "pattern": "000000",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "coplot",
+      "candidatesRemaining": 187,
+      "entropy": 6.248487825698048,
+      "expectedPartitionSize": 3.6417112299465275
+    },
+    {
+      "pattern": "000001",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "curtly",
+      "candidatesRemaining": 118,
+      "entropy": 5.75008428329214,
+      "expectedPartitionSize": 2.915254237288134
+    },
+    {
+      "pattern": "000002",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "mortar",
+      "candidatesRemaining": 15,
+      "entropy": 3.773557262275185,
+      "expectedPartitionSize": 1.1333333333333333
+    },
+    {
+      "pattern": "000010",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "temple",
+      "candidatesRemaining": 265,
+      "entropy": 6.430796233804209,
+      "expectedPartitionSize": 6.132075471698131
+    },
+    {
+      "pattern": "000011",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "retore",
+      "candidatesRemaining": 245,
+      "entropy": 6.161969142355332,
+      "expectedPartitionSize": 4.934693877551014
+    },
+    {
+      "pattern": "000012",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "rector",
+      "candidatesRemaining": 23,
+      "entropy": 4.069001629875993,
+      "expectedPartitionSize": 1.6086956521739126
+    },
+    {
+      "pattern": "000020",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "putlog",
+      "candidatesRemaining": 439,
+      "entropy": 5.7036234492359625,
+      "expectedPartitionSize": 13.382687927107058
+    },
+    {
+      "pattern": "000021",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "potful",
+      "candidatesRemaining": 181,
+      "entropy": 5.007325888551667,
+      "expectedPartitionSize": 9.574585635359096
+    },
+    {
+      "pattern": "000022",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "potful",
+      "candidatesRemaining": 337,
+      "entropy": 5.274582343703996,
+      "expectedPartitionSize": 14.637982195845698
+    },
+    {
+      "pattern": "000100",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "column",
+      "candidatesRemaining": 86,
+      "entropy": 5.578777040104842,
+      "expectedPartitionSize": 2.3255813953488382
+    },
+    {
+      "pattern": "000101",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "burton",
+      "candidatesRemaining": 39,
+      "entropy": 4.782587475161557,
+      "expectedPartitionSize": 1.6666666666666654
+    },
+    {
+      "pattern": "000102",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "concur",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "000110",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "denote",
+      "candidatesRemaining": 142,
+      "entropy": 5.854092935177438,
+      "expectedPartitionSize": 3.4788732394366253
+    },
+    {
+      "pattern": "000111",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "retore",
+      "candidatesRemaining": 67,
+      "entropy": 5.2263181082713475,
+      "expectedPartitionSize": 2.0149253731343286
+    },
+    {
+      "pattern": "000112",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "mentor",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "000120",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "dought",
+      "candidatesRemaining": 117,
+      "entropy": 4.976086607765518,
+      "expectedPartitionSize": 5.102564102564102
+    },
+    {
+      "pattern": "000121",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "termed",
+      "candidatesRemaining": 31,
+      "entropy": 4.542748326446119,
+      "expectedPartitionSize": 1.4516129032258056
+    },
+    {
+      "pattern": "000122",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "dought",
+      "candidatesRemaining": 53,
+      "entropy": 4.064618984404308,
+      "expectedPartitionSize": 4.018867924528306
+    },
+    {
+      "pattern": "000200",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "blotch",
+      "candidatesRemaining": 15,
+      "entropy": 3.906890595608518,
+      "expectedPartitionSize": 0.9999999999999999
+    },
+    {
+      "pattern": "000201",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "bronco",
+      "candidatesRemaining": 8,
+      "entropy": 2.85,
+      "expectedPartitionSize": 1.25
+    },
+    {
+      "pattern": "000202",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "kronor",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "000210",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "plough",
+      "candidatesRemaining": 31,
+      "entropy": 4.542748326446118,
+      "expectedPartitionSize": 1.451612903225806
+    },
+    {
+      "pattern": "000211",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "present",
+        "present"
+      ],
+      "bestGuess": "frothy",
+      "candidatesRemaining": 12,
+      "entropy": 3.418295834054489,
+      "expectedPartitionSize": 1.1666666666666665
+    },
+    {
+      "pattern": "000220",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "denote",
+      "candidatesRemaining": 42,
+      "entropy": 4.332095398660171,
+      "expectedPartitionSize": 2.333333333333333
+    },
+    {
+      "pattern": "000221",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "dought",
+      "candidatesRemaining": 21,
+      "entropy": 4.201841232302569,
+      "expectedPartitionSize": 1.1904761904761911
+    },
+    {
+      "pattern": "000222",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "cenote",
+      "candidatesRemaining": 23,
+      "entropy": 3.638147696204827,
+      "expectedPartitionSize": 2.3043478260869574
+    },
+    {
+      "pattern": "001000",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "toluic",
+      "candidatesRemaining": 187,
+      "entropy": 6.276353286394689,
+      "expectedPartitionSize": 3.5026737967914467
+    },
+    {
+      "pattern": "001001",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "torpid",
+      "candidatesRemaining": 78,
+      "entropy": 5.288621769866933,
+      "expectedPartitionSize": 2.46153846153846
+    },
+    {
+      "pattern": "001002",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "lictor",
+      "candidatesRemaining": 6,
+      "entropy": 2.351629167387823,
+      "expectedPartitionSize": 1.3333333333333333
+    },
+    {
+      "pattern": "001010",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "docile",
+      "candidatesRemaining": 226,
+      "entropy": 5.970194767196095,
+      "expectedPartitionSize": 6.39823008849558
+    },
+    {
+      "pattern": "001011",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "cerite",
+      "candidatesRemaining": 144,
+      "entropy": 5.466202481433732,
+      "expectedPartitionSize": 4.736111111111115
+    },
+    {
+      "pattern": "001012",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "devoir",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "001020",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "piglet",
+      "candidatesRemaining": 131,
+      "entropy": 4.714819756024264,
+      "expectedPartitionSize": 7.564885496183206
+    },
+    {
+      "pattern": "001021",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "riblet",
+      "candidatesRemaining": 37,
+      "entropy": 4.0254053925390325,
+      "expectedPartitionSize": 3.3243243243243255
+    },
+    {
+      "pattern": "001022",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "limpid",
+      "candidatesRemaining": 151,
+      "entropy": 4.372268061106038,
+      "expectedPartitionSize": 12.059602649006615
+    },
+    {
+      "pattern": "001100",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "putlog",
+      "candidatesRemaining": 297,
+      "entropy": 5.630620072128341,
+      "expectedPartitionSize": 12.144781144781167
+    },
+    {
+      "pattern": "001101",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "corium",
+      "candidatesRemaining": 80,
+      "entropy": 4.732063398452641,
+      "expectedPartitionSize": 4.275000000000003
+    },
+    {
+      "pattern": "001102",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "indoor",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "001110",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "denote",
+      "candidatesRemaining": 181,
+      "entropy": 5.466203980989383,
+      "expectedPartitionSize": 5.5856353591160275
+    },
+    {
+      "pattern": "001111",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "pereon",
+      "candidatesRemaining": 61,
+      "entropy": 4.563785239443964,
+      "expectedPartitionSize": 3.393442622950819
+    },
+    {
+      "pattern": "001112",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "menhir",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "001120",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "minted",
+      "candidatesRemaining": 74,
+      "entropy": 4.206124720696845,
+      "expectedPartitionSize": 7.2702702702702675
+    },
+    {
+      "pattern": "001121",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "inbred",
+      "candidatesRemaining": 6,
+      "entropy": 2.3516291673878227,
+      "expectedPartitionSize": 1.3333333333333333
+    },
+    {
+      "pattern": "001122",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "dimwit",
+      "candidatesRemaining": 50,
+      "entropy": 3.393727823576531,
+      "expectedPartitionSize": 7.799999999999995
+    },
+    {
+      "pattern": "001200",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "oilcup",
+      "candidatesRemaining": 19,
+      "entropy": 3.681880802803402,
+      "expectedPartitionSize": 1.6315789473684208
+    },
+    {
+      "pattern": "001201",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "correct",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "fornix",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "001210",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "exonic",
+      "candidatesRemaining": 10,
+      "entropy": 2.8219280948873626,
+      "expectedPartitionSize": 1.6
+    },
+    {
+      "pattern": "001211",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "correct",
+        "present",
+        "present"
+      ],
+      "bestGuess": "vernix",
+      "candidatesRemaining": 6,
+      "entropy": 2.018295834054489,
+      "expectedPartitionSize": 1.6666666666666667
+    },
+    {
+      "pattern": "001220",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "welted",
+      "candidatesRemaining": 16,
+      "entropy": 3.274397470347699,
+      "expectedPartitionSize": 2.25
+    },
+    {
+      "pattern": "001221",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "correct",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "girned",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "001222",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "correct",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "winner",
+      "candidatesRemaining": 8,
+      "entropy": 2.1,
+      "expectedPartitionSize": 2.5
+    },
+    {
+      "pattern": "002000",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "touchy",
+      "candidatesRemaining": 34,
+      "entropy": 4.631292988181899,
+      "expectedPartitionSize": 1.529411764705881
+    },
+    {
+      "pattern": "002001",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "triply",
+      "candidatesRemaining": 38,
+      "entropy": 4.371100790318223,
+      "expectedPartitionSize": 2.263157894736841
+    },
+    {
+      "pattern": "002010",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "boucle",
+      "candidatesRemaining": 26,
+      "entropy": 4.546593564294937,
+      "expectedPartitionSize": 1.1538461538461537
+    },
+    {
+      "pattern": "002011",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "gentle",
+      "candidatesRemaining": 21,
+      "entropy": 3.916126946588284,
+      "expectedPartitionSize": 1.4761904761904765
+    },
+    {
+      "pattern": "002012",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "absent",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "editor",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "002020",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "cloddy",
+      "candidatesRemaining": 34,
+      "entropy": 4.253212018409154,
+      "expectedPartitionSize": 2.235294117647058
+    },
+    {
+      "pattern": "002021",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "temped",
+      "candidatesRemaining": 23,
+      "entropy": 3.6381476962048276,
+      "expectedPartitionSize": 2.3043478260869565
+    },
+    {
+      "pattern": "002022",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "blotch",
+      "candidatesRemaining": 34,
+      "entropy": 3.713078842626793,
+      "expectedPartitionSize": 4.117647058823528
+    },
+    {
+      "pattern": "002100",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "chiton",
+      "candidatesRemaining": 7,
+      "entropy": 2.9073549220576043,
+      "expectedPartitionSize": 0.9999999999999998
+    },
+    {
+      "pattern": "002101",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "origin",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "002110",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "coigne",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "002111",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "orient",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "002120",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "knifed",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "002121",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "present",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "driven",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "002122",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "present",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "knifer",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "002200",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "clutch",
+      "candidatesRemaining": 18,
+      "entropy": 3.94770277922009,
+      "expectedPartitionSize": 1.2222222222222225
+    },
+    {
+      "pattern": "002201",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "correct",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "fringy",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "002210",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "heinie",
+      "candidatesRemaining": 8,
+      "entropy": 2.1,
+      "expectedPartitionSize": 2.5
+    },
+    {
+      "pattern": "002211",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "correct",
+        "present",
+        "present"
+      ],
+      "bestGuess": "cringe",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "002220",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "wicopy",
+      "candidatesRemaining": 11,
+      "entropy": 3.095795255000934,
+      "expectedPartitionSize": 1.3636363636363633
+    },
+    {
+      "pattern": "002221",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "correct",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "brined",
+      "candidatesRemaining": 4,
+      "entropy": 1.6,
+      "expectedPartitionSize": 1.5
+    },
+    {
+      "pattern": "002222",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "correct",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "weiner",
+      "candidatesRemaining": 8,
+      "entropy": 2.1,
+      "expectedPartitionSize": 2.5
+    },
+    {
+      "pattern": "010000",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "outlay",
+      "candidatesRemaining": 159,
+      "entropy": 6.032033468902715,
+      "expectedPartitionSize": 3.3018867924528377
+    },
+    {
+      "pattern": "010001",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "blotch",
+      "candidatesRemaining": 128,
+      "entropy": 5.591126661048398,
+      "expectedPartitionSize": 3.515625
+    },
+    {
+      "pattern": "010002",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "brulot",
+      "candidatesRemaining": 36,
+      "entropy": 4.5514621540397995,
+      "expectedPartitionSize": 1.7222222222222214
+    },
+    {
+      "pattern": "010010",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "delate",
+      "candidatesRemaining": 235,
+      "entropy": 6.279984996270832,
+      "expectedPartitionSize": 4.2000000000000055
+    },
+    {
+      "pattern": "010011",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "delate",
+      "candidatesRemaining": 195,
+      "entropy": 5.709261117006197,
+      "expectedPartitionSize": 4.948717948717947
+    },
+    {
+      "pattern": "010012",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "pelted",
+      "candidatesRemaining": 21,
+      "entropy": 3.9754180179138325,
+      "expectedPartitionSize": 1.4761904761904767
+    },
+    {
+      "pattern": "010020",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "blotch",
+      "candidatesRemaining": 93,
+      "entropy": 4.828054682644498,
+      "expectedPartitionSize": 4.419354838709676
+    },
+    {
+      "pattern": "010021",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "crated",
+      "candidatesRemaining": 57,
+      "entropy": 3.9605369150886895,
+      "expectedPartitionSize": 6.1929824561403475
+    },
+    {
+      "pattern": "010022",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "blotch",
+      "candidatesRemaining": 93,
+      "entropy": 4.14651316412653,
+      "expectedPartitionSize": 9.537634408602162
+    },
+    {
+      "pattern": "010100",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "actual",
+      "candidatesRemaining": 82,
+      "entropy": 5.512622583701691,
+      "expectedPartitionSize": 2.048780487804879
+    },
+    {
+      "pattern": "010101",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "toucan",
+      "candidatesRemaining": 62,
+      "entropy": 4.997999334336161,
+      "expectedPartitionSize": 2.354838709677418
+    },
+    {
+      "pattern": "010102",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "nonpar",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "010110",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "delate",
+      "candidatesRemaining": 111,
+      "entropy": 5.494237713604152,
+      "expectedPartitionSize": 2.9999999999999987
+    },
+    {
+      "pattern": "010111",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "terrae",
+      "candidatesRemaining": 42,
+      "entropy": 4.57411437571685,
+      "expectedPartitionSize": 2.047619047619047
+    },
+    {
+      "pattern": "010112",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "enamor",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "010120",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "welted",
+      "candidatesRemaining": 32,
+      "entropy": 4.351409765557392,
+      "expectedPartitionSize": 1.6875
+    },
+    {
+      "pattern": "010121",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "graben",
+      "candidatesRemaining": 6,
+      "entropy": 2.3516291673878227,
+      "expectedPartitionSize": 1.3333333333333333
+    },
+    {
+      "pattern": "010122",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "anther",
+      "candidatesRemaining": 7,
+      "entropy": 2.6216406363433182,
+      "expectedPartitionSize": 1.2857142857142856
+    },
+    {
+      "pattern": "010200",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "toughy",
+      "candidatesRemaining": 24,
+      "entropy": 4.1053885422075345,
+      "expectedPartitionSize": 1.583333333333334
+    },
+    {
+      "pattern": "010201",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "buying",
+      "candidatesRemaining": 11,
+      "entropy": 3.459431618637298,
+      "expectedPartitionSize": 1.0000000000000002
+    },
+    {
+      "pattern": "010202",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "planar",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "010210",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "deluge",
+      "candidatesRemaining": 19,
+      "entropy": 4.03740119765411,
+      "expectedPartitionSize": 1.2105263157894732
+    },
+    {
+      "pattern": "010211",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "present",
+        "present"
+      ],
+      "bestGuess": "grange",
+      "candidatesRemaining": 6,
+      "entropy": 2.3516291673878227,
+      "expectedPartitionSize": 1.3333333333333335
+    },
+    {
+      "pattern": "010212",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "thenar",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "010220",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "cloddy",
+      "candidatesRemaining": 11,
+      "entropy": 3.2776134368191165,
+      "expectedPartitionSize": 1.1818181818181819
+    },
+    {
+      "pattern": "010221",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "cornea",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "010222",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "leaner",
+      "candidatesRemaining": 8,
+      "entropy": 2.85,
+      "expectedPartitionSize": 1.25
+    },
+    {
+      "pattern": "011000",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "amatol",
+      "candidatesRemaining": 116,
+      "entropy": 5.539431776157302,
+      "expectedPartitionSize": 3.2068965517241392
+    },
+    {
+      "pattern": "011001",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "amtrac",
+      "candidatesRemaining": 76,
+      "entropy": 4.951715825385681,
+      "expectedPartitionSize": 4.078947368421052
+    },
+    {
+      "pattern": "011002",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "mohair",
+      "candidatesRemaining": 10,
+      "entropy": 3.221928094887362,
+      "expectedPartitionSize": 1.2000000000000002
+    },
+    {
+      "pattern": "011010",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "aplite",
+      "candidatesRemaining": 69,
+      "entropy": 5.105061188844578,
+      "expectedPartitionSize": 2.623188405797102
+    },
+    {
+      "pattern": "011011",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "derail",
+      "candidatesRemaining": 39,
+      "entropy": 4.660667282798391,
+      "expectedPartitionSize": 1.82051282051282
+    },
+    {
+      "pattern": "011012",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "absent",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "eclair",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "011020",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "diadem",
+      "candidatesRemaining": 7,
+      "entropy": 2.9073549220576043,
+      "expectedPartitionSize": 0.9999999999999998
+    },
+    {
+      "pattern": "011021",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "aeried",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "011022",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "airier",
+      "candidatesRemaining": 8,
+      "entropy": 2.85,
+      "expectedPartitionSize": 1.25
+    },
+    {
+      "pattern": "011100",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "minion",
+      "candidatesRemaining": 91,
+      "entropy": 5.154404360022088,
+      "expectedPartitionSize": 3.461538461538461
+    },
+    {
+      "pattern": "011101",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "aramid",
+      "candidatesRemaining": 26,
+      "entropy": 4.2098671219040344,
+      "expectedPartitionSize": 1.5384615384615388
+    },
+    {
+      "pattern": "011102",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "present",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "antiar",
+      "candidatesRemaining": 5,
+      "entropy": 2.0219280948873624,
+      "expectedPartitionSize": 1.4000000000000001
+    },
+    {
+      "pattern": "011110",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "aplite",
+      "candidatesRemaining": 57,
+      "entropy": 4.523605970601745,
+      "expectedPartitionSize": 2.8245614035087723
+    },
+    {
+      "pattern": "011111",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "reagin",
+      "candidatesRemaining": 8,
+      "entropy": 2.85,
+      "expectedPartitionSize": 1.25
+    },
+    {
+      "pattern": "011112",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "present",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "linear",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "011120",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "aidmen",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "011121",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "present",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "airmen",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "011200",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "diglot",
+      "candidatesRemaining": 13,
+      "entropy": 3.238901256602631,
+      "expectedPartitionSize": 1.4615384615384615
+    },
+    {
+      "pattern": "011201",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "correct",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "crania",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "011210",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "beanie",
+      "candidatesRemaining": 8,
+      "entropy": 2.85,
+      "expectedPartitionSize": 1.25
+    },
+    {
+      "pattern": "011211",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "correct",
+        "present",
+        "present"
+      ],
+      "bestGuess": "hernia",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "011222",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "correct",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "inaner",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "012000",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "cloddy",
+      "candidatesRemaining": 23,
+      "entropy": 4.262692390839622,
+      "expectedPartitionSize": 1.260869565217391
+    },
+    {
+      "pattern": "012001",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "trebly",
+      "candidatesRemaining": 15,
+      "entropy": 3.773557262275185,
+      "expectedPartitionSize": 1.1333333333333333
+    },
+    {
+      "pattern": "012002",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "chimar",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "012010",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "opiate",
+      "candidatesRemaining": 10,
+      "entropy": 3.221928094887362,
+      "expectedPartitionSize": 1.2
+    },
+    {
+      "pattern": "012011",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "triage",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "012020",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "abided",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "012021",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "ariled",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "012022",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "abider",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "012100",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "amidin",
+      "candidatesRemaining": 5,
+      "entropy": 2.4219280948873623,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "012101",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "origan",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "012110",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "enigma",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "012200",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "acinic",
+      "candidatesRemaining": 5,
+      "entropy": 2.0219280948873624,
+      "expectedPartitionSize": 1.4000000000000001
+    },
+    {
+      "pattern": "012201",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "correct",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "trinal",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "012202",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "correct",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "acinar",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "012210",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "veinal",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "012220",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "alined",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "012222",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "correct",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "aliner",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "020000",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "thymol",
+      "candidatesRemaining": 162,
+      "entropy": 5.70468146992186,
+      "expectedPartitionSize": 4.358024691358015
+    },
+    {
+      "pattern": "020001",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "portly",
+      "candidatesRemaining": 87,
+      "entropy": 5.00460524401232,
+      "expectedPartitionSize": 3.4827586206896566
+    },
+    {
+      "pattern": "020002",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "burlap",
+      "candidatesRemaining": 23,
+      "entropy": 4.088779347361362,
+      "expectedPartitionSize": 1.4347826086956519
+    },
+    {
+      "pattern": "020010",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "tumble",
+      "candidatesRemaining": 83,
+      "entropy": 5.0055515170649185,
+      "expectedPartitionSize": 4.18072289156627
+    },
+    {
+      "pattern": "020011",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "burgle",
+      "candidatesRemaining": 59,
+      "entropy": 4.582150575578778,
+      "expectedPartitionSize": 3.237288135593219
+    },
+    {
+      "pattern": "020020",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "dumbly",
+      "candidatesRemaining": 175,
+      "entropy": 4.465514205447924,
+      "expectedPartitionSize": 14.771428571428567
+    },
+    {
+      "pattern": "020021",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "temped",
+      "candidatesRemaining": 94,
+      "entropy": 3.780794474900462,
+      "expectedPartitionSize": 11.574468085106378
+    },
+    {
+      "pattern": "020022",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "putlog",
+      "candidatesRemaining": 138,
+      "entropy": 3.8220351806160373,
+      "expectedPartitionSize": 15.898550724637676
+    },
+    {
+      "pattern": "020100",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "column",
+      "candidatesRemaining": 84,
+      "entropy": 4.870537066122468,
+      "expectedPartitionSize": 3.8095238095238066
+    },
+    {
+      "pattern": "020101",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "portly",
+      "candidatesRemaining": 50,
+      "entropy": 4.606370130156181,
+      "expectedPartitionSize": 2.920000000000001
+    },
+    {
+      "pattern": "020102",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "present",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "cantor",
+      "candidatesRemaining": 6,
+      "entropy": 2.3516291673878227,
+      "expectedPartitionSize": 1.3333333333333335
+    },
+    {
+      "pattern": "020110",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "dangle",
+      "candidatesRemaining": 38,
+      "entropy": 4.384001448099094,
+      "expectedPartitionSize": 2.31578947368421
+    },
+    {
+      "pattern": "020111",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "nature",
+      "candidatesRemaining": 7,
+      "entropy": 2.9073549220576043,
+      "expectedPartitionSize": 0.9999999999999998
+    },
+    {
+      "pattern": "020120",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "bolted",
+      "candidatesRemaining": 55,
+      "entropy": 4.050938562910586,
+      "expectedPartitionSize": 4.454545454545453
+    },
+    {
+      "pattern": "020121",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "present",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "dermic",
+      "candidatesRemaining": 21,
+      "entropy": 3.3680424225727155,
+      "expectedPartitionSize": 2.333333333333333
+    },
+    {
+      "pattern": "020122",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "present",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "detick",
+      "candidatesRemaining": 32,
+      "entropy": 3.1001878900165245,
+      "expectedPartitionSize": 4.875
+    },
+    {
+      "pattern": "020200",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "sculpt",
+      "candidatesRemaining": 14,
+      "entropy": 3.6644977792004623,
+      "expectedPartitionSize": 1.1428571428571426
+    },
+    {
+      "pattern": "020201",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "correct",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "carnal",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "020202",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "correct",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "pawnor",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "020210",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "jaunce",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "020220",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "dimwit",
+      "candidatesRemaining": 19,
+      "entropy": 3.110578014789015,
+      "expectedPartitionSize": 2.789473684210527
+    },
+    {
+      "pattern": "020221",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "correct",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "yarned",
+      "candidatesRemaining": 8,
+      "entropy": 2.2556390622295663,
+      "expectedPartitionSize": 2
+    },
+    {
+      "pattern": "020222",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "correct",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "warmly",
+      "candidatesRemaining": 17,
+      "entropy": 2.889549430862088,
+      "expectedPartitionSize": 2.7647058823529402
+    },
+    {
+      "pattern": "021000",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "mythic",
+      "candidatesRemaining": 68,
+      "entropy": 4.908948642905964,
+      "expectedPartitionSize": 2.7058823529411753
+    },
+    {
+      "pattern": "021001",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "curtly",
+      "candidatesRemaining": 33,
+      "entropy": 4.513794876803093,
+      "expectedPartitionSize": 1.6060606060606055
+    },
+    {
+      "pattern": "021002",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "kaffir",
+      "candidatesRemaining": 8,
+      "entropy": 2.5056390622295663,
+      "expectedPartitionSize": 1.75
+    },
+    {
+      "pattern": "021010",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "deltic",
+      "candidatesRemaining": 34,
+      "entropy": 4.135564959585625,
+      "expectedPartitionSize": 2.352941176470587
+    },
+    {
+      "pattern": "021011",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "caribe",
+      "candidatesRemaining": 9,
+      "entropy": 3.04770277922009,
+      "expectedPartitionSize": 1.2222222222222223
+    },
+    {
+      "pattern": "021020",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "babied",
+      "candidatesRemaining": 4,
+      "entropy": 1.6,
+      "expectedPartitionSize": 1.5
+    },
+    {
+      "pattern": "021021",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "caried",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "021022",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "lechwe",
+      "candidatesRemaining": 16,
+      "entropy": 2.952819531114783,
+      "expectedPartitionSize": 2.375
+    },
+    {
+      "pattern": "021100",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "mythic",
+      "candidatesRemaining": 126,
+      "entropy": 3.930353842268553,
+      "expectedPartitionSize": 16.23809523809524
+    },
+    {
+      "pattern": "021101",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "coring",
+      "candidatesRemaining": 37,
+      "entropy": 3.459321270975883,
+      "expectedPartitionSize": 4.621621621621623
+    },
+    {
+      "pattern": "021110",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "halite",
+      "candidatesRemaining": 18,
+      "entropy": 3.5724312513221195,
+      "expectedPartitionSize": 1.666666666666667
+    },
+    {
+      "pattern": "021111",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "larine",
+      "candidatesRemaining": 7,
+      "entropy": 1.9423709931771087,
+      "expectedPartitionSize": 2.142857142857143
+    },
+    {
+      "pattern": "021122",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "present",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "panier",
+      "candidatesRemaining": 3,
+      "entropy": 1.0182958340544896,
+      "expectedPartitionSize": 1.6666666666666665
+    },
+    {
+      "pattern": "021200",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "catnip",
+      "candidatesRemaining": 5,
+      "entropy": 2.4219280948873623,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "021210",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "cannie",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "021211",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "correct",
+        "present",
+        "present"
+      ],
+      "bestGuess": "carnie",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "022000",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "daimio",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "022001",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "fairly",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "022002",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "bailor",
+      "candidatesRemaining": 3,
+      "entropy": 1.0182958340544896,
+      "expectedPartitionSize": 1.6666666666666665
+    },
+    {
+      "pattern": "022010",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "faille",
+      "candidatesRemaining": 5,
+      "entropy": 2.4219280948873623,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "022011",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "maigre",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "022020",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "welted",
+      "candidatesRemaining": 18,
+      "entropy": 2.974937501201927,
+      "expectedPartitionSize": 2.999999999999999
+    },
+    {
+      "pattern": "022021",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "laired",
+      "candidatesRemaining": 7,
+      "entropy": 1.7644977792004615,
+      "expectedPartitionSize": 2.714285714285714
+    },
+    {
+      "pattern": "022022",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "twibil",
+      "candidatesRemaining": 15,
+      "entropy": 2.840223928941852,
+      "expectedPartitionSize": 2.6000000000000005
+    },
+    {
+      "pattern": "022100",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "caiman",
+      "candidatesRemaining": 5,
+      "entropy": 2.0219280948873624,
+      "expectedPartitionSize": 1.4
+    },
+    {
+      "pattern": "022101",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "cairny",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "022120",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "daimen",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "022122",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "present",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "nailer",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "022200",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "dainty",
+      "candidatesRemaining": 7,
+      "entropy": 2.2280852788913945,
+      "expectedPartitionSize": 1.8571428571428568
+    },
+    {
+      "pattern": "022220",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "gained",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "022221",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "correct",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "rained",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "022222",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "correct",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "fainer",
+      "candidatesRemaining": 3,
+      "entropy": 1.0182958340544896,
+      "expectedPartitionSize": 1.6666666666666665
+    },
+    {
+      "pattern": "100000",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "cloots",
+      "candidatesRemaining": 204,
+      "entropy": 6.449290065935815,
+      "expectedPartitionSize": 3.284313725490193
+    },
+    {
+      "pattern": "100001",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "touchy",
+      "candidatesRemaining": 146,
+      "entropy": 5.6013422811319975,
+      "expectedPartitionSize": 4.8630136986301284
+    },
+    {
+      "pattern": "100002",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "cursor",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "100010",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "betels",
+      "candidatesRemaining": 261,
+      "entropy": 6.050386927627297,
+      "expectedPartitionSize": 6.272030651340984
+    },
+    {
+      "pattern": "100011",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "retore",
+      "candidatesRemaining": 286,
+      "entropy": 5.435686074442671,
+      "expectedPartitionSize": 11.062937062937056
+    },
+    {
+      "pattern": "100012",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "lessor",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "100020",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "dought",
+      "candidatesRemaining": 298,
+      "entropy": 5.606768213316634,
+      "expectedPartitionSize": 9.456375838926165
+    },
+    {
+      "pattern": "100021",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "couths",
+      "candidatesRemaining": 138,
+      "entropy": 4.925635016703801,
+      "expectedPartitionSize": 7.550724637681149
+    },
+    {
+      "pattern": "100022",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "tossup",
+      "candidatesRemaining": 65,
+      "entropy": 4.384456607374046,
+      "expectedPartitionSize": 4.076923076923076
+    },
+    {
+      "pattern": "100100",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "cloots",
+      "candidatesRemaining": 67,
+      "entropy": 5.0250652208778535,
+      "expectedPartitionSize": 2.4029850746268657
+    },
+    {
+      "pattern": "100101",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "brooch",
+      "candidatesRemaining": 19,
+      "entropy": 4.03740119765411,
+      "expectedPartitionSize": 1.2105263157894732
+    },
+    {
+      "pattern": "100110",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "tenons",
+      "candidatesRemaining": 87,
+      "entropy": 5.141905387665616,
+      "expectedPartitionSize": 3.6436781609195426
+    },
+    {
+      "pattern": "100111",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "betons",
+      "candidatesRemaining": 38,
+      "entropy": 4.376363948212961,
+      "expectedPartitionSize": 2.2631578947368416
+    },
+    {
+      "pattern": "100112",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "censor",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "100120",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "custos",
+      "candidatesRemaining": 58,
+      "entropy": 4.906924797563258,
+      "expectedPartitionSize": 2.4482758620689644
+    },
+    {
+      "pattern": "100121",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "enures",
+      "candidatesRemaining": 8,
+      "entropy": 2.85,
+      "expectedPartitionSize": 1.25
+    },
+    {
+      "pattern": "100122",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "censer",
+      "candidatesRemaining": 7,
+      "entropy": 2.3359263506290326,
+      "expectedPartitionSize": 1.5714285714285712
+    },
+    {
+      "pattern": "100200",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "fought",
+      "candidatesRemaining": 25,
+      "entropy": 3.8292750707107115,
+      "expectedPartitionSize": 2.2
+    },
+    {
+      "pattern": "100201",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "correct",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "dorbug",
+      "candidatesRemaining": 13,
+      "entropy": 3.546593564294939,
+      "expectedPartitionSize": 1.1538461538461537
+    },
+    {
+      "pattern": "100210",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "teensy",
+      "candidatesRemaining": 9,
+      "entropy": 3.04770277922009,
+      "expectedPartitionSize": 1.2222222222222225
+    },
+    {
+      "pattern": "100211",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "correct",
+        "present",
+        "present"
+      ],
+      "bestGuess": "brents",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "100220",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "leones",
+      "candidatesRemaining": 9,
+      "entropy": 2.6032583347756457,
+      "expectedPartitionSize": 1.6666666666666667
+    },
+    {
+      "pattern": "100221",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "correct",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "trones",
+      "candidatesRemaining": 6,
+      "entropy": 2.3516291673878227,
+      "expectedPartitionSize": 1.3333333333333333
+    },
+    {
+      "pattern": "101000",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "compts",
+      "candidatesRemaining": 200,
+      "entropy": 5.973260378913106,
+      "expectedPartitionSize": 4.419999999999993
+    },
+    {
+      "pattern": "101001",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "courts",
+      "candidatesRemaining": 66,
+      "entropy": 5.108417793436983,
+      "expectedPartitionSize": 2.3939393939393927
+    },
+    {
+      "pattern": "101002",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "upstir",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "101010",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "limits",
+      "candidatesRemaining": 114,
+      "entropy": 5.285006326075101,
+      "expectedPartitionSize": 3.5438596491228043
+    },
+    {
+      "pattern": "101011",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "remelt",
+      "candidatesRemaining": 111,
+      "entropy": 4.479232789840726,
+      "expectedPartitionSize": 9.342342342342347
+    },
+    {
+      "pattern": "101012",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "bestir",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "101020",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "diglot",
+      "candidatesRemaining": 133,
+      "entropy": 4.759450229819437,
+      "expectedPartitionSize": 7.135338345864662
+    },
+    {
+      "pattern": "101021",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "tirled",
+      "candidatesRemaining": 28,
+      "entropy": 3.9677201004744993,
+      "expectedPartitionSize": 2.3571428571428568
+    },
+    {
+      "pattern": "101022",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "blotch",
+      "candidatesRemaining": 16,
+      "entropy": 3.202819531114783,
+      "expectedPartitionSize": 2.125
+    },
+    {
+      "pattern": "101100",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "putons",
+      "candidatesRemaining": 109,
+      "entropy": 5.399078366820789,
+      "expectedPartitionSize": 3.3302752293578046
+    },
+    {
+      "pattern": "101101",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "boring",
+      "candidatesRemaining": 23,
+      "entropy": 3.9690016298759936,
+      "expectedPartitionSize": 1.608695652173913
+    },
+    {
+      "pattern": "101110",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "eosins",
+      "candidatesRemaining": 70,
+      "entropy": 4.543379181682898,
+      "expectedPartitionSize": 5.028571428571425
+    },
+    {
+      "pattern": "101111",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "unsent",
+      "candidatesRemaining": 23,
+      "entropy": 3.914866303883101,
+      "expectedPartitionSize": 1.7826086956521736
+    },
+    {
+      "pattern": "101120",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "dictum",
+      "candidatesRemaining": 36,
+      "entropy": 3.6971597234241482,
+      "expectedPartitionSize": 3.833333333333332
+    },
+    {
+      "pattern": "101121",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "present",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "inures",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "101122",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "present",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "nosier",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "101200",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "bionts",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "101210",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "bennis",
+      "candidatesRemaining": 4,
+      "entropy": 1.6,
+      "expectedPartitionSize": 1.5
+    },
+    {
+      "pattern": "101220",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "dienes",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "101221",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "correct",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "irones",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "102000",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "cloots",
+      "candidatesRemaining": 52,
+      "entropy": 4.810734669939354,
+      "expectedPartitionSize": 2.1153846153846145
+    },
+    {
+      "pattern": "102001",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "phytol",
+      "candidatesRemaining": 59,
+      "entropy": 4.405380074852152,
+      "expectedPartitionSize": 3.779661016949152
+    },
+    {
+      "pattern": "102010",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "defect",
+      "candidatesRemaining": 20,
+      "entropy": 3.9219280948873623,
+      "expectedPartitionSize": 1.4000000000000001
+    },
+    {
+      "pattern": "102011",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "frowst",
+      "candidatesRemaining": 20,
+      "entropy": 3.621928094887362,
+      "expectedPartitionSize": 1.9000000000000004
+    },
+    {
+      "pattern": "102020",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "holdup",
+      "candidatesRemaining": 43,
+      "entropy": 4.34186497602557,
+      "expectedPartitionSize": 2.6744186046511635
+    },
+    {
+      "pattern": "102021",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "temped",
+      "candidatesRemaining": 29,
+      "entropy": 3.3436310999243437,
+      "expectedPartitionSize": 3.551724137931033
+    },
+    {
+      "pattern": "102022",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "poiser",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "102100",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "foison",
+      "candidatesRemaining": 6,
+      "entropy": 2.684962500721156,
+      "expectedPartitionSize": 0.9999999999999999
+    },
+    {
+      "pattern": "102101",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "grison",
+      "candidatesRemaining": 4,
+      "entropy": 1.6,
+      "expectedPartitionSize": 1.5
+    },
+    {
+      "pattern": "102110",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "deigns",
+      "candidatesRemaining": 5,
+      "entropy": 2.4219280948873623,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "102111",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "reigns",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "102120",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "knifes",
+      "candidatesRemaining": 6,
+      "entropy": 2.684962500721156,
+      "expectedPartitionSize": 0.9999999999999999
+    },
+    {
+      "pattern": "102200",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "dought",
+      "candidatesRemaining": 25,
+      "entropy": 3.843856189774723,
+      "expectedPartitionSize": 2.12
+    },
+    {
+      "pattern": "102201",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "correct",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "brings",
+      "candidatesRemaining": 8,
+      "entropy": 2.5056390622295663,
+      "expectedPartitionSize": 1.75
+    },
+    {
+      "pattern": "102210",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "elints",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "102211",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "correct",
+        "present",
+        "present"
+      ],
+      "bestGuess": "reinks",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "102220",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "whines",
+      "candidatesRemaining": 10,
+      "entropy": 1.6709505944546688,
+      "expectedPartitionSize": 4.199999999999999
+    },
+    {
+      "pattern": "102221",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "correct",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "brines",
+      "candidatesRemaining": 3,
+      "entropy": 1.0182958340544896,
+      "expectedPartitionSize": 1.6666666666666665
+    },
+    {
+      "pattern": "110000",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "clouts",
+      "candidatesRemaining": 205,
+      "entropy": 6.008523793009289,
+      "expectedPartitionSize": 4.49268292682927
+    },
+    {
+      "pattern": "110001",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "boarts",
+      "candidatesRemaining": 149,
+      "entropy": 5.101455446408176,
+      "expectedPartitionSize": 7.174496644295304
+    },
+    {
+      "pattern": "110002",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "hussar",
+      "candidatesRemaining": 10,
+      "entropy": 2.9464393446710155,
+      "expectedPartitionSize": 1.6000000000000003
+    },
+    {
+      "pattern": "110010",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "delate",
+      "candidatesRemaining": 127,
+      "entropy": 5.571917636148235,
+      "expectedPartitionSize": 3.472440944881888
+    },
+    {
+      "pattern": "110011",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "deters",
+      "candidatesRemaining": 112,
+      "entropy": 4.8262295494969125,
+      "expectedPartitionSize": 5.517857142857142
+    },
+    {
+      "pattern": "110012",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "eschar",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "110020",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "cleped",
+      "candidatesRemaining": 86,
+      "entropy": 4.505596699202484,
+      "expectedPartitionSize": 6.023255813953489
+    },
+    {
+      "pattern": "110021",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "claspt",
+      "candidatesRemaining": 45,
+      "entropy": 3.734217897889656,
+      "expectedPartitionSize": 4.466666666666667
+    },
+    {
+      "pattern": "110022",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "leaser",
+      "candidatesRemaining": 8,
+      "entropy": 2.6,
+      "expectedPartitionSize": 1.5
+    },
+    {
+      "pattern": "110100",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "mutons",
+      "candidatesRemaining": 57,
+      "entropy": 4.784215671869699,
+      "expectedPartitionSize": 2.719298245614036
+    },
+    {
+      "pattern": "110101",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "ourang",
+      "candidatesRemaining": 21,
+      "entropy": 3.689703732199547,
+      "expectedPartitionSize": 1.761904761904762
+    },
+    {
+      "pattern": "110110",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "cement",
+      "candidatesRemaining": 43,
+      "entropy": 4.339542523232318,
+      "expectedPartitionSize": 2.627906976744187
+    },
+    {
+      "pattern": "110111",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "lemans",
+      "candidatesRemaining": 11,
+      "entropy": 3.459431618637298,
+      "expectedPartitionSize": 1.0000000000000002
+    },
+    {
+      "pattern": "110120",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "anoles",
+      "candidatesRemaining": 10,
+      "entropy": 2.746439344671016,
+      "expectedPartitionSize": 1.8000000000000003
+    },
+    {
+      "pattern": "110121",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "present",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "antres",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "110122",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "present",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "answer",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "110200",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "actual",
+      "candidatesRemaining": 23,
+      "entropy": 3.6709688919510652,
+      "expectedPartitionSize": 2.2173913043478257
+    },
+    {
+      "pattern": "110201",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "correct",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "tombak",
+      "candidatesRemaining": 16,
+      "entropy": 3.202819531114783,
+      "expectedPartitionSize": 2.125
+    },
+    {
+      "pattern": "110210",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "helmet",
+      "candidatesRemaining": 11,
+      "entropy": 3.459431618637298,
+      "expectedPartitionSize": 1.0000000000000002
+    },
+    {
+      "pattern": "110211",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "correct",
+        "present",
+        "present"
+      ],
+      "bestGuess": "arenas",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "110220",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "atones",
+      "candidatesRemaining": 8,
+      "entropy": 2.35,
+      "expectedPartitionSize": 1.75
+    },
+    {
+      "pattern": "110221",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "correct",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "cranes",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "111000",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "pilots",
+      "candidatesRemaining": 98,
+      "entropy": 5.085645493576529,
+      "expectedPartitionSize": 3.6326530612244876
+    },
+    {
+      "pattern": "111001",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "trails",
+      "candidatesRemaining": 46,
+      "entropy": 4.361842390463365,
+      "expectedPartitionSize": 3.3478260869565224
+    },
+    {
+      "pattern": "111002",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "disbar",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "111010",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "dimple",
+      "candidatesRemaining": 22,
+      "entropy": 4.186704345910023,
+      "expectedPartitionSize": 1.2727272727272723
+    },
+    {
+      "pattern": "111011",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "adrift",
+      "candidatesRemaining": 16,
+      "entropy": 3.625,
+      "expectedPartitionSize": 1.375
+    },
+    {
+      "pattern": "111020",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "aisled",
+      "candidatesRemaining": 9,
+      "entropy": 3.04770277922009,
+      "expectedPartitionSize": 1.2222222222222223
+    },
+    {
+      "pattern": "111021",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "aeries",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "111022",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "ashier",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "111100",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "tiling",
+      "candidatesRemaining": 38,
+      "entropy": 4.418722908066562,
+      "expectedPartitionSize": 2.1052631578947367
+    },
+    {
+      "pattern": "111101",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "drains",
+      "candidatesRemaining": 10,
+      "entropy": 2.9464393446710155,
+      "expectedPartitionSize": 1.6000000000000003
+    },
+    {
+      "pattern": "111102",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present",
+        "present",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "instar",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "111110",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "tenias",
+      "candidatesRemaining": 10,
+      "entropy": 3.221928094887362,
+      "expectedPartitionSize": 1.2
+    },
+    {
+      "pattern": "111111",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "arsine",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "111200",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "liangs",
+      "candidatesRemaining": 8,
+      "entropy": 2.85,
+      "expectedPartitionSize": 1.25
+    },
+    {
+      "pattern": "111220",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "inanes",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "112000",
+      "feedbackArray": [
+        "present",
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "alamos",
+      "candidatesRemaining": 22,
+      "entropy": 4.061482186720775,
+      "expectedPartitionSize": 1.4545454545454541
+    },
+    {
+      "pattern": "112001",
+      "feedbackArray": [
+        "present",
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "cobalt",
+      "candidatesRemaining": 14,
+      "entropy": 3.6644977792004623,
+      "expectedPartitionSize": 1.1428571428571426
+    },
+    {
+      "pattern": "112010",
+      "feedbackArray": [
+        "present",
+        "present",
+        "correct",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "adieus",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "112011",
+      "feedbackArray": [
+        "present",
+        "present",
+        "correct",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "ariels",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "112020",
+      "feedbackArray": [
+        "present",
+        "present",
+        "correct",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "amides",
+      "candidatesRemaining": 9,
+      "entropy": 2.213283334294875,
+      "expectedPartitionSize": 2.3333333333333335
+    },
+    {
+      "pattern": "112021",
+      "feedbackArray": [
+        "present",
+        "present",
+        "correct",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "arises",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "112100",
+      "feedbackArray": [
+        "present",
+        "present",
+        "correct",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "animas",
+      "candidatesRemaining": 10,
+      "entropy": 2.7464393446710154,
+      "expectedPartitionSize": 1.8000000000000003
+    },
+    {
+      "pattern": "112110",
+      "feedbackArray": [
+        "present",
+        "present",
+        "correct",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "aliens",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "112120",
+      "feedbackArray": [
+        "present",
+        "present",
+        "correct",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "animes",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "112121",
+      "feedbackArray": [
+        "present",
+        "present",
+        "correct",
+        "present",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "arisen",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "112200",
+      "feedbackArray": [
+        "present",
+        "present",
+        "correct",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "acinus",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "112220",
+      "feedbackArray": [
+        "present",
+        "present",
+        "correct",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "alines",
+      "candidatesRemaining": 3,
+      "entropy": 1.0182958340544896,
+      "expectedPartitionSize": 1.6666666666666665
+    },
+    {
+      "pattern": "120000",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "moults",
+      "candidatesRemaining": 136,
+      "entropy": 5.055302339833353,
+      "expectedPartitionSize": 5.838235294117655
+    },
+    {
+      "pattern": "120001",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "mortal",
+      "candidatesRemaining": 66,
+      "entropy": 4.557440096821825,
+      "expectedPartitionSize": 3.5151515151515142
+    },
+    {
+      "pattern": "120002",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "castor",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "120010",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "mulcts",
+      "candidatesRemaining": 41,
+      "entropy": 4.439223115486298,
+      "expectedPartitionSize": 2.4634146341463428
+    },
+    {
+      "pattern": "120011",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "yclept",
+      "candidatesRemaining": 89,
+      "entropy": 3.467270144022552,
+      "expectedPartitionSize": 12.573033707865157
+    },
+    {
+      "pattern": "120012",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "caesar",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "120020",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "musths",
+      "candidatesRemaining": 133,
+      "entropy": 4.619024817068436,
+      "expectedPartitionSize": 8.518796992481214
+    },
+    {
+      "pattern": "120021",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "phlegm",
+      "candidatesRemaining": 37,
+      "entropy": 3.4113635004132528,
+      "expectedPartitionSize": 5.378378378378379
+    },
+    {
+      "pattern": "120022",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "plight",
+      "candidatesRemaining": 32,
+      "entropy": 3.22075946970164,
+      "expectedPartitionSize": 4.875
+    },
+    {
+      "pattern": "120100",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "mobcap",
+      "candidatesRemaining": 53,
+      "entropy": 4.255484605180033,
+      "expectedPartitionSize": 3.4150943396226436
+    },
+    {
+      "pattern": "120101",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "tomcod",
+      "candidatesRemaining": 11,
+      "entropy": 3.2776134368191165,
+      "expectedPartitionSize": 1.1818181818181819
+    },
+    {
+      "pattern": "120110",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "volant",
+      "candidatesRemaining": 19,
+      "entropy": 3.5368867237421666,
+      "expectedPartitionSize": 1.842105263157894
+    },
+    {
+      "pattern": "120111",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "caners",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "120120",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "months",
+      "candidatesRemaining": 17,
+      "entropy": 3.572469458770136,
+      "expectedPartitionSize": 1.5882352941176472
+    },
+    {
+      "pattern": "120121",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "present",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "nacres",
+      "candidatesRemaining": 4,
+      "entropy": 1.6,
+      "expectedPartitionSize": 1.5
+    },
+    {
+      "pattern": "120200",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "daunts",
+      "candidatesRemaining": 9,
+      "entropy": 2.1588138903312015,
+      "expectedPartitionSize": 2.555555555555556
+    },
+    {
+      "pattern": "120201",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "correct",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "varnas",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "120210",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "faenas",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "120220",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "pannes",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "121000",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "splits",
+      "candidatesRemaining": 65,
+      "entropy": 4.552096560485427,
+      "expectedPartitionSize": 3.7692307692307683
+    },
+    {
+      "pattern": "121001",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "rapids",
+      "candidatesRemaining": 26,
+      "entropy": 3.9402655651949265,
+      "expectedPartitionSize": 2.23076923076923
+    },
+    {
+      "pattern": "121010",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "present",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "deltic",
+      "candidatesRemaining": 12,
+      "entropy": 3.418295834054489,
+      "expectedPartitionSize": 1.1666666666666665
+    },
+    {
+      "pattern": "121020",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "present",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "clewed",
+      "candidatesRemaining": 14,
+      "entropy": 2.9780948881692613,
+      "expectedPartitionSize": 2.4285714285714297
+    },
+    {
+      "pattern": "121021",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "present",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "caries",
+      "candidatesRemaining": 5,
+      "entropy": 1.6219280948873622,
+      "expectedPartitionSize": 1.8
+    },
+    {
+      "pattern": "121022",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "present",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "easier",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "121100",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "present",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "coming",
+      "candidatesRemaining": 36,
+      "entropy": 3.951194363083222,
+      "expectedPartitionSize": 2.888888888888888
+    },
+    {
+      "pattern": "121101",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "present",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "ravins",
+      "candidatesRemaining": 5,
+      "entropy": 2.4219280948873623,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "121110",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "present",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "casein",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "121120",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "present",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "navies",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "122000",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "correct",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "taigas",
+      "candidatesRemaining": 10,
+      "entropy": 2.546439344671015,
+      "expectedPartitionSize": 2
+    },
+    {
+      "pattern": "122001",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "correct",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "cairds",
+      "candidatesRemaining": 3,
+      "entropy": 1.0182958340544896,
+      "expectedPartitionSize": 1.6666666666666665
+    },
+    {
+      "pattern": "122020",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "correct",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "maizes",
+      "candidatesRemaining": 5,
+      "entropy": 2.0219280948873624,
+      "expectedPartitionSize": 1.4
+    },
+    {
+      "pattern": "122021",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "correct",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "raised",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "122022",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "correct",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "kaiser",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "122100",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "correct",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "naiads",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "122101",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "correct",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "bairns",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "122120",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "correct",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "naives",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "122200",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "correct",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "faints",
+      "candidatesRemaining": 4,
+      "entropy": 1.6,
+      "expectedPartitionSize": 1.5
+    },
+    {
+      "pattern": "200000",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "cloths",
+      "candidatesRemaining": 115,
+      "entropy": 5.909050185972981,
+      "expectedPartitionSize": 2.2521739130434764
+    },
+    {
+      "pattern": "200001",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "thorps",
+      "candidatesRemaining": 60,
+      "entropy": 5.215061012203069,
+      "expectedPartitionSize": 1.7999999999999992
+    },
+    {
+      "pattern": "200002",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "stupor",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "200010",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "steels",
+      "candidatesRemaining": 94,
+      "entropy": 5.484234931801624,
+      "expectedPartitionSize": 2.6808510638297838
+    },
+    {
+      "pattern": "200011",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "hopers",
+      "candidatesRemaining": 56,
+      "entropy": 4.68068378045402,
+      "expectedPartitionSize": 2.642857142857142
+    },
+    {
+      "pattern": "200012",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "sector",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "200020",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "poults",
+      "candidatesRemaining": 101,
+      "entropy": 5.270309844091143,
+      "expectedPartitionSize": 3.316831683168318
+    },
+    {
+      "pattern": "200021",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "clouts",
+      "candidatesRemaining": 33,
+      "entropy": 4.27137063437885,
+      "expectedPartitionSize": 1.9696969696969693
+    },
+    {
+      "pattern": "200022",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "topful",
+      "candidatesRemaining": 41,
+      "entropy": 4.1315846264110005,
+      "expectedPartitionSize": 2.9024390243902443
+    },
+    {
+      "pattern": "200100",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "pylons",
+      "candidatesRemaining": 36,
+      "entropy": 4.461320140211007,
+      "expectedPartitionSize": 1.8888888888888875
+    },
+    {
+      "pattern": "200101",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "strong",
+      "candidatesRemaining": 11,
+      "entropy": 3.5594316186372983,
+      "expectedPartitionSize": 1.0000000000000002
+    },
+    {
+      "pattern": "200110",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "skeens",
+      "candidatesRemaining": 24,
+      "entropy": 4.070175521464345,
+      "expectedPartitionSize": 1.6666666666666674
+    },
+    {
+      "pattern": "200111",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "cytons",
+      "candidatesRemaining": 11,
+      "entropy": 3.459431618637298,
+      "expectedPartitionSize": 1.0000000000000002
+    },
+    {
+      "pattern": "200112",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "present",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "senhor",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "200120",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "louden",
+      "candidatesRemaining": 22,
+      "entropy": 3.9139770731827506,
+      "expectedPartitionSize": 1.5454545454545452
+    },
+    {
+      "pattern": "200121",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "present",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "snored",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "200122",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "present",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "sender",
+      "candidatesRemaining": 4,
+      "entropy": 1.6,
+      "expectedPartitionSize": 1.5
+    },
+    {
+      "pattern": "200200",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "shunts",
+      "candidatesRemaining": 8,
+      "entropy": 2.5056390622295663,
+      "expectedPartitionSize": 1.75
+    },
+    {
+      "pattern": "200210",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "capote",
+      "candidatesRemaining": 11,
+      "entropy": 3.459431618637298,
+      "expectedPartitionSize": 1.0000000000000002
+    },
+    {
+      "pattern": "200220",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "stoned",
+      "candidatesRemaining": 10,
+      "entropy": 2.8219280948873626,
+      "expectedPartitionSize": 1.6
+    },
+    {
+      "pattern": "200221",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "correct",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "sorned",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "200222",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "correct",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "sooner",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "201000",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "moults",
+      "candidatesRemaining": 50,
+      "entropy": 5.148758439731456,
+      "expectedPartitionSize": 1.5200000000000005
+    },
+    {
+      "pattern": "201001",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "script",
+      "candidatesRemaining": 23,
+      "entropy": 4.188779347361361,
+      "expectedPartitionSize": 1.434782608695652
+    },
+    {
+      "pattern": "201002",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "siddur",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "201010",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "temple",
+      "candidatesRemaining": 28,
+      "entropy": 4.423251796980339,
+      "expectedPartitionSize": 1.428571428571429
+    },
+    {
+      "pattern": "201011",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "uptick",
+      "candidatesRemaining": 19,
+      "entropy": 3.5368867237421666,
+      "expectedPartitionSize": 1.842105263157894
+    },
+    {
+      "pattern": "201020",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "diglot",
+      "candidatesRemaining": 19,
+      "entropy": 3.6163485660751626,
+      "expectedPartitionSize": 1.842105263157894
+    },
+    {
+      "pattern": "201021",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "scries",
+      "candidatesRemaining": 6,
+      "entropy": 2.684962500721156,
+      "expectedPartitionSize": 0.9999999999999999
+    },
+    {
+      "pattern": "201022",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "filmic",
+      "candidatesRemaining": 14,
+      "entropy": 2.950212064914747,
+      "expectedPartitionSize": 2.142857142857143
+    },
+    {
+      "pattern": "201100",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "diglot",
+      "candidatesRemaining": 28,
+      "entropy": 4.307354922057605,
+      "expectedPartitionSize": 1.642857142857144
+    },
+    {
+      "pattern": "201101",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "spring",
+      "candidatesRemaining": 7,
+      "entropy": 1.942370993177109,
+      "expectedPartitionSize": 2.142857142857143
+    },
+    {
+      "pattern": "201110",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "pelite",
+      "candidatesRemaining": 17,
+      "entropy": 3.8521687236032816,
+      "expectedPartitionSize": 1.2352941176470589
+    },
+    {
+      "pattern": "201111",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "serein",
+      "candidatesRemaining": 6,
+      "entropy": 2.3516291673878227,
+      "expectedPartitionSize": 1.3333333333333335
+    },
+    {
+      "pattern": "201112",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "present",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "senior",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "201120",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "sicken",
+      "candidatesRemaining": 5,
+      "entropy": 2.0219280948873624,
+      "expectedPartitionSize": 1.4000000000000001
+    },
+    {
+      "pattern": "201122",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "present",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "singer",
+      "candidatesRemaining": 3,
+      "entropy": 1.0182958340544896,
+      "expectedPartitionSize": 1.6666666666666665
+    },
+    {
+      "pattern": "201202",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "correct",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "signor",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "201210",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "scenic",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "201220",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "signed",
+      "candidatesRemaining": 5,
+      "entropy": 2.0219280948873624,
+      "expectedPartitionSize": 1.4
+    },
+    {
+      "pattern": "201222",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "correct",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "signer",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "202000",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "lymphs",
+      "candidatesRemaining": 43,
+      "entropy": 4.5340664296648825,
+      "expectedPartitionSize": 2.209302325581396
+    },
+    {
+      "pattern": "202001",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "shtiks",
+      "candidatesRemaining": 16,
+      "entropy": 3.75,
+      "expectedPartitionSize": 1.25
+    },
+    {
+      "pattern": "202002",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "suitor",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "202010",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "cloths",
+      "candidatesRemaining": 12,
+      "entropy": 3.584962500721156,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "202011",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "shiers",
+      "candidatesRemaining": 3,
+      "entropy": 1.0182958340544896,
+      "expectedPartitionSize": 1.6666666666666665
+    },
+    {
+      "pattern": "202012",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "absent",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "seisor",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "202020",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "platys",
+      "candidatesRemaining": 45,
+      "entropy": 4.322315530038771,
+      "expectedPartitionSize": 2.6444444444444435
+    },
+    {
+      "pattern": "202021",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "spires",
+      "candidatesRemaining": 5,
+      "entropy": 2.0219280948873624,
+      "expectedPartitionSize": 1.4000000000000001
+    },
+    {
+      "pattern": "202022",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "veldts",
+      "candidatesRemaining": 14,
+      "entropy": 3.09306920777189,
+      "expectedPartitionSize": 1.714285714285714
+    },
+    {
+      "pattern": "202100",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "scions",
+      "candidatesRemaining": 7,
+      "entropy": 2.6216406363433182,
+      "expectedPartitionSize": 1.2857142857142856
+    },
+    {
+      "pattern": "202110",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "seisin",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "202120",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "sniped",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "202122",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "present",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "snider",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "202200",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "glouts",
+      "candidatesRemaining": 20,
+      "entropy": 3.821928094887362,
+      "expectedPartitionSize": 1.7000000000000006
+    },
+    {
+      "pattern": "202202",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "correct",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "spinor",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "202210",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "swinge",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "202220",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "spined",
+      "candidatesRemaining": 8,
+      "entropy": 2.0056390622295663,
+      "expectedPartitionSize": 2.25
+    },
+    {
+      "pattern": "202222",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "correct",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "seiner",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "210000",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "mulcts",
+      "candidatesRemaining": 95,
+      "entropy": 5.501875483000409,
+      "expectedPartitionSize": 2.5578947368421066
+    },
+    {
+      "pattern": "210001",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "coapts",
+      "candidatesRemaining": 59,
+      "entropy": 4.632228854263241,
+      "expectedPartitionSize": 2.7627118644067794
+    },
+    {
+      "pattern": "210002",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "soucar",
+      "candidatesRemaining": 7,
+      "entropy": 2.9073549220576043,
+      "expectedPartitionSize": 0.9999999999999998
+    },
+    {
+      "pattern": "210010",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "delate",
+      "candidatesRemaining": 51,
+      "entropy": 4.86812043984103,
+      "expectedPartitionSize": 1.9803921568627445
+    },
+    {
+      "pattern": "210011",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "teraph",
+      "candidatesRemaining": 28,
+      "entropy": 3.9946803684089085,
+      "expectedPartitionSize": 1.9999999999999998
+    },
+    {
+      "pattern": "210012",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "secpar",
+      "candidatesRemaining": 4,
+      "entropy": 1.6,
+      "expectedPartitionSize": 1.5
+    },
+    {
+      "pattern": "210020",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "platys",
+      "candidatesRemaining": 65,
+      "entropy": 4.333283967769672,
+      "expectedPartitionSize": 4.0153846153846136
+    },
+    {
+      "pattern": "210021",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "depths",
+      "candidatesRemaining": 11,
+      "entropy": 3.2776134368191165,
+      "expectedPartitionSize": 1.1818181818181819
+    },
+    {
+      "pattern": "210022",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "petrol",
+      "candidatesRemaining": 30,
+      "entropy": 3.5647351787255053,
+      "expectedPartitionSize": 3.1333333333333324
+    },
+    {
+      "pattern": "210100",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "platys",
+      "candidatesRemaining": 27,
+      "entropy": 4.1622949095708766,
+      "expectedPartitionSize": 1.7407407407407403
+    },
+    {
+      "pattern": "210101",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "knouts",
+      "candidatesRemaining": 14,
+      "entropy": 3.521640636343319,
+      "expectedPartitionSize": 1.2857142857142854
+    },
+    {
+      "pattern": "210110",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "decent",
+      "candidatesRemaining": 20,
+      "entropy": 3.746439344671015,
+      "expectedPartitionSize": 1.7000000000000004
+    },
+    {
+      "pattern": "210111",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "senary",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "210120",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "shaken",
+      "candidatesRemaining": 9,
+      "entropy": 2.297159723424149,
+      "expectedPartitionSize": 2.111111111111111
+    },
+    {
+      "pattern": "210121",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "present",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "snared",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "210122",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "present",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "snarer",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "210200",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "aughts",
+      "candidatesRemaining": 20,
+      "entropy": 3.8219280948873617,
+      "expectedPartitionSize": 1.5000000000000004
+    },
+    {
+      "pattern": "210210",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "seance",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "210220",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "staned",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "211000",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "lipids",
+      "candidatesRemaining": 21,
+      "entropy": 4.106603137064474,
+      "expectedPartitionSize": 1.285714285714286
+    },
+    {
+      "pattern": "211001",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "charts",
+      "candidatesRemaining": 14,
+      "entropy": 3.521640636343319,
+      "expectedPartitionSize": 1.2857142857142856
+    },
+    {
+      "pattern": "211002",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "present",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "sirdar",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "211010",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "present",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "sheila",
+      "candidatesRemaining": 8,
+      "entropy": 2.85,
+      "expectedPartitionSize": 1.25
+    },
+    {
+      "pattern": "211011",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "present",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "serail",
+      "candidatesRemaining": 5,
+      "entropy": 2.4219280948873623,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "211100",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "present",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "stains",
+      "candidatesRemaining": 7,
+      "entropy": 2.6216406363433187,
+      "expectedPartitionSize": 1.2857142857142854
+    },
+    {
+      "pattern": "211101",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "present",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "sprain",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "211110",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "present",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "semina",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "211200",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "present",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "shanti",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "211210",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "present",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "sienna",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "212000",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "shivas",
+      "candidatesRemaining": 9,
+      "entropy": 2.825480556997868,
+      "expectedPartitionSize": 1.4444444444444446
+    },
+    {
+      "pattern": "212001",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "spiral",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "212002",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "correct",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "shikar",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "212010",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "correct",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "spicae",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "212021",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "correct",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "spirea",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "212200",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "correct",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "spinal",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "220000",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "moguls",
+      "candidatesRemaining": 30,
+      "entropy": 4.41506101220307,
+      "expectedPartitionSize": 1.5333333333333348
+    },
+    {
+      "pattern": "220001",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "altars",
+      "candidatesRemaining": 13,
+      "entropy": 3.546593564294939,
+      "expectedPartitionSize": 1.1538461538461537
+    },
+    {
+      "pattern": "220002",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "savour",
+      "candidatesRemaining": 9,
+      "entropy": 2.3810361125534234,
+      "expectedPartitionSize": 2.3333333333333335
+    },
+    {
+      "pattern": "220010",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "yclept",
+      "candidatesRemaining": 18,
+      "entropy": 3.8365916681089787,
+      "expectedPartitionSize": 1.3333333333333337
+    },
+    {
+      "pattern": "220011",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "sabers",
+      "candidatesRemaining": 7,
+      "entropy": 1.4787834934861754,
+      "expectedPartitionSize": 3
+    },
+    {
+      "pattern": "220020",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "talced",
+      "candidatesRemaining": 21,
+      "entropy": 3.7442393049484357,
+      "expectedPartitionSize": 2.047619047619048
+    },
+    {
+      "pattern": "220021",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "sabred",
+      "candidatesRemaining": 6,
+      "entropy": 2.351629167387823,
+      "expectedPartitionSize": 1.3333333333333333
+    },
+    {
+      "pattern": "220022",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "saucer",
+      "candidatesRemaining": 9,
+      "entropy": 1.5466166676282083,
+      "expectedPartitionSize": 4.333333333333332
+    },
+    {
+      "pattern": "220100",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "longan",
+      "candidatesRemaining": 14,
+      "entropy": 3.6644977792004623,
+      "expectedPartitionSize": 1.1428571428571426
+    },
+    {
+      "pattern": "220101",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "sarans",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "220102",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "present",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "sangar",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "220110",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "sanely",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "220120",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "sadden",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "220121",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "present",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "sarsen",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "220122",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "present",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "sander",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "220200",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "sannop",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "220220",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "sawney",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "221000",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "mysids",
+      "candidatesRemaining": 12,
+      "entropy": 3.4182958340544896,
+      "expectedPartitionSize": 1.1666666666666665
+    },
+    {
+      "pattern": "221001",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "safari",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "221002",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "present",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "savior",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "221010",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "present",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "saltie",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "221011",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "present",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "satire",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "221020",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "present",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "samiel",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "221022",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "present",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "sagier",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "221100",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "present",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "gently",
+      "candidatesRemaining": 13,
+      "entropy": 3.180832987205441,
+      "expectedPartitionSize": 1.615384615384615
+    },
+    {
+      "pattern": "221101",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "present",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "sarins",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "221102",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "present",
+        "present",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "santir",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "221110",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "present",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "sabine",
+      "candidatesRemaining": 3,
+      "entropy": 1.0182958340544896,
+      "expectedPartitionSize": 1.6666666666666665
+    },
+    {
+      "pattern": "221120",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "present",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "sanies",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "222000",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "correct",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "saigas",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "222002",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "correct",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "sailor",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "222010",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "correct",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "saithe",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "222020",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "correct",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "saices",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "222022",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "correct",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "sailer",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "222100",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "correct",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "saimin",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "222200",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "correct",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "saints",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "222220",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "correct",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "sained",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    }
+  ]
+}

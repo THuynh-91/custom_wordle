@@ -1,13 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import GameSetup from './components/GameSetup';
 import GameBoard from './components/GameBoard';
-import MultiplayerLobby from './components/MultiplayerLobby';
-import MultiplayerGameBoard from './components/MultiplayerGameBoard';
 import { GameMode, WordLength, SolverType, MultiplayerRoomState } from '@shared/types';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import './App.css';
 import { apiFetch } from './lib/apiClient';
+
+// Lazy-load multiplayer components: they pull in socket.io-client and are only
+// needed when a user actually enters multiplayer, keeping them out of the main bundle.
+const MultiplayerLobby = lazy(() => import('./components/MultiplayerLobby'));
+const MultiplayerGameBoard = lazy(() => import('./components/MultiplayerGameBoard'));
+
+const MultiplayerFallback = () => (
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: '400px',
+    fontSize: '1.2rem'
+  }}>
+    Loading multiplayer...
+  </div>
+);
 
 function App() {
   const [gameId, setGameId] = useState<string | null>(null);
@@ -440,6 +455,7 @@ function App() {
       </header>
 
       <main className="app-main container">
+        <Suspense fallback={<MultiplayerFallback />}>
         {(() => {
           console.log('[App] ========== RENDER DECISION ==========');
           console.log('[App] State check:');
@@ -533,6 +549,7 @@ function App() {
             />
           );
         })()}
+        </Suspense>
       </main>
 
       <footer className="app-footer">

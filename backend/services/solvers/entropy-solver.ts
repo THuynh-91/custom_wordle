@@ -74,6 +74,37 @@ function feedbackToPattern(feedback: TileState[]): string {
 }
 
 /**
+ * Resolve the precomputed data file across the various dev / build layouts.
+ *
+ * Depending on whether `flatten-backend` ran, the compiled solver can live at
+ * `dist/backend/services/solvers/...` or `dist/backend/backend/services/solvers/...`,
+ * so a single `__dirname`-relative path is not reliable. We probe several
+ * candidate roots (mirroring word-service's resolveDataFile) and return the
+ * first that exists.
+ */
+function resolvePrecomputedPath(length: WordLength): string | null {
+  const fileName = `second-guess-${length}.json`;
+  const candidates = [
+    // dev / flattened-dist layout: services/solvers -> data/precomputed
+    path.join(__dirname, '..', '..', 'data', 'precomputed', fileName),
+    // nested-dist layout (no flatten): backend/services/solvers -> backend/data/precomputed
+    path.join(__dirname, '..', '..', '..', 'data', 'precomputed', fileName),
+    // cwd-based fallbacks for various deploy roots
+    path.resolve(process.cwd(), 'dist', 'backend', 'data', 'precomputed', fileName),
+    path.resolve(process.cwd(), 'dist', 'data', 'precomputed', fileName),
+    path.resolve(process.cwd(), 'backend', 'data', 'precomputed', fileName),
+    path.resolve(process.cwd(), 'data', 'precomputed', fileName)
+  ];
+
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) {
+      return candidate;
+    }
+  }
+  return null;
+}
+
+/**
  * Load pre-computed second guess data for a given word length
  */
 function loadPrecomputedData(length: WordLength): void {
@@ -82,10 +113,10 @@ function loadPrecomputedData(length: WordLength): void {
   }
 
   try {
-    const dataPath = path.join(__dirname, '..', '..', 'data', 'precomputed', `second-guess-${length}.json`);
+    const dataPath = resolvePrecomputedPath(length);
 
-    if (!fs.existsSync(dataPath)) {
-      console.log(`[EntropySolver] No pre-computed data found for length ${length} at ${dataPath}`);
+    if (!dataPath) {
+      console.log(`[EntropySolver] No pre-computed data found for length ${length}`);
       return;
     }
 
@@ -253,10 +284,32 @@ export class EntropySolver extends BaseSolver {
         }
       };
     } else if (this.useAllGuesses && candidatesRemaining.length > 10) {
-      // For larger sets, consider all possible guesses (including non-answers) for optimal play
-      // This may be slower but gives better average performance
-      // Strategic guesses (that don't match constraints) can eliminate many candidates at once
-      wordsToEvaluate = this.allGuesses;
+      // For larger sets, consider all possible guesses (including non-answers) for optimal play.
+      // Strategic guesses (that don't match constraints) can eliminate many candidates at once.
+      //
+      // PERFORMANCE CAP: the cost of this branch is O(wordsToEvaluate * candidatesRemaining).
+      // For 6/7-letter words allGuesses is 15k-23k, which combined with a large candidate set
+      // blocks the event loop for ~2s. To keep worst-case latency well under ~300ms we bound
+      // the work: when the search space is large we always evaluate every remaining candidate
+      // (so the true answer is never excluded) plus a frequency-independent, evenly-spaced
+      // sample of the remaining guess pool for strategic information.
+      const MAX_EVALUATIONS = 4_000_000; // guess*candidate product budget
+      const guessBudget = Math.max(
+        candidatesRemaining.length,
+        Math.floor(MAX_EVALUATIONS / Math.max(candidatesRemaining.length, 1))
+      );
+
+      if (this.allGuesses.length <= guessBudget) {
+        wordsToEvaluate = this.allGuesses;
+      } else {
+        // Always include the actual candidates, then top up with a representative
+        // sample of strategic (non-candidate) guesses up to the budget.
+        const candidateSet = new Set(candidatesRemaining);
+        const strategicPool = this.allGuesses.filter(w => !candidateSet.has(w));
+        const strategicBudget = Math.max(0, guessBudget - candidatesRemaining.length);
+        const sampledStrategic = this.sampleWords(strategicPool, strategicBudget);
+        wordsToEvaluate = [...candidatesRemaining, ...sampledStrategic];
+      }
     } else {
       // For smaller sets, just evaluate candidates
       wordsToEvaluate = candidatesRemaining;

@@ -210,6 +210,11 @@ export class MultiplayerService {
       throw new Error('Game is not in progress');
     }
 
+    // Player must still be playing (cannot submit after won/lost)
+    if (player.status !== 'in-progress') {
+      throw new Error('You have already finished');
+    }
+
     // Check turn-based mode
     if (room.gameMode === 'turn-based' && room.currentTurn !== playerId) {
       throw new Error('Not your turn');
@@ -253,15 +258,63 @@ export class MultiplayerService {
       }
     }
 
-    // Switch turn for turn-based mode
+    // Advance the turn for turn-based mode, skipping finished/disconnected
+    // players so the game cannot deadlock on the player who just moved.
     if (room.gameMode === 'turn-based' && room.status === 'in-progress') {
-      const otherPlayer = room.players.find(p => p?.id !== playerId);
-      if (otherPlayer) {
-        room.currentTurn = otherPlayer.id;
-      }
+      this.advanceTurn(room, playerId);
     }
 
     return { room, feedback, playerStatus: player.status };
+  }
+
+  /**
+   * Pick the next player who is still active (in-progress and connected) and
+   * assign them the turn. Falls back to in-progress-but-disconnected players if
+   * no connected player is available, so a temporary disconnect does not stall
+   * the game. If no player can take a turn, the room is completed.
+   *
+   * @param afterPlayerId - the player who just acted (or is leaving); the search
+   *   for the next turn starts after this player so turns rotate fairly.
+   */
+  private static advanceTurn(
+    room: MultiplayerRoomState,
+    afterPlayerId?: string
+  ): void {
+    if (room.gameMode !== 'turn-based') return;
+
+    const players = room.players.filter(
+      (p): p is MultiplayerPlayer => p !== undefined
+    );
+
+    const isActive = (p: MultiplayerPlayer) =>
+      p.status === 'in-progress' && p.isConnected;
+    const isPlayable = (p: MultiplayerPlayer) => p.status === 'in-progress';
+
+    // Rotate the search order so it begins after the player who just acted.
+    let ordered = players;
+    if (afterPlayerId) {
+      const idx = players.findIndex(p => p.id === afterPlayerId);
+      if (idx !== -1) {
+        ordered = [...players.slice(idx + 1), ...players.slice(0, idx + 1)];
+      }
+    }
+
+    // Prefer a connected, in-progress player; otherwise allow a disconnected
+    // one (they may reconnect within the timeout window).
+    const next = ordered.find(isActive) || ordered.find(isPlayable);
+
+    if (next) {
+      room.currentTurn = next.id;
+      return;
+    }
+
+    // No player can move -> the game is over.
+    room.status = 'completed';
+    room.completedAt = room.completedAt ?? Date.now();
+    // Winner, if any, is the lone player who already won; otherwise leave unset.
+    const winner = players.find(p => p.status === 'won');
+    if (winner) room.winner = winner.id;
+    console.log(`[Multiplayer] Game completed in room ${room.roomCode} - no active players to take a turn`);
   }
 
   /**
@@ -315,6 +368,10 @@ export class MultiplayerService {
       } else if (room.status === 'waiting') {
         // Remove room if game hasn't started
         this.removeRoom(roomId);
+      } else if (room.status === 'in-progress') {
+        // No other player remains; make sure the turn does not stay pinned to
+        // the timed-out player.
+        this.advanceTurn(room, playerId);
       }
     }
 
@@ -383,6 +440,24 @@ export class MultiplayerService {
     const activePlayers = room.players.filter(p => p !== undefined);
     if (activePlayers.length === 0 || (room.status === 'waiting' && activePlayers.length < 2)) {
       this.removeRoom(roomId);
+      return;
+    }
+
+    // The leaver may have held the turn (turn-based). Reassign it to a remaining
+    // player or complete the game so the survivor is never stuck on "Not your
+    // turn". If a single player remains in an in-progress game, award them the win.
+    if (room.status === 'in-progress') {
+      const remaining = room.players.filter(
+        (p): p is MultiplayerPlayer => p !== undefined
+      );
+      if (remaining.length === 1 && remaining[0].status === 'in-progress') {
+        room.status = 'completed';
+        room.winner = remaining[0].id;
+        room.completedAt = Date.now();
+        console.log(`[Multiplayer] Game ended in room ${room.roomCode} - opponent left`);
+      } else if (room.gameMode === 'turn-based' && room.currentTurn === playerId) {
+        this.advanceTurn(room, playerId);
+      }
     }
   }
 
@@ -423,16 +498,113 @@ export class MultiplayerService {
   }
 
   /**
-   * Get sanitized room state (hide secret from clients during game)
+   * Build a per-player sanitized view of the room state.
+   *
+   * Sanitization scheme:
+   *  - The secret is only included once the room is `completed`; otherwise blank.
+   *  - The requesting player (`playerId`) receives their OWN full guess history
+   *    (guesses + per-tile feedback).
+   *  - Opponent players are reduced to non-revealing progress only: the number
+   *    of guesses made plus a per-row colour-count summary (how many correct /
+   *    present / absent tiles each row had). This conveys "how well they're
+   *    doing" for UI/progress purposes WITHOUT leaking the guessed letters or
+   *    which positions are correct, so the answer cannot be deduced.
+   *  - Once the room is `completed`, full histories are revealed for everyone so
+   *    the end-game recap shows both boards.
+   *
+   * The whole structure is deep-copied so the stored room is never mutated and
+   * no nested arrays/objects are shared by reference with the client payload.
    */
-  static getSanitizedRoomState(room: MultiplayerRoomState, playerId: string): any {
-    const sanitized = { ...room };
+  static getSanitizedRoomState(
+    room: MultiplayerRoomState,
+    playerId: string
+  ): MultiplayerRoomState {
+    const isCompleted = room.status === 'completed';
 
-    // Only reveal secret if game is completed
-    if (room.status !== 'completed') {
-      sanitized.secret = '';
-    }
+    const sanitizePlayer = (
+      player: MultiplayerPlayer
+    ): MultiplayerPlayer => {
+      const isSelf = player.id === playerId;
+      const revealFull = isSelf || isCompleted;
+
+      const guesses: GuessFeedback[] = revealFull
+        ? player.guesses.map(g => ({
+            guess: g.guess,
+            feedback: [...g.feedback],
+            timestamp: g.timestamp,
+          }))
+        : // Opponent in an active game: hide letters & exact feedback, keep
+          // only a non-revealing per-row colour-count summary.
+          player.guesses.map(g => ({
+            guess: '',
+            feedback: this.summarizeFeedback(g.feedback),
+            timestamp: g.timestamp,
+          }));
+
+      return {
+        id: player.id,
+        name: player.name,
+        isReady: player.isReady,
+        guesses,
+        status: player.status,
+        isConnected: player.isConnected,
+        ...(player.disconnectedAt !== undefined
+          ? { disconnectedAt: player.disconnectedAt }
+          : {}),
+      };
+    };
+
+    const players = room.players.map(p =>
+      p ? sanitizePlayer(p) : undefined
+    ) as [MultiplayerPlayer, MultiplayerPlayer?];
+
+    const sanitized: MultiplayerRoomState = {
+      roomId: room.roomId,
+      roomCode: room.roomCode,
+      length: room.length,
+      secret: isCompleted ? room.secret : '',
+      gameMode: room.gameMode,
+      maxGuesses: room.maxGuesses,
+      hardMode: room.hardMode,
+      players,
+      status: room.status,
+      createdAt: room.createdAt,
+      ...(room.currentTurn !== undefined ? { currentTurn: room.currentTurn } : {}),
+      ...(room.winner !== undefined ? { winner: room.winner } : {}),
+      ...(room.startedAt !== undefined ? { startedAt: room.startedAt } : {}),
+      ...(room.completedAt !== undefined ? { completedAt: room.completedAt } : {}),
+    };
 
     return sanitized;
+  }
+
+  /**
+   * Reduce a row of tile feedback to a non-revealing colour-count summary.
+   * Produces an array of the same length, but with all positional information
+   * stripped: it is filled with `correct` tiles, then `present`, then `absent`,
+   * so the opponent only learns HOW MANY of each colour the row scored — never
+   * which letters or positions. (`empty` tiles, if any, are preserved at the end.)
+   */
+  static summarizeFeedbackForClient(feedback: TileState[]): TileState[] {
+    return this.summarizeFeedback(feedback);
+  }
+
+  private static summarizeFeedback(feedback: TileState[]): TileState[] {
+    let correct = 0;
+    let present = 0;
+    let absent = 0;
+    let empty = 0;
+    for (const f of feedback) {
+      if (f === 'correct') correct++;
+      else if (f === 'present') present++;
+      else if (f === 'absent') absent++;
+      else empty++;
+    }
+    return [
+      ...Array<TileState>(correct).fill('correct'),
+      ...Array<TileState>(present).fill('present'),
+      ...Array<TileState>(absent).fill('absent'),
+      ...Array<TileState>(empty).fill('empty'),
+    ];
   }
 }

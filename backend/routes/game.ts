@@ -3,6 +3,8 @@
  */
 
 import express from 'express';
+import { z } from 'zod';
+import { RateLimiterMemory } from 'rate-limiter-flexible';
 import { v4 as uuidv4 } from 'uuid';
 import { WordService } from '../services/word-service.js';
 import { GameEngine } from '../services/game-engine.js';
@@ -31,20 +33,94 @@ const games = new Map<string, GameState>();
 const raceGames = new Map<string, RaceState>();
 
 /**
+ * Strict rate limiter for the expensive AI-move endpoint (runs full entropy
+ * evaluation). 10 requests per minute per IP on top of the global limiter.
+ */
+const aiMoveRateLimiter = new RateLimiterMemory({
+  points: 10,
+  duration: 60,
+});
+
+// ---- Validation schemas (mirror shared/types.ts shapes) --------------------
+
+const WORD_LENGTHS = [3, 4, 5, 6, 7] as const;
+const GAME_MODES = [
+  'custom-challenge',
+  'human-play',
+  'race',
+  'ai-vs-ai',
+  'todays-wordle',
+  'multiplayer-challenge',
+] as const;
+const SOLVER_TYPES = ['frequency', 'entropy', 'ml', 'rl', 'hybrid'] as const;
+
+// A word/guess: letters only (a-z, case-insensitive), 3-7 chars. Per-length
+// exact matching is enforced downstream against the word lists.
+const wordString = z
+  .string()
+  .trim()
+  .regex(/^[a-zA-Z]{3,7}$/, 'Word must be 3-7 alphabetic characters');
+
+// Game ids are UUIDs created via uuidv4().
+const gameIdParamSchema = z.string().uuid('Invalid game id');
+
+const lengthSchema = z
+  .number()
+  .int()
+  .refine((n) => (WORD_LENGTHS as readonly number[]).includes(n), {
+    message: 'length must be one of 3, 4, 5, 6, 7',
+  });
+
+const createGameSchema = z.object({
+  mode: z.enum(GAME_MODES),
+  length: lengthSchema,
+  hardMode: z.boolean().optional(),
+  secret: wordString.optional(),
+  seed: z.string().trim().min(1).max(128).optional(),
+  solverType: z.enum(SOLVER_TYPES).optional(),
+});
+
+const submitGuessSchema = z.object({
+  word: wordString,
+});
+
+const validateWordSchema = z.object({
+  word: wordString,
+  length: lengthSchema,
+});
+
+const solverTypeQuerySchema = z.enum(SOLVER_TYPES).default('entropy');
+
+/**
+ * Validate the :gameId param. Returns the id or null (and sends 400) if invalid.
+ */
+function parseGameId(req: express.Request, res: express.Response): string | null {
+  const parsed = gameIdParamSchema.safeParse(req.params.gameId);
+  if (!parsed.success) {
+    res.status(400).json({
+      error: 'Invalid Request',
+      message: parsed.error.errors[0]?.message || 'Invalid game id',
+    });
+    return null;
+  }
+  return parsed.data;
+}
+
+/**
  * Create a new game
  */
 router.post('/create', async (req, res) => {
   try {
-    const request: CreateGameRequest = req.body;
-    const { mode, length, hardMode = false, secret, seed, solverType = 'entropy' } = request;
-
-    // Validate length
-    if (![3, 4, 5, 6, 7].includes(length)) {
+    const parsed = createGameSchema.safeParse(req.body);
+    if (!parsed.success) {
       return res.status(400).json({
-        error: 'Invalid Length',
-        message: ERROR_MESSAGES.INVALID_WORD_LENGTH(length)
+        error: 'Invalid Request',
+        message: parsed.error.errors[0]?.message || 'Invalid create game request',
       });
     }
+
+    const request: CreateGameRequest = parsed.data as CreateGameRequest;
+    const { mode, length, hardMode = false, secret, seed, solverType = 'entropy' } = request;
 
     // Determine secret word
     let secretWord: string;
@@ -126,8 +202,17 @@ router.post('/create', async (req, res) => {
  */
 router.post('/:gameId/guess', async (req, res) => {
   try {
-    const { gameId } = req.params;
-    const { word }: SubmitGuessRequest = req.body;
+    const gameId = parseGameId(req, res);
+    if (gameId === null) return;
+
+    const parsedBody = submitGuessSchema.safeParse(req.body);
+    if (!parsedBody.success) {
+      return res.status(400).json({
+        error: 'Invalid Request',
+        message: parsedBody.error.errors[0]?.message || 'Invalid guess',
+      });
+    }
+    const { word }: SubmitGuessRequest = parsedBody.data;
 
     // Check if this is a race game
     const raceGame = raceGames.get(gameId);
@@ -291,8 +376,28 @@ router.post('/:gameId/guess', async (req, res) => {
  */
 router.get('/:gameId/ai-move', async (req, res) => {
   try {
-    const { gameId } = req.params;
-    const { solverType = 'entropy' } = req.query;
+    // Stricter per-IP limit: this endpoint runs full entropy evaluation.
+    const rlKey = req.ip || req.socket.remoteAddress || 'unknown';
+    try {
+      await aiMoveRateLimiter.consume(rlKey);
+    } catch {
+      return res.status(429).json({
+        error: 'Too Many Requests',
+        message: ERROR_MESSAGES.RATE_LIMIT_EXCEEDED,
+      });
+    }
+
+    const gameId = parseGameId(req, res);
+    if (gameId === null) return;
+
+    const parsedSolver = solverTypeQuerySchema.safeParse(req.query.solverType ?? 'entropy');
+    if (!parsedSolver.success) {
+      return res.status(400).json({
+        error: 'Invalid Request',
+        message: ERROR_MESSAGES.INVALID_SOLVER_TYPE(String(req.query.solverType)),
+      });
+    }
+    const solverType = parsedSolver.data;
 
     // Check if this is a race game
     const raceGame = raceGames.get(gameId);
@@ -511,14 +616,14 @@ router.get('/:gameId/ai-move', async (req, res) => {
  */
 router.post('/:gameId/validate', async (req, res) => {
   try {
-    const { word, length }: ValidateWordRequest = req.body;
-
-    if (![3, 4, 5, 6, 7].includes(length)) {
+    const parsedBody = validateWordSchema.safeParse(req.body);
+    if (!parsedBody.success) {
       return res.status(400).json({
-        error: 'Invalid Length',
-        message: ERROR_MESSAGES.INVALID_WORD_LENGTH(length)
+        error: 'Invalid Request',
+        message: parsedBody.error.errors[0]?.message || 'Invalid validate request',
       });
     }
+    const { word, length }: ValidateWordRequest = parsedBody.data as ValidateWordRequest;
 
     const normalizedWord = word.toLowerCase().trim();
     const valid = WordService.isValidGuess(normalizedWord, length as WordLength);
@@ -540,7 +645,8 @@ router.post('/:gameId/validate', async (req, res) => {
  */
 router.get('/:gameId', async (req, res) => {
   try {
-    const { gameId } = req.params;
+    const gameId = parseGameId(req, res);
+    if (gameId === null) return;
 
     // Check for race game first
     const raceGame = raceGames.get(gameId);

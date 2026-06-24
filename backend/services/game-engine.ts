@@ -59,114 +59,61 @@ export class GameEngine {
     const letterConstraints = new Map<string, LetterConstraint>();
     const positionConstraints: (string | null)[] = new Array(length).fill(null);
 
+    const ensureConstraint = (letter: string): LetterConstraint => {
+      if (!letterConstraints.has(letter)) {
+        letterConstraints.set(letter, {
+          minCount: 0,
+          maxCount: Infinity,
+          positions: {
+            mustBe: new Set(),
+            cannotBe: new Set()
+          }
+        });
+      }
+      return letterConstraints.get(letter)!;
+    };
+
     // Process each guess
     for (const { guess, feedback } of guesses) {
-      const letterCounts = new Map<string, { min: number; max: number }>();
+      // Tally per-letter green/present/absent counts for THIS guess.
+      // Standard Wordle count rules (handles duplicate letters correctly):
+      //   - minimum copies in answer = greens + presents (yellows)
+      //   - if any copy of the letter was marked absent (gray), then the
+      //     answer contains EXACTLY greens + presents of that letter, so the
+      //     maximum is also greens + presents. Otherwise the max is unbounded.
+      const greens = new Map<string, number>();
+      const presents = new Map<string, number>();
+      const hasGray = new Map<string, boolean>();
 
-      // First pass: process greens and update position constraints
       for (let i = 0; i < length; i++) {
         const letter = guess[i];
+        const state = feedback[i];
 
-        if (feedback[i] === 'correct') {
+        if (state === 'correct') {
           positionConstraints[i] = letter;
-
-          if (!letterCounts.has(letter)) {
-            letterCounts.set(letter, { min: 0, max: Infinity });
-          }
-          letterCounts.get(letter)!.min++;
+          greens.set(letter, (greens.get(letter) || 0) + 1);
+          ensureConstraint(letter).positions.mustBe.add(i);
+        } else if (state === 'present') {
+          presents.set(letter, (presents.get(letter) || 0) + 1);
+          ensureConstraint(letter).positions.cannotBe.add(i);
+        } else if (state === 'absent') {
+          hasGray.set(letter, true);
+          ensureConstraint(letter).positions.cannotBe.add(i);
         }
       }
 
-      // Second pass: process yellows and grays
-      for (let i = 0; i < length; i++) {
-        const letter = guess[i];
+      // Derive per-guess min/max per letter and intersect into the running
+      // constraints (min = max across guesses, max = min across guesses).
+      const lettersInGuess = new Set(guess);
+      for (const letter of lettersInGuess) {
+        const green = greens.get(letter) || 0;
+        const present = presents.get(letter) || 0;
+        const guessMin = green + present;
+        const guessMax = hasGray.get(letter) ? guessMin : Infinity;
 
-        if (!letterCounts.has(letter)) {
-          letterCounts.set(letter, { min: 0, max: Infinity });
-        }
-
-        if (feedback[i] === 'present') {
-          letterCounts.get(letter)!.min++;
-
-          // Update letter constraints
-          if (!letterConstraints.has(letter)) {
-            letterConstraints.set(letter, {
-              minCount: 0,
-              maxCount: Infinity,
-              positions: {
-                mustBe: new Set(),
-                cannotBe: new Set()
-              }
-            });
-          }
-          letterConstraints.get(letter)!.positions.cannotBe.add(i);
-
-        } else if (feedback[i] === 'absent') {
-          // Check if this letter appeared as correct/present elsewhere
-          const hasCorrectOrPresent = feedback.some((f, idx) =>
-            guess[idx] === letter && (f === 'correct' || f === 'present')
-          );
-
-          if (!hasCorrectOrPresent) {
-            // Letter doesn't exist in word at all
-            letterCounts.get(letter)!.max = 0;
-          } else {
-            // Letter exists but not in this position
-            // The max count is determined by correct + present count
-            const count = feedback.filter((f, idx) =>
-              guess[idx] === letter && (f === 'correct' || f === 'present')
-            ).length;
-            letterCounts.get(letter)!.max = count;
-          }
-
-          if (!letterConstraints.has(letter)) {
-            letterConstraints.set(letter, {
-              minCount: 0,
-              maxCount: Infinity,
-              positions: {
-                mustBe: new Set(),
-                cannotBe: new Set()
-              }
-            });
-          }
-          letterConstraints.get(letter)!.positions.cannotBe.add(i);
-        }
-      }
-
-      // Update letter constraints with counts
-      for (const [letter, counts] of letterCounts) {
-        if (!letterConstraints.has(letter)) {
-          letterConstraints.set(letter, {
-            minCount: 0,
-            maxCount: Infinity,
-            positions: {
-              mustBe: new Set(),
-              cannotBe: new Set()
-            }
-          });
-        }
-
-        const constraint = letterConstraints.get(letter)!;
-        constraint.minCount = Math.max(constraint.minCount, counts.min);
-        constraint.maxCount = Math.min(constraint.maxCount, counts.max);
-      }
-    }
-
-    // Add position constraints to letter constraints
-    for (let i = 0; i < length; i++) {
-      if (positionConstraints[i]) {
-        const letter = positionConstraints[i]!;
-        if (!letterConstraints.has(letter)) {
-          letterConstraints.set(letter, {
-            minCount: 0,
-            maxCount: Infinity,
-            positions: {
-              mustBe: new Set(),
-              cannotBe: new Set()
-            }
-          });
-        }
-        letterConstraints.get(letter)!.positions.mustBe.add(i);
+        const constraint = ensureConstraint(letter);
+        constraint.minCount = Math.max(constraint.minCount, guessMin);
+        constraint.maxCount = Math.min(constraint.maxCount, guessMax);
       }
     }
 

@@ -225,8 +225,14 @@ async function main() {
   console.log('feedback patterns from the first guess.');
   console.log('');
 
-  // Focus on 5-letter words first (standard Wordle)
-  const lengthsToCompute: WordLength[] = [5];
+  // Lengths to compute can be passed as CLI args, e.g. `tsx precompute-second-guess.ts 6 7`.
+  // Defaults to 5-letter words (standard Wordle) when no args are supplied.
+  const cliLengths = process.argv
+    .slice(2)
+    .map(arg => parseInt(arg, 10))
+    .filter(n => [3, 4, 5, 6, 7].includes(n)) as WordLength[];
+
+  const lengthsToCompute: WordLength[] = cliLengths.length > 0 ? cliLengths : [5];
 
   for (const length of lengthsToCompute) {
     await precomputeForLength(length);
