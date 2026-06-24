@@ -42,6 +42,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [newChallengeWord, setNewChallengeWord] = useState('');
   const [challengeWordError, setChallengeWordError] = useState('');
   const [aiThinkingGuess, setAiThinkingGuess] = useState('');
+  // True during the deliberate pre-move "thinking" delay (separate from `loading`,
+  // which only covers the now-~30ms fetch). Drives the spinner + slot animation.
+  const [aiThinking, setAiThinking] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const maxGuesses = 6;
@@ -159,7 +162,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
   // Slot machine animation for AI thinking in all modes
   useEffect(() => {
     // Show animation when AI is thinking in any mode
-    const shouldAnimate = loading && (
+    const shouldAnimate = (loading || aiThinking) && (
       (gameMode === 'race' && currentTurn === 'ai' && aiStatus === 'in-progress') ||
       (gameMode === 'custom-challenge' && status === 'in-progress') ||
       (gameMode === 'todays-wordle' && status === 'in-progress')
@@ -186,14 +189,14 @@ const GameBoard: React.FC<GameBoardProps> = ({
     } else {
       setAiThinkingGuess('');
     }
-  }, [gameMode, currentTurn, aiStatus, loading, wordLength, status]);
+  }, [gameMode, currentTurn, aiStatus, loading, aiThinking, wordLength, status]);
 
   useEffect(() => {
     // Auto-play for custom challenge mode and today's wordle with natural delay
     if ((gameMode === 'custom-challenge' || gameMode === 'todays-wordle') && status === 'in-progress') {
-      // Natural "thinking" pause so the slot-machine animation reads as the AI
-      // deliberating. Computation is now ~30ms, so this delay is purely for feel
-      // and is CONSISTENT (no more multi-second spikes on hard words).
+      // Show the "thinking" spinner + slot animation for the WHOLE deliberate
+      // pause (not just the ~30ms fetch), so the AI reads as deliberating.
+      setAiThinking(true);
       const delay = guesses.length === 0 ? 1200 : 1600;
       const timer = setTimeout(() => {
         playAIMove();
@@ -202,6 +205,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
     }
     // Auto-play AI in race mode only when it's AI's turn and AI is still playing
     if (gameMode === 'race' && aiStatus === 'in-progress' && currentTurn === 'ai') {
+      setAiThinking(true);
       const delay = aiGuesses.length === 0 ? 800 : 600; // Faster in race mode
       const timer = setTimeout(() => {
         playAIMove();
@@ -282,6 +286,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
       setMessage(error.message || 'Error getting AI move');
     } finally {
       setLoading(false);
+      setAiThinking(false);
     }
   };
 
@@ -575,7 +580,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
         </div>
       )}
 
-      {loading && (gameMode === 'custom-challenge' || gameMode === 'todays-wordle') && (
+      {(loading || aiThinking) && (gameMode === 'custom-challenge' || gameMode === 'todays-wordle') && (
         <div className="loading-indicator">
           <div className="spinner"></div>
           <p>AI is thinking...</p>
