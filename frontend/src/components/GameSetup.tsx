@@ -1,7 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GameMode, WordLength, SolverType } from '@shared/types';
 import './GameSetup.css';
 import { apiFetch } from '../lib/apiClient';
+
+const VALID_MODES: GameMode[] = ['todays-wordle', 'custom-challenge', 'race', 'human-play'];
+const VALID_LENGTHS: WordLength[] = [3, 4, 5, 6, 7];
+
+const getSavedMode = (): GameMode => {
+  const saved = localStorage.getItem('lastMode') as GameMode | null;
+  return saved && VALID_MODES.includes(saved) ? saved : 'todays-wordle';
+};
+
+const getSavedLength = (): WordLength => {
+  const saved = Number(localStorage.getItem('lastLength')) as WordLength;
+  return VALID_LENGTHS.includes(saved) ? saved : 5;
+};
 
 interface GameSetupProps {
   onGameStart: (gameId: string, mode: GameMode, length: WordLength, solver: SolverType, hardMode: boolean) => void;
@@ -10,12 +23,24 @@ interface GameSetupProps {
 }
 
 const GameSetup: React.FC<GameSetupProps> = ({ onGameStart, onShowInstructions, onShowMultiplayer }) => {
-  const [mode, setMode] = useState<GameMode>('todays-wordle');
-  const [length, setLength] = useState<WordLength>(5);
+  const [mode, setMode] = useState<GameMode>(getSavedMode);
+  const [length, setLength] = useState<WordLength>(() =>
+    getSavedMode() === 'todays-wordle' ? 5 : getSavedLength()
+  );
   const solver: SolverType = 'entropy'; // Always use entropy solver (best performance)
   const [customWord, setCustomWord] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Persist last-used mode and word length so they survive reloads.
+  useEffect(() => {
+    localStorage.setItem('lastMode', mode);
+  }, [mode]);
+  useEffect(() => {
+    if (mode !== 'todays-wordle') {
+      localStorage.setItem('lastLength', String(length));
+    }
+  }, [length, mode]);
 
   const handleStart = async () => {
     setLoading(true);
