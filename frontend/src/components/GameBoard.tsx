@@ -191,9 +191,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
   useEffect(() => {
     // Auto-play for custom challenge mode and today's wordle with natural delay
     if ((gameMode === 'custom-challenge' || gameMode === 'todays-wordle') && status === 'in-progress') {
-      // Brief delay so the "thinking" slot animation registers; the AI move
-      // itself computes in ~5ms, so keep this short to feel snappy.
-      const delay = guesses.length === 0 ? 450 : 650;
+      // Natural "thinking" pause so the slot-machine animation reads as the AI
+      // deliberating. Computation is now ~30ms, so this delay is purely for feel
+      // and is CONSISTENT (no more multi-second spikes on hard words).
+      const delay = guesses.length === 0 ? 1200 : 1600;
       const timer = setTimeout(() => {
         playAIMove();
       }, delay);
