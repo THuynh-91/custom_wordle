@@ -97,6 +97,12 @@
   border-color: var(--color-text);
 }
 
+.theme-toggle.active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
 .app-main {
   flex: 1;
   padding: 2rem 1rem;

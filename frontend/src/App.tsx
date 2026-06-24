@@ -67,6 +67,9 @@ function App() {
     }
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
+  const [isColorblindMode, setIsColorblindMode] = useState(() => {
+    return localStorage.getItem('colorblindMode') === 'true';
+  });
 
   useEffect(() => {
     // Apply dark mode class to html element
@@ -237,8 +240,21 @@ function App() {
     };
   }, [showPingPongModal]);
 
+  useEffect(() => {
+    if (isColorblindMode) {
+      document.documentElement.classList.add('colorblind-mode');
+    } else {
+      document.documentElement.classList.remove('colorblind-mode');
+    }
+    localStorage.setItem('colorblindMode', isColorblindMode.toString());
+  }, [isColorblindMode]);
+
   const toggleDarkMode = () => {
     setIsDarkMode(prev => !prev);
+  };
+
+  const toggleColorblindMode = () => {
+    setIsColorblindMode(prev => !prev);
   };
 
   const handleGameStart = (id: string, mode: GameMode, length: WordLength, solver: SolverType, hard: boolean) => {
@@ -443,6 +459,18 @@ function App() {
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
             </svg>
           </button>
+          <button
+            className={`theme-toggle${isColorblindMode ? ' active' : ''}`}
+            onClick={toggleColorblindMode}
+            aria-label="Toggle colorblind-friendly high-contrast colors"
+            aria-pressed={isColorblindMode}
+            title={isColorblindMode ? 'Colorblind mode on (orange/blue)' : 'Colorblind mode off'}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 3a9 9 0 000 18z" fill="currentColor" stroke="none" />
+            </svg>
+          </button>
           <button className="theme-toggle" onClick={toggleDarkMode} aria-label="Toggle dark mode">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
               {isDarkMode ? (
@@ -582,6 +610,7 @@ function App() {
                   <li>Green tiles mean the letter is correct and in the right position</li>
                   <li>Yellow tiles mean the letter is in the word but wrong position</li>
                   <li>Gray tiles mean the letter is not in the word</li>
+                  <li>Use the header toggles for dark mode and colorblind-friendly (orange/blue) colors</li>
                 </ul>
               </div>
 

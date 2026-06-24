@@ -86,6 +86,31 @@ html.dark-mode {
   --color-inverted-text-secondary: #787c7e;
 }
 
+/* Colorblind / high-contrast palette: replaces green/yellow with the
+   blue/orange pairing used by Wordle's official high-contrast mode. Layered
+   after dark-mode so it overrides the tile colors in either theme. */
+html.colorblind-mode {
+  --color-correct: #f5793a;
+  --color-present: #85c0f9;
+  --color-button-primary: #f5793a;
+  --color-accent: #f5793a;
+  --color-accent-hover: #e06a2f;
+  --color-header-gradient-1: #f5793a;
+  --color-header-gradient-2: #e06a2f;
+}
+
+html.colorblind-mode.dark-mode {
+  --color-correct: #f5793a;
+  --color-present: #85c0f9;
+}
+
+/* The high-contrast "present" blue is light, so use dark text on it for
+   readability on both tiles and keyboard keys. */
+html.colorblind-mode .tile.present,
+html.colorblind-mode .key-present {
+  color: #1a1a1b;
+}
+
 /* Remove auto dark mode - let user toggle manually */
 
 body {
