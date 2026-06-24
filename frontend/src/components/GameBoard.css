@@ -241,21 +241,23 @@
   display: block;
   margin: 2rem auto 0;
   padding: 0.85rem 2.5rem;
-  background: var(--color-button-primary);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 700;
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .new-game-button:hover {
   background: var(--color-accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(106, 170, 100, 0.3);
+  box-shadow: var(--shadow-md);
 }
+
+.new-game-button:active { transform: translateY(0) scale(.99); }
 
 @media (max-width: 968px) {
   .game-content.race-mode {
@@ -329,7 +331,7 @@
   gap: 0.5rem;
   cursor: pointer;
   padding: 0.5rem 1rem;
-  background: var(--color-panel-bg);
+  background: var(--color-surface-2);
   border: 1px solid var(--color-border);
   border-radius: 8px;
   transition: background 0.2s;
@@ -361,21 +363,23 @@
 
 .replay-button {
   padding: 0.85rem 2rem;
-  background: var(--color-button-primary);
-  color: white;
-  border: none;
-  border-radius: 8px;
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  font-family: var(--font-sans);
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 500;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .replay-button:hover {
   background: var(--color-accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(106, 170, 100, 0.3);
+  box-shadow: var(--shadow-md);
 }
+
+.replay-button:active { transform: translateY(0) scale(.99); }
 
 /* Modal */
 .modal-overlay {
@@ -384,12 +388,15 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(20, 20, 19, 0.38);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  animation: fadeIn 0.3s ease-out;
+  padding: 1rem;
+  animation: fadeIn var(--dur-base) var(--ease-out);
 }
 
 @keyframes fadeIn {
@@ -402,14 +409,26 @@
 }
 
 .modal-content {
-  background: var(--color-bg);
-  border-radius: 16px;
-  padding: 2rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-xl);
+  padding: 2.25rem;
   max-width: 500px;
-  width: 90%;
+  width: 100%;
   position: relative;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  animation: slideUp 0.3s ease-out;
+  box-shadow: var(--shadow-lg);
+  animation: modal-in var(--dur-slow) var(--ease-soft);
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes slideUp {
@@ -442,7 +461,7 @@
 }
 
 .modal-close:hover {
-  background: var(--color-panel-bg);
+  background: var(--color-surface-2);
   color: var(--color-text);
 }
 
@@ -452,10 +471,12 @@
 }
 
 .modal-header h2 {
+  font-family: var(--font-serif);
   font-size: 2rem;
   color: var(--color-text);
   margin: 0;
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: -0.02em;
 }
 
 .modal-body {
@@ -469,7 +490,7 @@
   gap: 1.5rem;
   margin-bottom: 1.5rem;
   padding: 1rem;
-  background: var(--color-panel-bg);
+  background: var(--color-surface-2);
   border-radius: 8px;
   border: 1px solid var(--color-border);
 }
@@ -515,7 +536,7 @@
 .challenge-replay-section {
   margin-top: 1.5rem;
   padding: 1rem;
-  background: var(--color-panel-bg);
+  background: var(--color-surface-2);
   border-radius: 8px;
   border: 1px solid var(--color-border);
 }
@@ -578,7 +599,7 @@
 }
 
 .game-summary {
-  background: var(--color-panel-bg);
+  background: var(--color-surface-2);
   border-radius: 8px;
   padding: 1rem;
   border: 1px solid var(--color-border);
@@ -609,12 +630,12 @@
 
 .modal-button {
   padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 8px;
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  font-family: var(--font-sans);
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
   flex: 1;
 }
 
@@ -623,24 +644,28 @@
   width: 100%;
   margin-top: 1rem;
   padding: 0.7rem 1.5rem;
-  border: 2px solid var(--color-accent);
-  border-radius: 8px;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--r-md);
   background: transparent;
   color: var(--color-accent);
+  font-family: var(--font-sans);
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
 }
 
 .share-button:hover {
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-accent-contrast);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
 }
 
+.share-button:active { transform: translateY(0) scale(.99); }
+
 .modal-button.replay {
-  background: var(--color-button-primary);
-  color: white;
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
 }
 
 .modal-button.replay:hover {
@@ -648,27 +673,33 @@
 }
 
 .modal-button.new-game {
-  background: var(--color-absent);
-  color: white;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
 }
 
 .modal-button.new-game:hover {
-  background: var(--color-footer-text);
+  background: var(--color-surface-2);
+  border-color: var(--c-mid-gray);
 }
 
 .modal-button.home {
-  background: #3b82f6;
-  color: white;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
 }
 
 .modal-button.home:hover {
-  background: #2563eb;
+  background: var(--color-surface-2);
+  border-color: var(--c-mid-gray);
 }
 
 .modal-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-sm);
 }
+
+.modal-button:active { transform: translateY(0) scale(.99); }
 
 @media (max-width: 768px) {
   .game-info {

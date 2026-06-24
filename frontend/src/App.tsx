@@ -440,8 +440,10 @@ function App() {
             Home
           </button>
         )}
-        <h1>AI Wordle Duel</h1>
-        <p className="tagline">Challenge AI solvers across multiple word lengths</p>
+        <div className="header-title">
+          <h1>AI Wordle Duel</h1>
+          <p className="tagline">Challenge AI solvers across multiple word lengths</p>
+        </div>
         <div className="header-buttons">
           <button
             onClick={handleOpenPingPong}
