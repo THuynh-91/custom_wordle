@@ -42,8 +42,64 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [newChallengeWord, setNewChallengeWord] = useState('');
   const [challengeWordError, setChallengeWordError] = useState('');
   const [aiThinkingGuess, setAiThinkingGuess] = useState('');
+  const [copied, setCopied] = useState(false);
 
   const maxGuesses = 6;
+
+  // Build a spoiler-free emoji grid of the result for sharing.
+  const buildShareText = (): string => {
+    const useColorblind = document.documentElement.classList.contains('colorblind-mode');
+    const correct = useColorblind ? '🟧' : '🟩';
+    const present = useColorblind ? '🟦' : '🟨';
+    const absent = '⬛';
+    const emojiFor = (s: TileState) =>
+      s === 'correct' ? correct : s === 'present' ? present : absent;
+
+    // For modes where the AI solves, share the AI's board; otherwise the human's.
+    const board = guesses;
+    const solved = status === 'won';
+    const tries = solved ? `${board.length}/${maxGuesses}` : `X/${maxGuesses}`;
+
+    const titleMap: Record<string, string> = {
+      'todays-wordle': "AI Wordle Duel - Today's Wordle",
+      'custom-challenge': 'AI Wordle Duel - Challenge AI',
+      'race': 'AI Wordle Duel - Race Mode',
+      'human-play': 'AI Wordle Duel',
+    };
+    const title = titleMap[gameMode] || 'AI Wordle Duel';
+
+    const grid = board
+      .map(({ feedback }) => feedback.map(emojiFor).join(''))
+      .join('\n');
+
+    return `${title} (${wordLength}) ${tries}\n\n${grid}`;
+  };
+
+  const handleShare = async () => {
+    const text = buildShareText();
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard can be unavailable (insecure context / permissions). Fall
+      // back to a temporary textarea + execCommand so the button still works.
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch {
+        setCopied(false);
+      }
+    }
+  };
 
   // Load race mode scores from localStorage
   const getRaceScores = () => {
@@ -332,11 +388,14 @@ const GameBoard: React.FC<GameBoardProps> = ({
         }
       }
     } catch (error: any) {
-      // Just trigger shake animation, no message needed
+      // Trigger shake animation and show a brief, clear toast so the player
+      // understands why nothing happened (most often: not in the word list).
       setIsInvalidWord(true);
+      setMessage('Not in word list');
       setTimeout(() => {
         setIsInvalidWord(false);
-      }, 500);
+        setMessage('');
+      }, 1500);
     } finally {
       setLoading(false);
     }
@@ -490,7 +549,11 @@ const GameBoard: React.FC<GameBoardProps> = ({
       )}
 
       {message && (
-        <div className={`message ${status !== 'in-progress' ? 'game-over' : ''}`}>
+        <div
+          className={`message ${status !== 'in-progress' ? 'game-over' : ''} ${isInvalidWord ? 'message-invalid' : ''}`}
+          role="status"
+          aria-live="polite"
+        >
           {message}
         </div>
       )}
@@ -669,6 +732,15 @@ const GameBoard: React.FC<GameBoardProps> = ({
                     <div className="challenge-error">{challengeWordError}</div>
                   )}
                 </div>
+              )}
+              {guesses.length > 0 && (
+                <button
+                  className="share-button"
+                  onClick={handleShare}
+                  aria-label="Copy results to clipboard"
+                >
+                  {copied ? '✓ Copied!' : '📋 Share Results'}
+                </button>
               )}
             </div>
             <div className="modal-actions">
