@@ -1,0 +1,237 @@
+{
+  "firstGuess": "ale",
+  "length": 3,
+  "totalPatterns": 27,
+  "validPatterns": 19,
+  "generatedAt": "2026-06-24T07:04:12.087Z",
+  "entries": [
+    {
+      "pattern": "000",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "sot",
+      "candidatesRemaining": 418,
+      "entropy": 2.964478093710457,
+      "expectedPartitionSize": 92.48803827751196
+    },
+    {
+      "pattern": "001",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "ten",
+      "candidatesRemaining": 126,
+      "entropy": 2.215131484760422,
+      "expectedPartitionSize": 47.42857142857143
+    },
+    {
+      "pattern": "002",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "our",
+      "candidatesRemaining": 61,
+      "entropy": 2.2032354470371116,
+      "expectedPartitionSize": 20.245901639344265
+    },
+    {
+      "pattern": "010",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "oil",
+      "candidatesRemaining": 30,
+      "entropy": 2.847860597836286,
+      "expectedPartitionSize": 4.933333333333334
+    },
+    {
+      "pattern": "011",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "gul",
+      "candidatesRemaining": 18,
+      "entropy": 1.7448425317532439,
+      "expectedPartitionSize": 6.444444444444444
+    },
+    {
+      "pattern": "012",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "lee",
+      "candidatesRemaining": 3,
+      "entropy": 1.0182958340544896,
+      "expectedPartitionSize": 1.6666666666666665
+    },
+    {
+      "pattern": "020",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "fly",
+      "candidatesRemaining": 8,
+      "entropy": 1.85,
+      "expectedPartitionSize": 2.75
+    },
+    {
+      "pattern": "021",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "eld",
+      "candidatesRemaining": 6,
+      "entropy": 0.7500224216483541,
+      "expectedPartitionSize": 4.333333333333334
+    },
+    {
+      "pattern": "022",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "ole",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "100",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "rat",
+      "candidatesRemaining": 193,
+      "entropy": 2.115550030388892,
+      "expectedPartitionSize": 79.15544041450777
+    },
+    {
+      "pattern": "101",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "eat",
+      "candidatesRemaining": 10,
+      "entropy": 2.4219280948873623,
+      "expectedPartitionSize": 2.4
+    },
+    {
+      "pattern": "102",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "gae",
+      "candidatesRemaining": 8,
+      "entropy": 0.6435644431995964,
+      "expectedPartitionSize": 6.25
+    },
+    {
+      "pattern": "110",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "bys",
+      "candidatesRemaining": 18,
+      "entropy": 1.497385205007079,
+      "expectedPartitionSize": 9.666666666666666
+    },
+    {
+      "pattern": "111",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "lea",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "200",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "tis",
+      "candidatesRemaining": 51,
+      "entropy": 2.1355552374924707,
+      "expectedPartitionSize": 17.3921568627451
+    },
+    {
+      "pattern": "202",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "ace",
+      "candidatesRemaining": 10,
+      "entropy": 0.5689955935892812,
+      "expectedPartitionSize": 8.2
+    },
+    {
+      "pattern": "210",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "aal",
+      "candidatesRemaining": 3,
+      "entropy": 1.0182958340544896,
+      "expectedPartitionSize": 1.6666666666666665
+    },
+    {
+      "pattern": "220",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "ala",
+      "candidatesRemaining": 6,
+      "entropy": 0.7500224216483541,
+      "expectedPartitionSize": 4.333333333333334
+    },
+    {
+      "pattern": "222",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "ale",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    }
+  ]
+}

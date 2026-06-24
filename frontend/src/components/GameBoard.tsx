@@ -110,7 +110,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
     if (shouldAnimate) {
       const letters = 'abcdefghijklmnopqrstuvwxyz';
-      let intervalId: NodeJS.Timeout;
 
       const animateSlots = () => {
         let randomWord = '';
@@ -121,7 +120,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
       };
 
       // Start animation
-      intervalId = setInterval(animateSlots, 100);
+      const intervalId = setInterval(animateSlots, 100);
 
       return () => {
         clearInterval(intervalId);

@@ -1,0 +1,841 @@
+{
+  "firstGuess": "tale",
+  "length": 4,
+  "totalPatterns": 81,
+  "validPatterns": 64,
+  "generatedAt": "2026-06-24T07:04:25.559Z",
+  "entries": [
+    {
+      "pattern": "0000",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "sorn",
+      "candidatesRemaining": 908,
+      "entropy": 4.706692025051511,
+      "expectedPartitionSize": 55.66079295154189
+    },
+    {
+      "pattern": "0001",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "dees",
+      "candidatesRemaining": 405,
+      "entropy": 4.272367484663378,
+      "expectedPartitionSize": 32.60000000000001
+    },
+    {
+      "pattern": "0002",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "nori",
+      "candidatesRemaining": 239,
+      "entropy": 3.5936803307015026,
+      "expectedPartitionSize": 27.17573221757322
+    },
+    {
+      "pattern": "0010",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "bios",
+      "candidatesRemaining": 153,
+      "entropy": 4.2249632900224565,
+      "expectedPartitionSize": 12.647058823529408
+    },
+    {
+      "pattern": "0011",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "sled",
+      "candidatesRemaining": 76,
+      "entropy": 3.4050609522504223,
+      "expectedPartitionSize": 10.605263157894738
+    },
+    {
+      "pattern": "0012",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "sour",
+      "candidatesRemaining": 37,
+      "entropy": 3.0370063275856043,
+      "expectedPartitionSize": 5.810810810810811
+    },
+    {
+      "pattern": "0020",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "miso",
+      "candidatesRemaining": 111,
+      "entropy": 3.594050246869351,
+      "expectedPartitionSize": 13.900900900900902
+    },
+    {
+      "pattern": "0021",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "deys",
+      "candidatesRemaining": 36,
+      "entropy": 2.711494627441815,
+      "expectedPartitionSize": 6.833333333333333
+    },
+    {
+      "pattern": "0022",
+      "feedbackArray": [
+        "absent",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "dorp",
+      "candidatesRemaining": 28,
+      "entropy": 2.845365744573764,
+      "expectedPartitionSize": 5.357142857142857
+    },
+    {
+      "pattern": "0100",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "soar",
+      "candidatesRemaining": 285,
+      "entropy": 4.2864490747247554,
+      "expectedPartitionSize": 21.54736842105261
+    },
+    {
+      "pattern": "0101",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "sear",
+      "candidatesRemaining": 89,
+      "entropy": 3.6177371923440025,
+      "expectedPartitionSize": 10.820224719101116
+    },
+    {
+      "pattern": "0102",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "ribs",
+      "candidatesRemaining": 19,
+      "entropy": 2.5358577759182794,
+      "expectedPartitionSize": 4.999999999999998
+    },
+    {
+      "pattern": "0110",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "alfa",
+      "candidatesRemaining": 82,
+      "entropy": 3.2541709853478307,
+      "expectedPartitionSize": 11.926829268292684
+    },
+    {
+      "pattern": "0111",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "feal",
+      "candidatesRemaining": 29,
+      "entropy": 2.877336290726284,
+      "expectedPartitionSize": 5.827586206896551
+    },
+    {
+      "pattern": "0112",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "alae",
+      "candidatesRemaining": 5,
+      "entropy": 1.4709505944546688,
+      "expectedPartitionSize": 2.1999999999999997
+    },
+    {
+      "pattern": "0120",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "hoys",
+      "candidatesRemaining": 18,
+      "entropy": 2.8218881955261788,
+      "expectedPartitionSize": 2.7777777777777772
+    },
+    {
+      "pattern": "0121",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "vela",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "0122",
+      "feedbackArray": [
+        "absent",
+        "present",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "able",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "0200",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "rins",
+      "candidatesRemaining": 379,
+      "entropy": 3.6190163662855954,
+      "expectedPartitionSize": 48.28759894459103
+    },
+    {
+      "pattern": "0201",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "edhs",
+      "candidatesRemaining": 15,
+      "entropy": 3.106890595608519,
+      "expectedPartitionSize": 2.0666666666666664
+    },
+    {
+      "pattern": "0202",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "cwms",
+      "candidatesRemaining": 92,
+      "entropy": 2.5463274376684035,
+      "expectedPartitionSize": 24.84782608695652
+    },
+    {
+      "pattern": "0210",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "lids",
+      "candidatesRemaining": 63,
+      "entropy": 2.9497086294362753,
+      "expectedPartitionSize": 10.269841269841269
+    },
+    {
+      "pattern": "0211",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "present"
+      ],
+      "bestGuess": "earl",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "0212",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "lace",
+      "candidatesRemaining": 8,
+      "entropy": 0.6435644431995964,
+      "expectedPartitionSize": 6.25
+    },
+    {
+      "pattern": "0220",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "mops",
+      "candidatesRemaining": 37,
+      "entropy": 2.5019380817174537,
+      "expectedPartitionSize": 10.243243243243244
+    },
+    {
+      "pattern": "0222",
+      "feedbackArray": [
+        "absent",
+        "correct",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "amps",
+      "candidatesRemaining": 11,
+      "entropy": 1.2776134368191154,
+      "expectedPartitionSize": 6.090909090909091
+    },
+    {
+      "pattern": "1000",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "suit",
+      "candidatesRemaining": 183,
+      "entropy": 4.426700101063823,
+      "expectedPartitionSize": 10.759562841530046
+    },
+    {
+      "pattern": "1001",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "sent",
+      "candidatesRemaining": 85,
+      "entropy": 3.6607960123698415,
+      "expectedPartitionSize": 9.094117647058821
+    },
+    {
+      "pattern": "1002",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "coir",
+      "candidatesRemaining": 29,
+      "entropy": 2.5233178137684864,
+      "expectedPartitionSize": 6.724137931034483
+    },
+    {
+      "pattern": "1010",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "suit",
+      "candidatesRemaining": 24,
+      "entropy": 3.8512274809529563,
+      "expectedPartitionSize": 2.083333333333334
+    },
+    {
+      "pattern": "1011",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "blet",
+      "candidatesRemaining": 7,
+      "entropy": 1.7644977792004615,
+      "expectedPartitionSize": 2.714285714285714
+    },
+    {
+      "pattern": "1012",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "lite",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "1020",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "chow",
+      "candidatesRemaining": 16,
+      "entropy": 2.3050365325772657,
+      "expectedPartitionSize": 4.125
+    },
+    {
+      "pattern": "1021",
+      "feedbackArray": [
+        "present",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "belt",
+      "candidatesRemaining": 7,
+      "entropy": 0.6916727785823275,
+      "expectedPartitionSize": 5.285714285714286
+    },
+    {
+      "pattern": "1100",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "sort",
+      "candidatesRemaining": 57,
+      "entropy": 3.4731796025153043,
+      "expectedPartitionSize": 6.263157894736841
+    },
+    {
+      "pattern": "1101",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "beam",
+      "candidatesRemaining": 17,
+      "entropy": 2.8163075192246447,
+      "expectedPartitionSize": 3
+    },
+    {
+      "pattern": "1102",
+      "feedbackArray": [
+        "present",
+        "present",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "ante",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "1110",
+      "feedbackArray": [
+        "present",
+        "present",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "alts",
+      "candidatesRemaining": 8,
+      "entropy": 2.5056390622295663,
+      "expectedPartitionSize": 1.75
+    },
+    {
+      "pattern": "1200",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "rhos",
+      "candidatesRemaining": 68,
+      "entropy": 3.166969608659627,
+      "expectedPartitionSize": 10.529411764705891
+    },
+    {
+      "pattern": "1201",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "east",
+      "candidatesRemaining": 4,
+      "entropy": 2.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "1202",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "bate",
+      "candidatesRemaining": 10,
+      "entropy": 0.5689955935892812,
+      "expectedPartitionSize": 8.2
+    },
+    {
+      "pattern": "1210",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "last",
+      "candidatesRemaining": 4,
+      "entropy": 1.6,
+      "expectedPartitionSize": 1.5
+    },
+    {
+      "pattern": "1212",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "present",
+        "correct"
+      ],
+      "bestGuess": "late",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "1220",
+      "feedbackArray": [
+        "present",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "halt",
+      "candidatesRemaining": 3,
+      "entropy": 1.0182958340544896,
+      "expectedPartitionSize": 1.6666666666666665
+    },
+    {
+      "pattern": "2000",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "sori",
+      "candidatesRemaining": 101,
+      "entropy": 3.9024026873773225,
+      "expectedPartitionSize": 8.683168316831676
+    },
+    {
+      "pattern": "2001",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "dens",
+      "candidatesRemaining": 33,
+      "entropy": 3.2021520733138713,
+      "expectedPartitionSize": 4.757575757575756
+    },
+    {
+      "pattern": "2002",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "inro",
+      "candidatesRemaining": 22,
+      "entropy": 2.9928560501604604,
+      "expectedPartitionSize": 3.363636363636363
+    },
+    {
+      "pattern": "2010",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "tirl",
+      "candidatesRemaining": 3,
+      "entropy": 1.6849625007211562,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "2011",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "present",
+        "present"
+      ],
+      "bestGuess": "teel",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "2020",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "till",
+      "candidatesRemaining": 6,
+      "entropy": 2.018295834054489,
+      "expectedPartitionSize": 1.6666666666666667
+    },
+    {
+      "pattern": "2021",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "tell",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "2022",
+      "feedbackArray": [
+        "correct",
+        "absent",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "tele",
+      "candidatesRemaining": 4,
+      "entropy": 0.9112781244591328,
+      "expectedPartitionSize": 2.5
+    },
+    {
+      "pattern": "2100",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "draw",
+      "candidatesRemaining": 17,
+      "entropy": 2.984234164652489,
+      "expectedPartitionSize": 2.4117647058823533
+    },
+    {
+      "pattern": "2101",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "present"
+      ],
+      "bestGuess": "teak",
+      "candidatesRemaining": 7,
+      "entropy": 1.7644977792004615,
+      "expectedPartitionSize": 2.714285714285714
+    },
+    {
+      "pattern": "2102",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "thae",
+      "candidatesRemaining": 2,
+      "entropy": 1.1,
+      "expectedPartitionSize": 1
+    },
+    {
+      "pattern": "2111",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "present",
+        "present"
+      ],
+      "bestGuess": "teal",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "2120",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "tola",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "2121",
+      "feedbackArray": [
+        "correct",
+        "present",
+        "correct",
+        "present"
+      ],
+      "bestGuess": "tela",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "2200",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "absent"
+      ],
+      "bestGuess": "runs",
+      "candidatesRemaining": 33,
+      "entropy": 2.809587878090137,
+      "expectedPartitionSize": 6.393939393939393
+    },
+    {
+      "pattern": "2202",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "absent",
+        "correct"
+      ],
+      "bestGuess": "tace",
+      "candidatesRemaining": 6,
+      "entropy": 0.7500224216483541,
+      "expectedPartitionSize": 4.333333333333334
+    },
+    {
+      "pattern": "2210",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "present",
+        "absent"
+      ],
+      "bestGuess": "tail",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "2211",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "present",
+        "present"
+      ],
+      "bestGuess": "tael",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    },
+    {
+      "pattern": "2220",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "correct",
+        "absent"
+      ],
+      "bestGuess": "tala",
+      "candidatesRemaining": 5,
+      "entropy": 0.8219280948873623,
+      "expectedPartitionSize": 3.4000000000000004
+    },
+    {
+      "pattern": "2222",
+      "feedbackArray": [
+        "correct",
+        "correct",
+        "correct",
+        "correct"
+      ],
+      "bestGuess": "tale",
+      "candidatesRemaining": 1,
+      "entropy": 0,
+      "expectedPartitionSize": 0
+    }
+  ]
+}

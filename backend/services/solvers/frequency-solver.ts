@@ -7,6 +7,15 @@ import { BaseSolver, SolverMove } from './base-solver.js';
 import { WordLength, GuessFeedback } from '../../../shared/types.js';
 import { WordService } from '../word-service.js';
 
+// Module-level cache of the best opening guess per word length.
+// The opener is independent of game state (it's purely a function of the full
+// candidate list + frequency data for that length), so it is safe to compute
+// once and reuse across every fresh game. JavaScript executes synchronously on a
+// single thread, so a plain Map populated under that model is inherently safe for
+// repeated/concurrent solver calls -- there is no torn-read risk and at worst the
+// (deterministic) computation runs twice before the entry is stored.
+const OPENING_MOVE_CACHE: Map<WordLength, SolverMove> = new Map();
+
 export class FrequencySolver extends BaseSolver {
   private frequencyData: Record<string, { total: number; positions: number[] }>;
 
@@ -37,6 +46,42 @@ export class FrequencySolver extends BaseSolver {
       };
     }
 
+    // OPTIMIZATION: the opening move scans the entire candidate list (321ms for
+    // 6-letter, 719ms for 7-letter). Since the opener only depends on word length,
+    // compute it once per length and memoize. Detect the opening move by an empty
+    // guess history.
+    if (guessHistory.length === 0) {
+      const cached = OPENING_MOVE_CACHE.get(this.length);
+      if (cached) {
+        // Return a fresh copy so callers can't mutate the cached entry, and report
+        // the (near-zero) lookup time rather than the original computation time.
+        return {
+          guess: cached.guess,
+          explanation: {
+            ...cached.explanation,
+            remainingCandidates: candidatesRemaining.slice(0, 50),
+            candidateCountBefore: candidatesRemaining.length,
+            computationTimeMs: Date.now() - startTime
+          }
+        };
+      }
+
+      const move = this.computeBestMove(guessHistory, candidatesRemaining, startTime);
+      OPENING_MOVE_CACHE.set(this.length, move);
+      return move;
+    }
+
+    return this.computeBestMove(guessHistory, candidatesRemaining, startTime);
+  }
+
+  /**
+   * Score every remaining candidate by frequency and return the best move.
+   */
+  private computeBestMove(
+    guessHistory: GuessFeedback[],
+    candidatesRemaining: string[],
+    startTime: number
+  ): SolverMove {
     // Score all candidates based on frequency
     const scoredCandidates = candidatesRemaining.map(word => ({
       word,
