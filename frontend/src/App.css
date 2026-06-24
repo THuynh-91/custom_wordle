@@ -6,16 +6,12 @@
 
 .app-header {
   background: var(--color-header-bg);
-  -webkit-backdrop-filter: saturate(160%) blur(10px);
-  backdrop-filter: saturate(160%) blur(10px);
   color: var(--color-text);
   padding: 1rem;
   text-align: center;
   border-bottom: 1px solid var(--color-header-border);
-  animation: slideDownHeader var(--dur-slow) var(--ease-out);
-  position: sticky;
-  top: 0;
-  z-index: 50;
+  animation: slideDownHeader 0.5s ease-out;
+  position: relative;
 }
 
 @keyframes slideDownHeader {
@@ -30,19 +26,19 @@
 }
 
 .app-header h1 {
-  font-family: var(--font-serif);
   font-size: 2.25rem;
-  font-weight: 500;
-  margin-bottom: 0.15rem;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.05rem;
   color: var(--color-text);
 }
 
 .tagline {
-  font-size: 0.9rem;
-  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  color: var(--color-text);
+  opacity: 0.6;
   font-weight: 400;
-  letter-spacing: 0;
+  letter-spacing: 0.05rem;
 }
 
 .home-button {
@@ -51,23 +47,20 @@
   left: 1rem;
   transform: translateY(-50%);
   padding: 0.5rem 1rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  border: 1px solid var(--color-border);
   color: var(--color-text);
-  border-radius: var(--r-md);
+  border-radius: 4px;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  box-shadow: var(--shadow-xs);
+  transition: all 0.2s ease;
 }
 
 .home-button:hover {
-  background: var(--color-surface-2);
-  border-color: var(--c-mid-gray);
-  box-shadow: var(--shadow-sm);
+  background: var(--color-panel-bg);
+  border-color: var(--color-text);
 }
-
-.home-button:active { transform: translateY(-50%) scale(.98); }
 
 .header-buttons {
   position: absolute;
@@ -82,9 +75,9 @@
 .pingpong-button,
 .feedback-button,
 .theme-toggle {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--r-md);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
   width: 40px;
   height: 40px;
   display: flex;
@@ -92,34 +85,28 @@
   justify-content: center;
   font-size: 1.25rem;
   cursor: pointer;
+  transition: all 0.2s ease;
   color: var(--color-text);
   text-decoration: none;
-  box-shadow: var(--shadow-xs);
 }
 
 .pingpong-button:hover,
 .feedback-button:hover,
 .theme-toggle:hover {
-  background: var(--color-surface-2);
-  border-color: var(--c-mid-gray);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+  background: var(--color-panel-bg);
+  border-color: var(--color-text);
 }
-
-.pingpong-button:active,
-.feedback-button:active,
-.theme-toggle:active { transform: translateY(0) scale(.96); }
 
 .theme-toggle.active {
   background: var(--color-accent);
   border-color: var(--color-accent);
-  color: var(--color-accent-contrast);
+  color: #fff;
 }
 
 .app-main {
   flex: 1;
-  padding: 2.5rem 1rem;
-  animation: rise-in var(--dur-page) var(--ease-out);
+  padding: 2rem 1rem;
+  animation: fadeIn 0.5s ease-in;
 }
 
 @keyframes fadeIn {
@@ -202,20 +189,17 @@
 
 .modal-button.primary {
   background: var(--color-modal-accent);
-  color: #fff;
-  font-weight: 500;
+  color: white;
+  font-weight: 600;
   padding: 0.75rem 2rem;
-  font-size: 1.05rem;
-  border-radius: var(--r-md);
+  font-size: 1.1rem;
 }
 
 .modal-button.primary:hover {
-  filter: brightness(1.06);
+  opacity: 0.9;
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
-
-.modal-button.primary:active { transform: translateY(0) scale(.99); }
 
 /* Feedback Modal Styles - Inverted colors like welcome modal */
 .feedback-modal {
@@ -251,19 +235,19 @@
 .form-group input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid var(--color-modal-border);
-  border-radius: var(--r-md);
+  border: 2px solid var(--color-modal-border);
+  border-radius: 8px;
   background: var(--color-modal-panel-bg);
   color: var(--color-modal-text);
   font-family: inherit;
   font-size: 0.95rem;
+  transition: border-color 0.2s;
 }
 
 .form-group textarea:focus,
 .form-group input:focus {
   outline: none;
   border-color: var(--color-modal-accent);
-  box-shadow: 0 0 0 3px var(--ring);
 }
 
 .form-group textarea:disabled,
@@ -324,41 +308,12 @@
 }
 
 @media (max-width: 768px) {
-  .app-header {
-    padding: 0.85rem 0.75rem;
-  }
-
   .app-header h1 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
 
   .tagline {
-    font-size: 0.85rem;
-  }
-
-  /* keep the centered title clear of the floating icon buttons */
-  .app-header h1,
-  .app-header .tagline {
-    padding: 0 3rem;
-  }
-
-  .header-buttons {
-    right: 0.6rem;
-    gap: 0.35rem;
-  }
-
-  .pingpong-button,
-  .feedback-button,
-  .theme-toggle {
-    width: 36px;
-    height: 36px;
-    font-size: 1.05rem;
-  }
-
-  .home-button {
-    left: 0.6rem;
-    padding: 0.4rem 0.7rem;
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 
   .welcome-modal {
@@ -376,65 +331,6 @@
 
   .instructions-list li {
     font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 480px) {
-  /* Use a flex row so the centered title can't slide under the
-     absolutely-floated icon buttons. */
-  .app-header {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.6rem 0.6rem;
-    text-align: left;
-  }
-
-  .app-header .header-title {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .app-header h1 {
-    font-size: 1.15rem;
-    margin-bottom: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .app-header .tagline {
-    display: none;
-  }
-
-  /* take the icon cluster + home button out of absolute flow */
-  .app-header .header-buttons {
-    position: static;
-    transform: none;
-    right: auto;
-    top: auto;
-    gap: 0.3rem;
-    flex-shrink: 0;
-  }
-
-  .app-header .home-button {
-    position: static;
-    transform: none;
-    left: auto;
-    top: auto;
-    flex-shrink: 0;
-    padding: 0.4rem 0.7rem;
-    font-size: 0.8rem;
-  }
-
-  .home-button:active { transform: scale(.98); }
-
-  .pingpong-button,
-  .feedback-button,
-  .theme-toggle {
-    width: 34px;
-    height: 34px;
-    font-size: 0.95rem;
   }
 }
 

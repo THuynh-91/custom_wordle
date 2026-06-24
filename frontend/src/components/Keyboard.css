@@ -18,24 +18,23 @@
   align-items: center;
   justify-content: center;
   background: var(--color-key-bg);
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--r-sm);
+  border: 2px solid var(--color-border);
+  border-radius: 4px;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
-  transition: transform var(--dur-fast) var(--ease-out),
-              background-color var(--dur-base) var(--ease-out);
+  transition: all 0.1s;
   text-transform: uppercase;
   color: var(--color-key-text);
 }
 
 .key:hover:not(:disabled) {
-  background: var(--c-mid-gray);
-  transform: translateY(-1px) scale(1.04);
+  background: var(--color-panel-border);
+  transform: scale(1.05);
 }
 
 .key:active:not(:disabled) {
-  transform: translateY(0) scale(0.95);
+  transform: scale(0.95);
 }
 
 .key:disabled {
@@ -71,9 +70,9 @@
 }
 
 .key-typing {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: var(--color-accent-contrast);
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
   font-weight: 900;
   transform: scale(1.05);
   animation: blink-key 0.8s ease-in-out infinite;
@@ -82,11 +81,11 @@
 @keyframes blink-key {
   0%, 100% {
     opacity: 1;
-    box-shadow: 0 0 15px var(--ring);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
   }
   50% {
     opacity: 0.6;
-    box-shadow: 0 0 5px var(--ring);
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
   }
 }
 

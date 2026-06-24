@@ -1,12 +1,11 @@
 .multiplayer-lobby {
   max-width: 600px;
   margin: 0 auto;
-  padding: var(--sp-6);
-  background: var(--color-surface);
-  border-radius: var(--r-lg);
-  box-shadow: var(--shadow-md);
+  padding: 2rem;
+  background: var(--color-panel-bg);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   border: 1px solid var(--color-border);
-  animation: rise-in var(--dur-slow) var(--ease-soft);
 }
 
 .lobby-header {
@@ -21,31 +20,22 @@
   text-align: center;
   margin: 0;
   color: var(--color-text);
-  font-family: var(--font-serif);
-  font-weight: 500;
-  letter-spacing: -0.02em;
 }
 
 .back-button {
   padding: 0.5rem 1rem;
-  background: var(--color-surface);
-  color: var(--color-text);
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--r-md);
+  background: var(--color-absent);
+  color: white;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 500;
-  box-shadow: var(--shadow-xs);
+  font-size: 1rem;
+  transition: opacity 0.2s;
 }
 
 .back-button:hover {
-  background: var(--color-surface-2);
-  border-color: var(--c-mid-gray);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+  opacity: 0.8;
 }
-
-.back-button:active { transform: translateY(0) scale(.98); }
 
 /* Choice View */
 .choice-buttons {
@@ -57,25 +47,23 @@
 
 .choice-button {
   padding: 2rem 1rem;
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--r-md);
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
   cursor: pointer;
+  transition: all 0.2s;
   text-align: center;
 }
 
 .choice-button:hover {
-  border-color: var(--color-accent);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
+  border-color: var(--color-present);
+  transform: translateY(-2px);
 }
-
-.choice-button:active { transform: translateY(0) scale(.99); }
 
 .choice-icon {
   font-size: 3rem;
   font-weight: bold;
-  color: var(--color-accent);
+  color: var(--color-present);
   margin-bottom: 0.5rem;
 }
 
@@ -104,27 +92,25 @@
 
 .setup-section input[type="text"] {
   width: 100%;
-  padding: 0.75rem 0.9rem;
+  padding: 0.75rem;
   font-size: 1rem;
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--r-md);
-  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg);
   color: var(--color-text);
   box-sizing: border-box;
 }
 
 .setup-section input[type="text"]:focus {
   outline: none;
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px var(--ring);
+  border-color: var(--color-present);
 }
 
 /* Info Box */
 .info-box {
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-border);
-  border-left: 3px solid var(--color-accent);
-  border-radius: var(--r-md);
+  background: var(--color-bg);
+  border: 2px solid var(--color-present);
+  border-radius: 8px;
   padding: 1rem;
 }
 
@@ -148,29 +134,28 @@
   flex: 1;
   padding: 0.75rem 1rem;
   background: var(--color-button-unselected-bg);
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--r-md);
+  border: 2px solid var(--color-border);
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--color-button-unselected-text);
-  font-family: var(--font-sans);
-  font-weight: 500;
+  font-weight: 600;
+  transition: all 0.2s;
 }
 
 .length-buttons button:hover,
 .mode-buttons button:hover {
-  border-color: var(--c-mid-gray);
-  background: var(--color-surface-2);
+  border-color: var(--color-text);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .length-buttons button.active,
 .mode-buttons button.active {
-  background: var(--color-accent);
-  color: var(--color-accent-contrast);
-  border-color: var(--color-accent);
-  box-shadow: var(--shadow-sm);
+  background: var(--color-button-selected-bg);
+  color: var(--color-button-selected-text);
+  border-color: var(--color-button-selected-bg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .mode-description {
@@ -214,7 +199,7 @@
   letter-spacing: 0.3em;
   color: var(--color-correct);
   padding: 0.5rem 1rem;
-  background: var(--color-surface-2);
+  background: var(--color-bg);
   border: 2px solid var(--color-correct);
   border-radius: 8px;
   font-family: 'Courier New', monospace;
@@ -222,19 +207,17 @@
 
 .copy-button {
   padding: 0.5rem 1rem;
-  background: var(--color-accent);
-  color: var(--color-accent-contrast);
+  background: var(--color-present);
+  color: white;
   border: none;
-  border-radius: var(--r-md);
+  border-radius: 4px;
   cursor: pointer;
   font-size: 0.9rem;
-  font-weight: 500;
+  transition: opacity 0.2s;
 }
 
 .copy-button:hover {
-  background: var(--color-accent-hover);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+  opacity: 0.8;
 }
 
 .share-link {
@@ -257,7 +240,7 @@
   font-size: 0.9rem;
   border: 2px solid var(--color-border);
   border-radius: 4px;
-  background: var(--color-surface);
+  background: var(--color-bg);
   color: var(--color-text);
 }
 
@@ -281,7 +264,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background: var(--color-surface-2);
+  background: var(--color-bg);
   border: 2px solid var(--color-border);
   border-radius: 4px;
 }
@@ -311,8 +294,8 @@
 .waiting-message {
   text-align: center;
   padding: 1rem;
-  background: var(--color-surface-2);
-  border: 2px dashed var(--color-accent);
+  background: var(--color-bg);
+  border: 2px dashed var(--color-present);
   border-radius: 4px;
   color: var(--color-text-secondary);
   font-style: italic;
@@ -373,24 +356,20 @@
 .start-button {
   width: 100%;
   padding: 1rem;
-  background: var(--color-accent);
-  color: var(--color-accent-contrast);
-  border: 1px solid transparent;
-  border-radius: var(--r-md);
+  background: var(--color-correct);
+  color: white;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
-  font-family: var(--font-sans);
-  font-size: 1.05rem;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
   margin-top: 1rem;
 }
 
 .start-button:hover:not(:disabled) {
-  background: var(--color-accent-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  opacity: 0.9;
 }
-
-.start-button:active:not(:disabled) { transform: translateY(0) scale(.99); }
 
 .start-button:disabled {
   opacity: 0.5;

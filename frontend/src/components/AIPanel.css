@@ -1,12 +1,12 @@
 .ai-panel {
-  background: var(--color-surface);
-  border-radius: var(--r-lg);
-  box-shadow: var(--shadow-md);
+  background: var(--color-panel-bg);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   margin: 2rem auto;
   max-width: 600px;
   overflow: hidden;
   border: 1px solid var(--color-border);
-  animation: rise-in var(--dur-slow) var(--ease-out);
+  animation: slideIn 0.5s ease-out;
 }
 
 @keyframes slideIn {
@@ -67,12 +67,12 @@
 
 .main-reasoning {
   padding: 1.25rem;
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-border);
-  border-left: 3px solid var(--color-accent);
-  border-radius: var(--r-md);
+  background: var(--color-bg);
+  border-left: 4px solid var(--color-header-gradient-1);
+  border-radius: 8px;
   margin-bottom: 1.5rem;
-  transition: transform var(--dur-base) var(--ease-out);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
 }
 
 .main-reasoning:hover {
@@ -97,19 +97,17 @@
 .stat-item {
   text-align: center;
   padding: 1rem;
-  background: var(--color-surface-2);
-  border-radius: var(--r-md);
-  box-shadow: var(--shadow-xs);
-  transition: transform var(--dur-base) var(--ease-out),
-              box-shadow var(--dur-base) var(--ease-out),
-              border-color var(--dur-base) var(--ease-out);
+  background: var(--color-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
   border: 1px solid var(--color-border);
 }
 
 .stat-item:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--color-accent);
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  border-color: var(--color-header-gradient-1);
 }
 
 .stat-label {
@@ -127,7 +125,8 @@
   display: block;
   font-size: 1.6rem;
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-header-gradient-1);
+  text-shadow: 0 2px 4px rgba(102, 126, 234, 0.1);
 }
 
 .stat-value.chosen-word {
@@ -152,18 +151,17 @@
 
 .alternative-item {
   padding: 1rem;
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-border);
-  border-radius: var(--r-md);
-  border-left: 3px solid var(--color-accent);
-  transition: transform var(--dur-base) var(--ease-out),
-              box-shadow var(--dur-base) var(--ease-out);
+  background: var(--color-bg);
+  border-radius: 10px;
+  border-left: 4px solid var(--color-present);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
 }
 
 .alternative-item:hover {
-  transform: translateX(6px);
-  box-shadow: var(--shadow-sm);
-  border-left-width: 5px;
+  transform: translateX(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  border-left-width: 6px;
 }
 
 .alt-word {

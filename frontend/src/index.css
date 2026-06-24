@@ -5,164 +5,85 @@
 }
 
 :root {
-  /* ===========================================================
-     Claude-inspired design tokens (warm, editorial, calm).
-     NOTE: the Wordle TILE + KEYBOARD semantic colors
-     (--color-correct / --color-present / --color-absent /
-     --color-empty) carry GAME MEANING and are intentionally
-     kept on the canonical Wordle green/yellow/gray ramp. The
-     colorblind override block below swaps them to orange/blue.
-     Do not route these through the coral brand accent.
-     =========================================================== */
-
-  /* --- Brand ramps --- */
-  --c-cream:        #faf9f5;
-  --c-ivory:        #f5f3ec;
-  --c-sand:         #efece2;
-  --c-light-gray:   #e8e6dc;
-  --c-mid-gray:     #b0aea5;
-  --c-warm-gray-2:  #8a887f;
-  --c-ink:          #141413;
-  --c-ink-soft:     #2b2a27;
-  --c-coral:        #d97757;
-  --c-coral-hover:  #c96442;
-  --c-coral-soft:   #f3d9cd;
-
-  /* --- Radius --- */
-  --r-xs: 4px;  --r-sm: 8px;  --r-md: 12px;
-  --r-lg: 16px; --r-xl: 24px; --r-pill: 999px;
-
-  /* --- Spacing scale (4px base) --- */
-  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
-  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px; --sp-9: 96px;
-
-  /* --- Shadows (subtle, warm-tinted ink) --- */
-  --shadow-xs: 0 1px 2px rgba(20,20,19,.04);
-  --shadow-sm: 0 1px 3px rgba(20,20,19,.06), 0 1px 2px rgba(20,20,19,.04);
-  --shadow-md: 0 4px 12px rgba(20,20,19,.07), 0 2px 4px rgba(20,20,19,.05);
-  --shadow-lg: 0 12px 32px rgba(20,20,19,.10), 0 4px 8px rgba(20,20,19,.06);
-
-  /* --- Motion --- */
-  --ease-out:   cubic-bezier(.2,.7,.3,1);
-  --ease-inout: cubic-bezier(.65,0,.35,1);
-  --ease-soft:  cubic-bezier(.33,1,.68,1);
-  --dur-fast:   120ms;
-  --dur-base:   200ms;
-  --dur-slow:   320ms;
-  --dur-page:   480ms;
-
-  /* --- Type --- */
-  --font-serif: "Fraunces", "Newsreader", Georgia, "Times New Roman", serif;
-  --font-sans:  "Inter", ui-sans-serif, system-ui, -apple-system,
-                "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-
-  /* --- Focus ring (coral halo) --- */
-  --ring: rgba(217,119,87,.45);
-
-  /* === Wordle semantic tile colors (GAME MEANING — keep) === */
   --color-correct: #6aaa64;
   --color-present: #c9b458;
   --color-absent: #787c7e;
   --color-empty: #d3d6da;
-
-  /* === App chrome (mapped onto the warm Claude palette) === */
-  --color-bg: var(--c-cream);
-  --color-text: var(--c-ink);
-  --color-text-secondary: var(--c-warm-gray-2);
-  --color-border: var(--c-light-gray);
-  --color-border-strong: #d9d6ca;
-  --color-key-bg: var(--c-light-gray);
-  --color-key-text: var(--c-ink);
-  --color-surface: #ffffff;
-  --color-surface-2: var(--c-ivory);
-  --color-panel-bg: #ffffff;
-  --color-panel-border: var(--c-light-gray);
-  --color-header-bg: rgba(250,249,245,.82);
-  --color-header-border: var(--c-light-gray);
-  --color-footer-bg: var(--c-cream);
-  --color-footer-text: var(--c-warm-gray-2);
-  --color-button-primary: var(--c-coral);
-  --color-button-secondary: #ffffff;
-  --color-button-selected-bg: var(--c-ink);
-  --color-button-selected-text: #ffffff;
-  --color-button-unselected-bg: #ffffff;
-  --color-button-unselected-text: var(--c-ink);
-  --color-accent: var(--c-coral);
-  --color-accent-hover: var(--c-coral-hover);
-  --color-accent-contrast: #ffffff;
-  --color-header-gradient-1: var(--c-coral);
-  --color-header-gradient-2: var(--c-coral-hover);
-
-  /* Welcome / feedback modal — warm inverted (charcoal) surface */
-  --color-modal-bg: #1f1e1b;
-  --color-modal-text: #f5f3ec;
-  --color-modal-border: #38362f;
-  --color-modal-panel-bg: #262521;
-  --color-modal-accent: #e08a6b;
-
-  /* Multiplayer lobby — inverted (charcoal) surface in light mode */
-  --color-inverted-bg: #1f1e1b;
-  --color-inverted-panel-bg: #262521;
-  --color-inverted-border: #38362f;
-  --color-inverted-text: #f5f3ec;
-  --color-inverted-text-secondary: #b0aea5;
+  --color-bg: #E3E3E1;
+  --color-text: #1a1a1b;
+  --color-text-secondary: #787c7e;
+  --color-border: #c0c0be;
+  --color-key-bg: #d3d6da;
+  --color-key-text: #1a1a1b;
+  --color-panel-bg: #E3E3E1;
+  --color-panel-border: #c0c0be;
+  --color-header-bg: #E3E3E1;
+  --color-header-border: #c0c0be;
+  --color-footer-bg: #E3E3E1;
+  --color-footer-text: #787c7e;
+  --color-button-primary: #6aaa64;
+  --color-button-secondary: #E3E3E1;
+  --color-button-selected-bg: #000000;
+  --color-button-selected-text: #FFFFFF;
+  --color-button-unselected-bg: #E3E3E1;
+  --color-button-unselected-text: #1a1a1b;
+  --color-accent: #6aaa64;
+  --color-accent-hover: #5a9454;
+  --color-header-gradient-1: #6aaa64;
+  --color-header-gradient-2: #5a9454;
+  /* Inverted colors for welcome modal */
+  --color-modal-bg: #121213;
+  --color-modal-text: #d7dadc;
+  --color-modal-border: #3a3a3c;
+  --color-modal-panel-bg: #1a1a1b;
+  --color-modal-accent: #538d4e;
+  /* Inverted colors for multiplayer lobby - use dark mode colors in light mode */
+  --color-inverted-bg: #121213;
+  --color-inverted-panel-bg: #1a1a1b;
+  --color-inverted-border: #3a3a3c;
+  --color-inverted-text: #d7dadc;
+  --color-inverted-text-secondary: #818384;
 }
 
 html.dark-mode {
-  /* === Wordle semantic tile colors (dark) — keep === */
   --color-correct: #538d4e;
   --color-present: #b59f3b;
   --color-absent: #3a3a3c;
   --color-empty: #3a3a3c;
-
-  /* === App chrome — warm charcoal, coral lifted === */
-  --color-bg: #1f1e1b;
-  --color-text: #f5f3ec;
-  --color-text-secondary: #b0aea5;
-  --color-border: #38362f;
-  --color-border-strong: #4a473f;
-  --color-key-bg: #4a473f;
-  --color-key-text: #f5f3ec;
-  --color-surface: #262521;
-  --color-surface-2: #2f2e29;
-  --color-panel-bg: #262521;
-  --color-panel-border: #38362f;
-  --color-header-bg: rgba(31,30,27,.82);
-  --color-header-border: #38362f;
-  --color-footer-bg: #1f1e1b;
-  --color-footer-text: #8a887f;
-  --color-button-primary: #e08a6b;
-  --color-button-secondary: #262521;
-  --color-button-selected-bg: #f5f3ec;
-  --color-button-selected-text: #1f1e1b;
-  --color-button-unselected-bg: #2f2e29;
-  --color-button-unselected-text: #f5f3ec;
-  --color-accent: #e08a6b;
-  --color-accent-hover: #ec9d80;
-  --color-accent-contrast: #1f1e1b;
-  --color-header-gradient-1: #e08a6b;
-  --color-header-gradient-2: #ec9d80;
-  --ring: rgba(224,138,107,.5);
-
-  --shadow-xs: 0 1px 2px rgba(0,0,0,.35);
-  --shadow-sm: 0 1px 3px rgba(0,0,0,.45);
-  --shadow-md: 0 4px 14px rgba(0,0,0,.45);
-  --shadow-lg: 0 14px 36px rgba(0,0,0,.55);
-
-  /* Welcome / feedback modal — light cream surface in dark mode */
-  --color-modal-bg: #faf9f5;
-  --color-modal-text: #141413;
-  --color-modal-border: #e8e6dc;
-  --color-modal-panel-bg: #ffffff;
-  --color-modal-accent: #c96442;
-
-  /* Multiplayer lobby — light surface in dark mode */
-  --color-inverted-bg: #faf9f5;
-  --color-inverted-panel-bg: #ffffff;
-  --color-inverted-border: #e8e6dc;
-  --color-inverted-text: #141413;
-  --color-inverted-text-secondary: #8a887f;
+  --color-bg: #121213;
+  --color-text: #d7dadc;
+  --color-text-secondary: #818384;
+  --color-border: #3a3a3c;
+  --color-key-bg: #818384;
+  --color-key-text: #ffffff;
+  --color-panel-bg: #1a1a1b;
+  --color-panel-border: #3a3a3c;
+  --color-header-bg: #121213;
+  --color-header-border: #3a3a3c;
+  --color-footer-bg: #121213;
+  --color-footer-text: #818384;
+  --color-button-primary: #538d4e;
+  --color-button-secondary: #1a1a1b;
+  --color-button-selected-bg: #FFFFFF;
+  --color-button-selected-text: #000000;
+  --color-button-unselected-bg: #1a1a1b;
+  --color-button-unselected-text: #d7dadc;
+  --color-accent: #538d4e;
+  --color-accent-hover: #4a7e46;
+  --color-header-gradient-1: #538d4e;
+  --color-header-gradient-2: #4a7e46;
+  /* Inverted colors for welcome modal in dark mode - use light mode colors */
+  --color-modal-bg: #E3E3E1;
+  --color-modal-text: #1a1a1b;
+  --color-modal-border: #c0c0be;
+  --color-modal-panel-bg: #E3E3E1;
+  --color-modal-accent: #6aaa64;
+  /* Inverted colors for multiplayer lobby - use light mode colors in dark mode */
+  --color-inverted-bg: #E3E3E1;
+  --color-inverted-panel-bg: #E3E3E1;
+  --color-inverted-border: #c0c0be;
+  --color-inverted-text: #1a1a1b;
+  --color-inverted-text-secondary: #787c7e;
 }
 
 /* Colorblind / high-contrast palette: replaces green/yellow with the
@@ -193,24 +114,13 @@ html.colorblind-mode .key-present {
 /* Remove auto dark mode - let user toggle manually */
 
 body {
-  font-family: var(--font-sans);
+  font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--color-bg);
   color: var(--color-text);
   min-height: 100vh;
-  font-size: 16px;
-  line-height: 1.6;
-  letter-spacing: -0.003em;
-  transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
-}
-
-/* Editorial serif reserved for large display headings */
-h1, h2, .display {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  line-height: 1.12;
-  letter-spacing: -0.02em;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #root {
@@ -285,14 +195,9 @@ input {
   animation: shake 0.5s ease-in-out;
 }
 
-/* Smooth transitions for interactive elements (transform/opacity/colors only) */
-button, input, select, textarea, a {
-  transition: background-color var(--dur-base) var(--ease-out),
-              color var(--dur-base) var(--ease-out),
-              border-color var(--dur-base) var(--ease-out),
-              box-shadow var(--dur-base) var(--ease-out),
-              transform var(--dur-fast) var(--ease-out),
-              opacity var(--dur-base) var(--ease-out);
+/* Smooth transitions for all interactive elements */
+button, input, select {
+  transition: all 0.2s ease;
 }
 
 /* Scrollbar */
@@ -306,47 +211,16 @@ button, input, select, textarea, a {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border-strong);
-  border-radius: var(--r-pill);
+  background: var(--color-border);
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--c-mid-gray);
+  background: var(--color-header-gradient-1);
 }
 
-/* Accessible animated coral focus ring */
-button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--ring);
-  border-radius: var(--r-sm);
-}
-
-/* --- Reusable motion primitives --- */
-@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-@keyframes rise-in {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes shimmer {
-  from { background-position: -200% 0; }
-  to   { background-position: 200% 0; }
-}
-
-/* Warm shimmer skeleton loader */
-.skeleton {
-  border-radius: var(--r-sm);
-  background: linear-gradient(90deg,
-    var(--color-surface-2) 25%, var(--color-border) 37%, var(--color-surface-2) 63%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s linear infinite;
-}
-
-/* Honor reduced-motion everywhere */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .001ms !important;
-    scroll-behavior: auto !important;
-  }
+/* Focus styles for accessibility */
+button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--color-header-gradient-1);
+  outline-offset: 2px;
 }
