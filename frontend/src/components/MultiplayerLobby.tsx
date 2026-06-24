@@ -6,6 +6,7 @@ import {
   JoinMultiplayerRoomResponse,
   PlayerJoinedData,
 } from '../services/socketService';
+import { logger } from '../lib/logger';
 import './MultiplayerLobby.css';
 
 interface MultiplayerLobbyProps {
@@ -97,7 +98,7 @@ const MultiplayerLobby: React.FC<MultiplayerLobbyProps> = ({
   }, [countdown]);
 
   const handleRoomCreated = useCallback((data: CreateMultiplayerRoomResponse) => {
-    console.log('Room created:', data);
+    logger.log('Room created:', data);
     setShareableLink(data.shareableLink);
     setCurrentRoomCode(data.roomCode);
     setRoomId(data.roomId);
@@ -107,7 +108,7 @@ const MultiplayerLobby: React.FC<MultiplayerLobbyProps> = ({
   }, []);
 
   const handleRoomJoined = useCallback((data: JoinMultiplayerRoomResponse) => {
-    console.log('Room joined:', data);
+    logger.log('Room joined:', data);
     setRoomId(data.roomId);
     setPlayerId(data.playerId);
     setIsHost(false);
@@ -125,14 +126,14 @@ const MultiplayerLobby: React.FC<MultiplayerLobbyProps> = ({
   }, []);
 
   const handlePlayerJoined = useCallback((data: PlayerJoinedData) => {
-    console.log('Player joined:', data);
+    logger.log('Player joined:', data);
     setOpponentJoined(true);
     setOpponentName(data.player.name);
     setOpponentReady(false);
   }, []);
 
   const handlePlayerReadyUpdated = useCallback((data: { playerId: string; playerName: string; isReady: boolean }) => {
-    console.log('Player ready updated:', data);
+    logger.log('Player ready updated:', data);
 
     setPlayerId((currentPlayerId) => {
       // Update own ready status or opponent ready status
@@ -150,17 +151,17 @@ const MultiplayerLobby: React.FC<MultiplayerLobbyProps> = ({
   }, []);
 
   const handleCountdownStarted = useCallback((data: { countdown: number }) => {
-    console.log('Countdown started:', data);
+    logger.log('Countdown started:', data);
     setCountdown(data.countdown);
   }, []);
 
   const handleGameStarted = useCallback((data: { roomState: any }) => {
-    console.log('=== GAME STARTED EVENT ===');
-    console.log('Received data:', data);
-    console.log('Room ID from ref:', roomIdRef.current);
-    console.log('Player ID from ref:', playerIdRef.current);
-    console.log('Is Host from ref:', isHostRef.current);
-    console.log('Room State:', data.roomState);
+    logger.log('=== GAME STARTED EVENT ===');
+    logger.log('Received data:', data);
+    logger.log('Room ID from ref:', roomIdRef.current);
+    logger.log('Player ID from ref:', playerIdRef.current);
+    logger.log('Is Host from ref:', isHostRef.current);
+    logger.log('Room State:', data.roomState);
 
     if (!data.roomState) {
       console.error('ERROR: roomState is null or undefined!');
@@ -172,9 +173,9 @@ const MultiplayerLobby: React.FC<MultiplayerLobbyProps> = ({
       return;
     }
 
-    console.log('Calling onGameStart...');
+    logger.log('Calling onGameStart...');
     onGameStart(roomIdRef.current, playerIdRef.current, isHostRef.current, data.roomState);
-    console.log('onGameStart called successfully');
+    logger.log('onGameStart called successfully');
   }, [onGameStart]);
 
   const handleSocketError = useCallback((data: { message: string }) => {

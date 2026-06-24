@@ -6,6 +6,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import './App.css';
 import { apiFetch } from './lib/apiClient';
+import { logger } from './lib/logger';
 
 // Lazy-load multiplayer components: they pull in socket.io-client and are only
 // needed when a user actually enters multiplayer, keeping them out of the main bundle.
@@ -45,11 +46,11 @@ function App() {
 
   // Debug multiplayer state changes
   useEffect(() => {
-    console.log('=== MULTIPLAYER STATE CHANGED ===');
-    console.log('showMultiplayerLobby:', showMultiplayerLobby);
-    console.log('multiplayerRoomId:', multiplayerRoomId);
-    console.log('multiplayerPlayerId:', multiplayerPlayerId);
-    console.log('multiplayerRoomState:', multiplayerRoomState);
+    logger.log('=== MULTIPLAYER STATE CHANGED ===');
+    logger.log('showMultiplayerLobby:', showMultiplayerLobby);
+    logger.log('multiplayerRoomId:', multiplayerRoomId);
+    logger.log('multiplayerPlayerId:', multiplayerPlayerId);
+    logger.log('multiplayerRoomState:', multiplayerRoomState);
   }, [showMultiplayerLobby, multiplayerRoomId, multiplayerPlayerId, multiplayerRoomState]);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [feedbackText, setFeedbackText] = useState('');
@@ -81,13 +82,13 @@ function App() {
     setTimeout(() => {
       const root = document.documentElement;
       const styles = getComputedStyle(root);
-      console.log('=== CSS VARIABLES DEBUG ===');
-      console.log('Dark Mode:', isDarkMode);
-      console.log('Selected Button BG:', styles.getPropertyValue('--color-button-selected-bg').trim());
-      console.log('Selected Button Text:', styles.getPropertyValue('--color-button-selected-text').trim());
-      console.log('Accent Color:', styles.getPropertyValue('--color-accent').trim());
-      console.log('Border Color:', styles.getPropertyValue('--color-border').trim());
-      console.log('========================');
+      logger.log('=== CSS VARIABLES DEBUG ===');
+      logger.log('Dark Mode:', isDarkMode);
+      logger.log('Selected Button BG:', styles.getPropertyValue('--color-button-selected-bg').trim());
+      logger.log('Selected Button Text:', styles.getPropertyValue('--color-button-selected-text').trim());
+      logger.log('Accent Color:', styles.getPropertyValue('--color-accent').trim());
+      logger.log('Border Color:', styles.getPropertyValue('--color-border').trim());
+      logger.log('========================');
     }, 100);
   }, [isDarkMode]);
 
@@ -249,7 +250,7 @@ function App() {
   };
 
   const handleNewGame = () => {
-    console.log('[App] handleNewGame called - resetting all game state');
+    logger.log('[App] handleNewGame called - resetting all game state');
 
     // Reset race mode scores when exiting to home
     if (gameMode === 'race') {
@@ -269,7 +270,7 @@ function App() {
     setIsMultiplayerHost(false);
     setMultiplayerRoomState(null);
 
-    console.log('[App] Game state reset complete');
+    logger.log('[App] Game state reset complete');
   };
 
   const handleShowMultiplayer = () => {
@@ -286,12 +287,12 @@ function App() {
     isHost: boolean,
     roomState: MultiplayerRoomState
   ) => {
-    console.log('[App] ========== GAME START HANDLER ==========');
-    console.log('[App] Starting multiplayer game with:');
-    console.log('  roomId:', roomId);
-    console.log('  playerId:', playerId);
-    console.log('  isHost:', isHost);
-    console.log('  roomState:', roomState);
+    logger.log('[App] ========== GAME START HANDLER ==========');
+    logger.log('[App] Starting multiplayer game with:');
+    logger.log('  roomId:', roomId);
+    logger.log('  playerId:', playerId);
+    logger.log('  isHost:', isHost);
+    logger.log('  roomState:', roomState);
 
     // Validate inputs
     if (!roomId || !playerId || !roomState) {
@@ -303,13 +304,13 @@ function App() {
 
     // Use React's startTransition to batch state updates
     React.startTransition(() => {
-      console.log('[App] Setting multiplayer state...');
+      logger.log('[App] Setting multiplayer state...');
       setShowMultiplayerLobby(false);
       setMultiplayerRoomId(roomId);
       setMultiplayerPlayerId(playerId);
       setIsMultiplayerHost(isHost);
       setMultiplayerRoomState(roomState);
-      console.log('[App] State update dispatched');
+      logger.log('[App] State update dispatched');
     });
 
     // Update URL after state is set (in next tick)
@@ -320,7 +321,7 @@ function App() {
         url.searchParams.set('code', roomState.roomCode);
         url.searchParams.set('game', 'active');
         window.history.replaceState({}, '', url.toString());
-        console.log('[App] URL updated to:', url.toString());
+        logger.log('[App] URL updated to:', url.toString());
       }
     }, 0);
   };
@@ -457,17 +458,17 @@ function App() {
       <main className="app-main container">
         <Suspense fallback={<MultiplayerFallback />}>
         {(() => {
-          console.log('[App] ========== RENDER DECISION ==========');
-          console.log('[App] State check:');
-          console.log('  showMultiplayerLobby:', showMultiplayerLobby);
-          console.log('  multiplayerRoomId:', multiplayerRoomId);
-          console.log('  multiplayerPlayerId:', multiplayerPlayerId);
-          console.log('  multiplayerRoomState:', multiplayerRoomState ? 'EXISTS' : 'NULL');
-          console.log('  gameId:', gameId);
+          logger.log('[App] ========== RENDER DECISION ==========');
+          logger.log('[App] State check:');
+          logger.log('  showMultiplayerLobby:', showMultiplayerLobby);
+          logger.log('  multiplayerRoomId:', multiplayerRoomId);
+          logger.log('  multiplayerPlayerId:', multiplayerPlayerId);
+          logger.log('  multiplayerRoomState:', multiplayerRoomState ? 'EXISTS' : 'NULL');
+          logger.log('  gameId:', gameId);
 
           // Multiplayer game in progress
           if (multiplayerRoomId && multiplayerPlayerId && multiplayerRoomState) {
-            console.log('[App] ✅ Rendering MultiplayerGameBoard');
+            logger.log('[App] ✅ Rendering MultiplayerGameBoard');
             return (
               <MultiplayerGameBoard
                 roomId={multiplayerRoomId}
@@ -481,7 +482,7 @@ function App() {
 
           // Check if we're waiting for multiplayer state to load
           if (multiplayerRoomId || multiplayerPlayerId) {
-            console.log('[App] ⏳ Waiting for multiplayer state to fully load...');
+            logger.log('[App] ⏳ Waiting for multiplayer state to fully load...');
             return (
               <div style={{
                 display: 'flex',
@@ -513,7 +514,7 @@ function App() {
 
           // Multiplayer lobby
           if (showMultiplayerLobby) {
-            console.log('[App] ✅ Rendering MultiplayerLobby');
+            logger.log('[App] ✅ Rendering MultiplayerLobby');
             return (
               <MultiplayerLobby
                 onGameStart={handleMultiplayerGameStart}
@@ -524,7 +525,7 @@ function App() {
 
           // Single player game in progress
           if (gameId) {
-            console.log('[App] ✅ Rendering GameBoard');
+            logger.log('[App] ✅ Rendering GameBoard');
             return (
               <GameBoard
                 key={gameId}
@@ -540,7 +541,7 @@ function App() {
           }
 
           // Default: Game setup screen
-          console.log('[App] ✅ Rendering GameSetup (default)');
+          logger.log('[App] ✅ Rendering GameSetup (default)');
           return (
             <GameSetup
               onGameStart={handleGameStart}

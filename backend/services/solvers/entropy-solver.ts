@@ -287,16 +287,24 @@ export class EntropySolver extends BaseSolver {
       // For larger sets, consider all possible guesses (including non-answers) for optimal play.
       // Strategic guesses (that don't match constraints) can eliminate many candidates at once.
       //
-      // PERFORMANCE CAP: the cost of this branch is O(wordsToEvaluate * candidatesRemaining).
-      // For 6/7-letter words allGuesses is 15k-23k, which combined with a large candidate set
-      // blocks the event loop for ~2s. To keep worst-case latency well under ~300ms we bound
-      // the work: when the search space is large we always evaluate every remaining candidate
-      // (so the true answer is never excluded) plus a frequency-independent, evenly-spaced
-      // sample of the remaining guess pool for strategic information.
-      const MAX_EVALUATIONS = 4_000_000; // guess*candidate product budget
-      const guessBudget = Math.max(
-        candidatesRemaining.length,
-        Math.floor(MAX_EVALUATIONS / Math.max(candidatesRemaining.length, 1))
+      // PERFORMANCE CAP: the cost of this branch is O(wordsToEvaluate * candidatesRemaining)
+      // feedback computations. For 6/7-letter words allGuesses is 15k-23k; combined with even a
+      // modest candidate set (the typical move-3 situation) that blocks the event loop for
+      // 0.5-1.6s. To keep EVERY move well under target (~60-120ms) we bound the work two ways:
+      //   1. A feedback-op budget (guess*candidate product) calibrated to the per-op cost of
+      //      the inlined single-pass scorer below.
+      //   2. An absolute cap on how many guesses we evaluate, so a small candidate set can never
+      //      drag in the full 23k guess pool.
+      // We ALWAYS evaluate every remaining candidate (the true answer is never excluded), then
+      // top up with an evenly-spaced sample of strategic (non-candidate) guesses. Sampling the
+      // huge guess pool barely affects solve quality because the remaining candidates already
+      // dominate the high-entropy choices once the field has been narrowed.
+      const MAX_EVALUATIONS = 400_000;   // guess*candidate feedback-op budget
+      const MAX_GUESSES_EVALUATED = 4_000; // hard cap on guess-pool breadth per move
+      const budgetFromOps = Math.floor(MAX_EVALUATIONS / Math.max(candidatesRemaining.length, 1));
+      const guessBudget = Math.min(
+        MAX_GUESSES_EVALUATED,
+        Math.max(candidatesRemaining.length, budgetFromOps)
       );
 
       if (this.allGuesses.length <= guessBudget) {
@@ -315,7 +323,14 @@ export class EntropySolver extends BaseSolver {
       wordsToEvaluate = candidatesRemaining;
     }
 
-    // Calculate entropy for each potential guess - use full calculation for optimal play
+    // Encode the candidate set once into fixed-width char-code arrays so the inner
+    // entropy loop avoids per-call string indexing and Map allocation (the dominant
+    // cost in GameEngine.generateFeedback). Reused across every guess this move.
+    const encodedCandidates = this.encodeWords(candidatesRemaining);
+    const candidateSet = new Set(candidatesRemaining);
+
+    // Calculate entropy for each potential guess - single pass derives BOTH entropy
+    // and expected partition size (previously two full passes over candidates).
     const scoredGuesses = wordsToEvaluate.map(guess => {
       const cacheKey = `${guess}:${candidatesRemaining.length}:${candidatesRemaining.slice(0, 5).join(',')}`;
 
@@ -327,8 +342,9 @@ export class EntropySolver extends BaseSolver {
         entropy = cached.entropy;
         expectedSize = cached.expectedSize;
       } else {
-        entropy = GameEngine.calculateEntropy(guess, candidatesRemaining);
-        expectedSize = GameEngine.calculateExpectedPartitionSize(guess, candidatesRemaining);
+        const scored = this.scoreGuessFast(guess, encodedCandidates);
+        entropy = scored.entropy;
+        expectedSize = scored.expectedSize;
         this.entropyCache.set(cacheKey, { entropy, expectedSize });
 
         // Limit cache size to prevent memory issues
@@ -341,7 +357,7 @@ export class EntropySolver extends BaseSolver {
       }
 
       // Small bonus for words that are in the candidate list (helps avoid wasting guesses)
-      const candidateBonus = candidatesRemaining.includes(guess) ? 0.1 : 0;
+      const candidateBonus = candidateSet.has(guess) ? 0.1 : 0;
 
       return {
         word: guess,
@@ -373,6 +389,106 @@ export class EntropySolver extends BaseSolver {
         computationTimeMs: Date.now() - startTime
       }
     };
+  }
+
+  /**
+   * Encode a list of words into fixed-width arrays of char codes (0-25) so the
+   * hot entropy loop can operate on integers without repeated string indexing.
+   */
+  private encodeWords(words: string[]): Uint8Array[] {
+    const encoded: Uint8Array[] = new Array(words.length);
+    for (let w = 0; w < words.length; w++) {
+      const word = words[w];
+      const arr = new Uint8Array(word.length);
+      for (let i = 0; i < word.length; i++) {
+        arr[i] = word.charCodeAt(i) - 97; // 'a' -> 0
+      }
+      encoded[w] = arr;
+    }
+    return encoded;
+  }
+
+  /**
+   * Compute BOTH the entropy and the expected partition size of `guess` against
+   * the (pre-encoded) candidate set in a single pass.
+   *
+   * This is a hot path: for a large guess pool it runs guesses*candidates times
+   * per move. It is functionally identical to
+   * GameEngine.calculateEntropy / calculateExpectedPartitionSize (same standard
+   * Wordle feedback rules incl. duplicate-letter handling) but:
+   *   - inlines feedback generation against integer arrays (no per-call Maps),
+   *   - encodes each feedback pattern as a single base-3 integer key,
+   *   - derives entropy and expected size from one pattern-count map.
+   */
+  private scoreGuessFast(
+    guess: string,
+    encodedCandidates: Uint8Array[]
+  ): { entropy: number; expectedSize: number } {
+    const length = guess.length;
+    const total = encodedCandidates.length;
+    if (total === 0) {
+      return { entropy: 0, expectedSize: 0 };
+    }
+
+    // Encode the guess once.
+    const g = new Uint8Array(length);
+    for (let i = 0; i < length; i++) {
+      g[i] = guess.charCodeAt(i) - 97;
+    }
+
+    // Pattern key (base-3 per tile) -> count. Map of small ints stays fast.
+    const patternCounts = new Map<number, number>();
+    // Per-letter remaining counts for the secret, reused per candidate.
+    const letterCounts = new Int8Array(26);
+    const tileState = new Uint8Array(length); // 0 absent, 1 present, 2 correct
+
+    for (let c = 0; c < total; c++) {
+      const secret = encodedCandidates[c];
+
+      // Reset only the 26 letter buckets (cheap, fixed cost).
+      letterCounts.fill(0);
+      for (let i = 0; i < length; i++) {
+        letterCounts[secret[i]]++;
+      }
+
+      // First pass: greens.
+      for (let i = 0; i < length; i++) {
+        if (g[i] === secret[i]) {
+          tileState[i] = 2;
+          letterCounts[g[i]]--;
+        } else {
+          tileState[i] = 0;
+        }
+      }
+      // Second pass: yellows.
+      for (let i = 0; i < length; i++) {
+        if (tileState[i] !== 2) {
+          const letter = g[i];
+          if (letterCounts[letter] > 0) {
+            tileState[i] = 1;
+            letterCounts[letter]--;
+          }
+        }
+      }
+
+      // Fold tile states into a single base-3 integer key.
+      let key = 0;
+      for (let i = 0; i < length; i++) {
+        key = key * 3 + tileState[i];
+      }
+
+      patternCounts.set(key, (patternCounts.get(key) || 0) + 1);
+    }
+
+    let entropy = 0;
+    let expectedSize = 0;
+    for (const count of patternCounts.values()) {
+      const probability = count / total;
+      entropy -= probability * Math.log2(probability);
+      expectedSize += probability * count;
+    }
+
+    return { entropy, expectedSize };
   }
 
   /**

@@ -4,6 +4,7 @@
  */
 
 import { API_BASE_URL } from '../lib/apiClient';
+import { logger } from '../lib/logger';
 
 const PING_INTERVAL = 10 * 60 * 1000; // 10 minutes in milliseconds
 const HEALTH_ENDPOINT = '/health';
@@ -26,13 +27,13 @@ async function pingBackend(): Promise<void> {
     });
 
     if (response.ok) {
-      console.log('[Keep-Alive] Backend ping successful:', new Date().toISOString());
+      logger.log('[Keep-Alive] Backend ping successful:', new Date().toISOString());
     } else {
       console.warn('[Keep-Alive] Backend ping returned non-OK status:', response.status);
     }
   } catch (error) {
     // Silent fail - we don't want to spam the console if the backend is temporarily down
-    console.debug('[Keep-Alive] Backend ping failed:', error);
+    logger.debug('[Keep-Alive] Backend ping failed:', error);
   }
 }
 
@@ -43,17 +44,17 @@ async function pingBackend(): Promise<void> {
 export function startKeepAlive(): void {
   // Don't start if already running
   if (pingIntervalId) {
-    console.log('[Keep-Alive] Service already running');
+    logger.log('[Keep-Alive] Service already running');
     return;
   }
 
   // Only start keep-alive if we have a backend URL configured
   if (!API_BASE_URL) {
-    console.log('[Keep-Alive] No backend URL configured, service not started');
+    logger.log('[Keep-Alive] No backend URL configured, service not started');
     return;
   }
 
-  console.log('[Keep-Alive] Starting service - will ping every 10 minutes');
+  logger.log('[Keep-Alive] Starting service - will ping every 10 minutes');
 
   // Ping immediately on start
   pingBackend();
@@ -69,7 +70,7 @@ export function stopKeepAlive(): void {
   if (pingIntervalId) {
     clearInterval(pingIntervalId);
     pingIntervalId = null;
-    console.log('[Keep-Alive] Service stopped');
+    logger.log('[Keep-Alive] Service stopped');
   }
 }
 

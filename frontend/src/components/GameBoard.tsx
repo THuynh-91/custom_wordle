@@ -5,6 +5,7 @@ import AIPanel from './AIPanel';
 import { GameMode, WordLength, SolverType, GuessFeedback, TileState, AIMoveExplanation } from '@shared/types';
 import './GameBoard.css';
 import { apiFetch } from '../lib/apiClient';
+import { logger } from '../lib/logger';
 
 interface GameBoardProps {
   gameId: string;
@@ -134,7 +135,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
   useEffect(() => {
     // Auto-play for custom challenge mode and today's wordle with natural delay
     if ((gameMode === 'custom-challenge' || gameMode === 'todays-wordle') && status === 'in-progress') {
-      const delay = guesses.length === 0 ? 1000 : 2000; // Shorter delay for first move
+      // Brief delay so the "thinking" slot animation registers; the AI move
+      // itself computes in ~5ms, so keep this short to feel snappy.
+      const delay = guesses.length === 0 ? 450 : 650;
       const timer = setTimeout(() => {
         playAIMove();
       }, delay);
@@ -621,13 +624,13 @@ const GameBoard: React.FC<GameBoardProps> = ({
                   className="secret-word"
                   ref={(el) => {
                     if (el) {
-                      console.log('=== GAMEBOARD SECRET WORD DEBUG ===');
-                      console.log('Element:', el);
+                      logger.log('=== GAMEBOARD SECRET WORD DEBUG ===');
+                      logger.log('Element:', el);
                       const styles = window.getComputedStyle(el);
-                      console.log('Font Size:', styles.fontSize);
-                      console.log('Color:', styles.color);
-                      console.log('Background:', styles.backgroundColor);
-                      console.log('========================');
+                      logger.log('Font Size:', styles.fontSize);
+                      logger.log('Color:', styles.color);
+                      logger.log('Background:', styles.backgroundColor);
+                      logger.log('========================');
                     }
                   }}
                 >{secret.toUpperCase()}</p>

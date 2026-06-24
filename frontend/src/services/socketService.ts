@@ -12,6 +12,7 @@ import {
   MultiplayerPlayer,
   TileState,
 } from '../../../shared/types';
+import { logger } from '../lib/logger';
 
 type SocketEventCallback<T = any> = (data: T) => void;
 
@@ -24,7 +25,7 @@ class SocketService {
    */
   connect(): void {
     if (this.socket?.connected) {
-      console.log('[Socket] Already connected');
+      logger.log('[Socket] Already connected');
       return;
     }
 
@@ -39,7 +40,7 @@ class SocketService {
 
     this.setupDefaultListeners();
 
-    console.log('[Socket] Connecting to', backendUrl);
+    logger.log('[Socket] Connecting to', backendUrl);
   }
 
   /**
@@ -50,7 +51,7 @@ class SocketService {
       this.socket.disconnect();
       this.socket = null;
       this.eventHandlers.clear();
-      console.log('[Socket] Disconnected');
+      logger.log('[Socket] Disconnected');
     }
   }
 
@@ -61,11 +62,11 @@ class SocketService {
     if (!this.socket) return;
 
     this.socket.on('connect', () => {
-      console.log('[Socket] Connected with ID:', this.socket?.id);
+      logger.log('[Socket] Connected with ID:', this.socket?.id);
     });
 
     this.socket.on('disconnect', (reason) => {
-      console.log('[Socket] Disconnected:', reason);
+      logger.log('[Socket] Disconnected:', reason);
     });
 
     this.socket.on('connect_error', (error) => {

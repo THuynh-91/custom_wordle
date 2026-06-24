@@ -9,6 +9,7 @@ import {
   PlayerLeftData,
   TurnChangedData,
 } from '../services/socketService';
+import { logger } from '../lib/logger';
 import './MultiplayerGameBoard.css';
 
 interface MultiplayerGameBoardProps {
@@ -26,11 +27,11 @@ const MultiplayerGameBoard: React.FC<MultiplayerGameBoardProps> = ({
   initialRoomState,
   onNewGame,
 }) => {
-  console.log('=== MultiplayerGameBoard Mounted ===');
-  console.log('Room ID:', roomId);
-  console.log('Player ID:', playerId);
-  console.log('Is Host:', isHost);
-  console.log('Initial Room State:', initialRoomState);
+  logger.log('=== MultiplayerGameBoard Mounted ===');
+  logger.log('Room ID:', roomId);
+  logger.log('Player ID:', playerId);
+  logger.log('Is Host:', isHost);
+  logger.log('Initial Room State:', initialRoomState);
 
   // Validate room state
   if (!initialRoomState) {
@@ -78,8 +79,8 @@ const MultiplayerGameBoard: React.FC<MultiplayerGameBoardProps> = ({
   const myPlayer = initialRoomState.players.find(p => p?.id === playerId);
   const opponentPlayer = initialRoomState.players.find(p => p?.id !== playerId);
 
-  console.log('My Player:', myPlayer);
-  console.log('Opponent Player:', opponentPlayer);
+  logger.log('My Player:', myPlayer);
+  logger.log('Opponent Player:', opponentPlayer);
 
   if (!myPlayer || !opponentPlayer) {
     console.error('ERROR: Could not find players!');
@@ -359,15 +360,15 @@ const MultiplayerGameBoard: React.FC<MultiplayerGameBoardProps> = ({
               The word was: <strong
                 ref={(el) => {
                   if (el) {
-                    console.log('=== SECRET WORD DEBUG ===');
-                    console.log('Element:', el);
+                    logger.log('=== SECRET WORD DEBUG ===');
+                    logger.log('Element:', el);
                     const styles = window.getComputedStyle(el);
-                    console.log('Font Size:', styles.fontSize);
-                    console.log('Color:', styles.color);
-                    console.log('Display:', styles.display);
+                    logger.log('Font Size:', styles.fontSize);
+                    logger.log('Color:', styles.color);
+                    logger.log('Display:', styles.display);
                     const rootStyles = window.getComputedStyle(document.documentElement);
-                    console.log('--color-accent:', rootStyles.getPropertyValue('--color-accent').trim());
-                    console.log('========================');
+                    logger.log('--color-accent:', rootStyles.getPropertyValue('--color-accent').trim());
+                    logger.log('========================');
                   }
                 }}
               >{secret.toUpperCase()}</strong>
