@@ -62,8 +62,14 @@ export const SOLVER_DESCRIPTIONS: Record<string, string> = {
 };
 
 // Rate limiting
+//
+// These are a backstop against a runaway script, NOT a usage quota — the app has
+// no traffic to shape, so the limits are set far above anything a person can
+// produce and only exist so a hot loop cannot peg the single free-tier backend
+// instance. Override per-environment with RATE_LIMIT_MAX_REQUESTS /
+// AI_MOVE_RATE_LIMIT_PER_MIN if even these get in the way.
 export const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
-export const RATE_LIMIT_MAX_REQUESTS = 100;
+export const RATE_LIMIT_MAX_REQUESTS = 2000;
 
 // Cache configuration
 export const CACHE_TTL = {

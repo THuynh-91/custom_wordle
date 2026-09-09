@@ -21,9 +21,20 @@ export abstract class BaseSolver {
   }
 
   /**
-   * Get the next move from the solver
+   * Get the next move from the solver.
+   *
+   * `guessesRemaining` is the number of guesses this solver still has, INCLUDING
+   * the move it is about to make. It cannot be derived from `guessHistory.length`
+   * because race mode passes the combined human+AI history (so the AI can read
+   * the human's feedback) which overstates how many turns the AI has used.
+   * Turn-aware solvers need the real budget to decide whether they can afford a
+   * pure elimination guess.
    */
-  abstract getNextMove(guessHistory: GuessFeedback[], candidatesRemaining: string[]): SolverMove;
+  abstract getNextMove(
+    guessHistory: GuessFeedback[],
+    candidatesRemaining: string[],
+    guessesRemaining?: number
+  ): SolverMove;
 
   /**
    * Get the name of this solver

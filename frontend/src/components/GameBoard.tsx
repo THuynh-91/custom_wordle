@@ -7,6 +7,84 @@ import './GameBoard.css';
 import { apiFetch } from '../lib/apiClient';
 import { logger } from '../lib/logger';
 
+/**
+ * Statuses safe to retry.
+ *
+ * `ai-move` RECORDS the guess it returns, so a blind retry could make the AI play
+ * twice. These are the codes where we know the request never reached that point:
+ * 429 is rejected by the rate limiter before any state changes, and 502/503/504
+ * come from the platform's proxy when the instance is down or still waking. A
+ * plain 500 originates INSIDE the handler, possibly after the guess was recorded,
+ * so it is deliberately excluded.
+ */
+const RETRYABLE_STATUSES = [429, 502, 503, 504];
+const AI_MOVE_MAX_ATTEMPTS = 3;
+/** Cap on how long we honour a Retry-After hint before giving up in-band. */
+const MAX_RETRY_WAIT_MS = 4000;
+
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+/**
+ * Fetch the AI's next move, retrying only the failures that a retry can fix.
+ *
+ * Every failure here used to collapse into a single generic "Failed to get AI
+ * move", which hid four very different problems (rate limiting, a cold or
+ * restarted backend, an expired game, an already-finished game) and abandoned
+ * the AI's board mid-game. A rate limit or a waking backend is transient and
+ * worth a short retry; a missing or finished game never is, so those report a
+ * specific, actionable message instead.
+ */
+async function requestAIMove(gameId: string, solverType: SolverType): Promise<any> {
+  let lastError: Error | null = null;
+
+  for (let attempt = 1; attempt <= AI_MOVE_MAX_ATTEMPTS; attempt++) {
+    let response: Response;
+    try {
+      response = await apiFetch(`/api/game/${gameId}/ai-move?solverType=${solverType}`);
+    } catch (networkError: any) {
+      // Offline, DNS failure, or a backend that is still spinning up. The request
+      // never got a response, so it almost certainly never recorded a guess.
+      lastError = new Error('Cannot reach the server. Check your connection.');
+      logger.warn(`[ai-move] network error (attempt ${attempt})`, networkError);
+      if (attempt < AI_MOVE_MAX_ATTEMPTS) {
+        await sleep(attempt * 700);
+        continue;
+      }
+      throw lastError;
+    }
+
+    if (response.ok) {
+      return response.json();
+    }
+
+    // The backend sends { error, message } — prefer its message over a guess.
+    const body = await response.json().catch(() => ({} as any));
+
+    if (response.status === 404) {
+      throw new Error('This game expired on the server. Start a new game.');
+    }
+    if (response.status === 400) {
+      throw new Error(body.message || 'This game has already finished.');
+    }
+
+    if (RETRYABLE_STATUSES.includes(response.status) && attempt < AI_MOVE_MAX_ATTEMPTS) {
+      const hintedMs = Number(response.headers.get('Retry-After') || body.retryAfter || 0) * 1000;
+      const waitMs = Math.min(hintedMs || attempt * 700, MAX_RETRY_WAIT_MS);
+      logger.warn(`[ai-move] HTTP ${response.status}, retrying in ${waitMs}ms (attempt ${attempt})`);
+      await sleep(waitMs);
+      continue;
+    }
+
+    throw new Error(
+      response.status === 429
+        ? 'The AI is being asked to move too quickly. Wait a moment and try again.'
+        : body.message || `The AI could not move (server error ${response.status}).`
+    );
+  }
+
+  throw lastError || new Error('The AI could not move.');
+}
+
 interface GameBoardProps {
   gameId: string;
   gameMode: GameMode;
@@ -220,13 +298,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
     setLoading(true);
     try {
-      const response = await apiFetch(`/api/game/${gameId}/ai-move?solverType=${solverType}`);
-
-      if (!response.ok) {
-        throw new Error('Failed to get AI move');
-      }
-
-      const data = await response.json();
+      const data = await requestAIMove(gameId, solverType);
 
       const newGuess: GuessFeedback = {
         guess: data.guess,
@@ -283,7 +355,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
       setAiExplanation(data.explanation);
     } catch (error: any) {
-      setMessage(error.message || 'Error getting AI move');
+      logger.error('[ai-move] giving up:', error);
+      setMessage(error.message || 'The AI could not move.');
     } finally {
       setLoading(false);
       setAiThinking(false);
@@ -353,8 +426,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
       setStatus(data.status);
       setMessage('');
 
-      // In race mode, switch turn to AI
-      if (gameMode === 'race') {
+      // In race mode, hand the turn to the AI — but NOT after a win, which ends
+      // the race. The AI has no legal move left once the secret has been played,
+      // so asking for one just surfaced an error over the victory screen.
+      if (gameMode === 'race' && data.status !== 'won') {
         setCurrentTurn('ai');
       }
 

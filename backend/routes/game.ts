@@ -33,11 +33,20 @@ const games = new Map<string, GameState>();
 const raceGames = new Map<string, RaceState>();
 
 /**
- * Strict rate limiter for the expensive AI-move endpoint (runs full entropy
- * evaluation). 10 requests per minute per IP on top of the global limiter.
+ * Backstop for the AI-move endpoint, which runs a full entropy search (~50-120ms
+ * of blocking CPU per call on the single free-tier instance).
+ *
+ * This is NOT a usage quota. The frontend paces the AI ~1.5s apart, so a person
+ * cannot exceed ~40/min from one tab; the ceiling below is an order of magnitude
+ * past that and exists purely so a hot loop cannot wedge the event loop. The
+ * original budget was 10/min — less than two games — which made the AI die
+ * mid-board with "Failed to get AI move" whenever a second game started inside
+ * the same minute. Override with AI_MOVE_RATE_LIMIT_PER_MIN.
  */
+const AI_MOVE_RATE_LIMIT_PER_MIN =
+  Number(process.env.AI_MOVE_RATE_LIMIT_PER_MIN) || 600;
 const aiMoveRateLimiter = new RateLimiterMemory({
-  points: 10,
+  points: AI_MOVE_RATE_LIMIT_PER_MIN,
   duration: 60,
 });
 
@@ -90,6 +99,23 @@ const validateWordSchema = z.object({
 });
 
 const solverTypeQuerySchema = z.enum(SOLVER_TYPES).default('entropy');
+
+/**
+ * Return `words` guaranteed to contain `secret`.
+ *
+ * Today's Wordle answer is fetched live from the NYT API and is NOT validated
+ * against our local word lists (it can't be — the whole point is to mirror NYT).
+ * NYT occasionally uses a word we don't carry (e.g. "intel" on 2026-08-30).
+ * Filtering a candidate pool that cannot contain the secret narrows to ZERO
+ * candidates after a few guesses, which surfaced as a 500 "No valid candidates
+ * remain" and therefore "Failed to get AI move" for the rest of the game.
+ *
+ * WordService returns a fresh array per call, so appending here is safe and does
+ * not pollute the shared word lists.
+ */
+function poolIncludingSecret(words: string[], secret: string): string[] {
+  return words.includes(secret) ? words : [...words, secret];
+}
 
 /**
  * Validate the :gameId param. Returns the id or null (and sends 400) if invalid.
@@ -263,9 +289,15 @@ router.post('/:gameId/guess', async (req, res) => {
 
       if (isWin) {
         raceGame.humanStatus = 'won';
-        if (raceGame.aiStatus !== 'in-progress') {
-          raceGame.completedAt = Date.now();
+        // A win ends the RACE, not just the winner's board. The AI cannot catch
+        // up, and giving it another turn used to break outright: the human's
+        // all-green guess narrows the AI's pool to exactly the secret, which is
+        // then dropped as already-guessed, leaving zero candidates and a 500
+        // that reached the player as "Failed to get AI move" on every win.
+        if (raceGame.aiStatus === 'in-progress') {
+          raceGame.aiStatus = 'lost';
         }
+        raceGame.completedAt = Date.now();
       } else if (isLoss) {
         raceGame.humanStatus = 'lost';
         if (raceGame.aiStatus !== 'in-progress') {
@@ -273,8 +305,10 @@ router.post('/:gameId/guess', async (req, res) => {
         }
       }
 
-      // Switch turn to AI
-      raceGame.currentTurn = 'ai';
+      // Hand the turn to the AI, unless the race is already decided.
+      if (raceGame.aiStatus === 'in-progress') {
+        raceGame.currentTurn = 'ai';
+      }
 
       // Create response
       const response: SubmitGuessResponse = {
@@ -315,7 +349,10 @@ router.post('/:gameId/guess', async (req, res) => {
       });
     }
 
-    if (!WordService.isValidGuess(normalizedGuess, game.length)) {
+    // The secret is always a legal guess, even when it came from the NYT API and
+    // is missing from our local list (see poolIncludingSecret) — otherwise typing
+    // the correct answer would be rejected as "not in the word list".
+    if (normalizedGuess !== game.secret && !WordService.isValidGuess(normalizedGuess, game.length)) {
       return res.status(400).json({
         error: 'Invalid Word',
         message: ERROR_MESSAGES.WORD_NOT_IN_LIST(normalizedGuess)
@@ -380,10 +417,15 @@ router.get('/:gameId/ai-move', async (req, res) => {
     const rlKey = req.ip || req.socket.remoteAddress || 'unknown';
     try {
       await aiMoveRateLimiter.consume(rlKey);
-    } catch {
+    } catch (rejection: any) {
+      // Tell the client how long to wait so it can retry instead of failing the
+      // move outright.
+      const retryAfterSec = Math.max(1, Math.ceil((rejection?.msBeforeNext ?? 60_000) / 1000));
+      res.set('Retry-After', String(retryAfterSec));
       return res.status(429).json({
         error: 'Too Many Requests',
         message: ERROR_MESSAGES.RATE_LIMIT_EXCEEDED,
+        retryAfter: retryAfterSec,
       });
     }
 
@@ -419,8 +461,14 @@ router.get('/:gameId/ai-move', async (req, res) => {
 
       // Build constraints and filter candidates based on BOTH AI's and human's guesses
       // In turn-based race mode, AI can see all human guesses and their feedback
-      const allAnswers = WordService.getAnswerWords(raceGame.length);
-      const allGuesses = WordService.getGuessWords(raceGame.length);
+      const allAnswers = poolIncludingSecret(
+        WordService.getAnswerWords(raceGame.length),
+        raceGame.secret
+      );
+      const allGuesses = poolIncludingSecret(
+        WordService.getGuessWords(raceGame.length),
+        raceGame.secret
+      );
 
       let candidates: string[];
       if (raceGame.aiGuesses.length === 0 && raceGame.humanGuesses.length === 0) {
@@ -444,9 +492,14 @@ router.get('/:gameId/ai-move', async (req, res) => {
       candidates = candidates.filter(word => !alreadyGuessed.has(word));
 
       if (candidates.length === 0) {
-        return res.status(500).json({
-          error: 'No Candidates',
-          message: 'No valid candidates remain'
+        // Nothing left the AI could legally guess means the race is over (the
+        // secret has already been played). That is a finished game, not a server
+        // fault, so retire the AI cleanly instead of returning a 500.
+        raceGame.aiStatus = 'lost';
+        raceGame.completedAt = Date.now();
+        return res.status(400).json({
+          error: 'Game Ended',
+          message: 'The race is already decided'
         });
       }
 
@@ -465,7 +518,10 @@ router.get('/:gameId/ai-move', async (req, res) => {
       // Get move - pass COMBINED guess history so AI knows about human's guesses
       // This prevents AI from using precomputed first guess if human already played
       const combinedGuessHistory = [...raceGame.humanGuesses, ...raceGame.aiGuesses];
-      const move = solver.getNextMove(combinedGuessHistory, candidates);
+      // Turn budget must come from the AI's OWN guess count — the combined history
+      // above includes the human's guesses and would understate the turns left.
+      const aiGuessesRemaining = raceGame.maxGuesses - raceGame.aiGuesses.length;
+      const move = solver.getNextMove(combinedGuessHistory, candidates, aiGuessesRemaining);
 
       // Generate feedback
       const feedback = GameEngine.generateFeedback(move.guess, raceGame.secret);
@@ -533,8 +589,8 @@ router.get('/:gameId/ai-move', async (req, res) => {
     }
 
     // Build constraints and filter candidates
-    const allAnswers = WordService.getAnswerWords(game.length);
-    const allGuesses = WordService.getGuessWords(game.length);
+    const allAnswers = poolIncludingSecret(WordService.getAnswerWords(game.length), game.secret);
+    const allGuesses = poolIncludingSecret(WordService.getGuessWords(game.length), game.secret);
 
     let candidates: string[];
     if (game.guesses.length === 0) {
@@ -546,6 +602,8 @@ router.get('/:gameId/ai-move', async (req, res) => {
     }
 
     if (candidates.length === 0) {
+      // Unreachable: poolIncludingSecret guarantees the secret is in the pool, and
+      // the secret always satisfies feedback derived from itself.
       return res.status(500).json({
         error: 'No Candidates',
         message: 'No valid candidates remain (this should not happen)'
@@ -565,7 +623,11 @@ router.get('/:gameId/ai-move', async (req, res) => {
     }
 
     // Get move
-    const move = solver.getNextMove(game.guesses, candidates);
+    const move = solver.getNextMove(
+      game.guesses,
+      candidates,
+      game.maxGuesses - game.guesses.length
+    );
 
     // Generate feedback
     const feedback = GameEngine.generateFeedback(move.guess, game.secret);

@@ -6,6 +6,7 @@
 import { BaseSolver, SolverMove } from './base-solver.js';
 import { WordLength, GuessFeedback, TileState } from '../../../shared/types.js';
 import { GameEngine } from '../game-engine.js';
+import { DEFAULT_MAX_GUESSES } from '../../../shared/constants.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -59,6 +60,32 @@ interface PrecomputedData {
 
 // Cache for loaded pre-computed data
 const PRECOMPUTED_SECOND_GUESSES: Map<WordLength, Map<string, PrecomputedEntry>> = new Map();
+
+/**
+ * Above this many candidates per remaining turn, finishing in time is not the
+ * binding constraint and the solve-probability estimate below loses resolution,
+ * so the solver falls back to plain entropy.
+ *
+ * Tuned with `npx tsx backend/scripts/benchmark-solver.ts 5 2000`, which swept
+ * 2/4/6/20 over the same 2000 games: 2 was best on both win rate (99.95% vs
+ * 99.90%) and average guesses (3.934 vs 3.954-3.963).
+ */
+const ENDGAME_CANDIDATES_PER_TURN = 2;
+
+/**
+ * Probability of solving a pool of `m` candidates with `k` guesses left.
+ *
+ * `m <= k` is a guaranteed win: just test them one per turn. Above that,
+ * enumeration can only cover `k` of the `m`, giving k/m. That is a LOWER bound —
+ * a good splitter usually does better — but it is monotone in the right
+ * direction (fewer and smaller buckets score higher), which is all the ranking
+ * needs. Keeping it a bound rather than a guess avoids an unfounded constant.
+ */
+function subSolveProbability(m: number, k: number): number {
+  if (k <= 0) return 0;
+  if (m <= k) return 1;
+  return k / m;
+}
 
 /**
  * Convert feedback array to pattern string for lookup
@@ -136,7 +163,10 @@ function loadPrecomputedData(length: WordLength): void {
 
 export class EntropySolver extends BaseSolver {
   private useAllGuesses: boolean;
-  private entropyCache: Map<string, { entropy: number; expectedSize: number }>;
+  private entropyCache: Map<
+    string,
+    { entropy: number; expectedSize: number; solveProbability: number }
+  >;
 
   constructor(length: WordLength, candidates: string[], allGuesses: string[], useAllGuesses = true) {
     super(length, candidates, allGuesses);
@@ -151,8 +181,15 @@ export class EntropySolver extends BaseSolver {
     return 'Optimized AI';
   }
 
-  getNextMove(guessHistory: GuessFeedback[], candidatesRemaining: string[]): SolverMove {
+  getNextMove(
+    guessHistory: GuessFeedback[],
+    candidatesRemaining: string[],
+    guessesRemaining: number = DEFAULT_MAX_GUESSES - guessHistory.length
+  ): SolverMove {
     const startTime = Date.now();
+    // Turns we have left, counting the one we are about to play. Clamped so a
+    // miscounted history can never make the solver think it has no budget.
+    const turnsLeft = Math.max(1, guessesRemaining);
 
     // If only one candidate left, return it
     if (candidatesRemaining.length === 1) {
@@ -249,6 +286,23 @@ export class EntropySolver extends BaseSolver {
     // Determine which words to evaluate for optimal play
     let wordsToEvaluate: string[];
 
+    // May we spend this turn on a pure elimination guess?
+    //
+    // Testing candidates one at a time can check at most `turnsLeft` of them, so:
+    //   - N <= turnsLeft  -> enumeration is already a GUARANTEED win. Never waste
+    //                        a turn; and the guarantee is self-sustaining, since a
+    //                        wrong guess drops both N and turnsLeft by at least 1.
+    //   - turnsLeft == 1  -> a probe has zero chance of winning. Must guess a candidate.
+    //   - otherwise       -> sequential guessing is a LOSING plan, so a turn spent
+    //                        splitting the pool is worth more than a 1-in-N shot.
+    //
+    // This is what the old `candidatesRemaining.length > 10` gate got wrong: traps
+    // like bight/dight/fight/hight/might/night/wight (7 candidates that differ only
+    // in the first letter) fall BELOW that gate, so the solver was restricted to
+    // candidate words and burned every remaining turn one letter at a time.
+    const canProbe =
+      this.useAllGuesses && turnsLeft > 1 && candidatesRemaining.length > turnsLeft;
+
     if (candidatesRemaining.length === 1) {
       // Only one candidate - must be it
       const chosen = candidatesRemaining[0];
@@ -283,9 +337,10 @@ export class EntropySolver extends BaseSolver {
           computationTimeMs: Date.now() - startTime
         }
       };
-    } else if (this.useAllGuesses && candidatesRemaining.length > 10) {
-      // For larger sets, consider all possible guesses (including non-answers) for optimal play.
-      // Strategic guesses (that don't match constraints) can eliminate many candidates at once.
+    } else if (canProbe) {
+      // Consider all possible guesses (including words that cannot be the answer).
+      // A "probe" sacrifices this turn's chance of winning to split the candidate
+      // pool, which is the only way out of a one-letter-apart trap.
       //
       // PERFORMANCE CAP: the cost of this branch is O(wordsToEvaluate * candidatesRemaining)
       // feedback computations. For 6/7-letter words allGuesses is 15k-23k; combined with even a
@@ -299,8 +354,13 @@ export class EntropySolver extends BaseSolver {
       // top up with an evenly-spaced sample of strategic (non-candidate) guesses. Sampling the
       // huge guess pool barely affects solve quality because the remaining candidates already
       // dominate the high-entropy choices once the field has been narrowed.
-      const MAX_EVALUATIONS = 400_000;   // guess*candidate feedback-op budget
-      const MAX_GUESSES_EVALUATED = 4_000; // hard cap on guess-pool breadth per move
+      //
+      // The breadth cap is set ABOVE the largest guess pool (23k for 7 letters) so that a
+      // small candidate set — exactly the endgame trap case — always gets the complete pool
+      // to search for a splitter. The op budget still bounds total work: with a small
+      // candidate set, 23k guesses is only ~160k ops, well inside budget.
+      const MAX_EVALUATIONS = 400_000;    // guess*candidate feedback-op budget
+      const MAX_GUESSES_EVALUATED = 25_000; // breadth cap; op budget is the real limiter
       const budgetFromOps = Math.floor(MAX_EVALUATIONS / Math.max(candidatesRemaining.length, 1));
       const guessBudget = Math.min(
         MAX_GUESSES_EVALUATED,
@@ -319,7 +379,8 @@ export class EntropySolver extends BaseSolver {
         wordsToEvaluate = [...candidatesRemaining, ...sampledStrategic];
       }
     } else {
-      // For smaller sets, just evaluate candidates
+      // Enumerating candidates already wins (or it is the last turn, where a probe
+      // cannot win at all) — only real candidates are worth evaluating.
       wordsToEvaluate = candidatesRemaining;
     }
 
@@ -329,23 +390,39 @@ export class EntropySolver extends BaseSolver {
     const encodedCandidates = this.encodeWords(candidatesRemaining);
     const candidateSet = new Set(candidatesRemaining);
 
-    // Calculate entropy for each potential guess - single pass derives BOTH entropy
-    // and expected partition size (previously two full passes over candidates).
+    // Which objective applies depends on how close the 6-guess cliff is.
+    //
+    // ENDGAME (few candidates relative to turns left): what matters is not raw
+    // information but whether we can still FINISH in time, and that depends on the
+    // exact bucket sizes a guess produces. Score by solve probability.
+    //
+    // MIDGAME/OPENING (large pool): no guess can plausibly finish soon, and the
+    // solve-probability estimate below degenerates once most buckets are bigger
+    // than the turns left (it stops distinguishing a bucket of 4 from one of 400).
+    // Raw entropy is the better-calibrated objective there.
+    const useSolveProbability =
+      candidatesRemaining.length <= ENDGAME_CANDIDATES_PER_TURN * turnsLeft;
+
+    // Calculate entropy for each potential guess - single pass derives entropy,
+    // expected partition size AND solve probability (one walk over candidates).
     const scoredGuesses = wordsToEvaluate.map(guess => {
-      const cacheKey = `${guess}:${candidatesRemaining.length}:${candidatesRemaining.slice(0, 5).join(',')}`;
+      const cacheKey = `${guess}:${turnsLeft}:${candidatesRemaining.length}:${candidatesRemaining.slice(0, 5).join(',')}`;
 
       let entropy: number;
       let expectedSize: number;
+      let solveProbability: number;
 
       const cached = this.entropyCache.get(cacheKey);
       if (cached) {
         entropy = cached.entropy;
         expectedSize = cached.expectedSize;
+        solveProbability = cached.solveProbability;
       } else {
-        const scored = this.scoreGuessFast(guess, encodedCandidates);
+        const scored = this.scoreGuessFast(guess, encodedCandidates, turnsLeft);
         entropy = scored.entropy;
         expectedSize = scored.expectedSize;
-        this.entropyCache.set(cacheKey, { entropy, expectedSize });
+        solveProbability = scored.solveProbability;
+        this.entropyCache.set(cacheKey, { entropy, expectedSize, solveProbability });
 
         // Limit cache size to prevent memory issues
         if (this.entropyCache.size > 10000) {
@@ -363,12 +440,24 @@ export class EntropySolver extends BaseSolver {
         word: guess,
         entropy,
         expectedSize,
+        solveProbability,
         score: entropy + candidateBonus
       };
     });
 
-    // Sort by score (highest entropy first)
-    scoredGuesses.sort((a, b) => b.score - a.score);
+    // Endgame: highest solve probability wins, entropy breaks ties (and a candidate
+    // breaks a remaining tie, so an equally-good guess that could just win is preferred).
+    // Otherwise: highest entropy.
+    if (useSolveProbability) {
+      scoredGuesses.sort(
+        (a, b) =>
+          b.solveProbability - a.solveProbability ||
+          b.entropy - a.entropy ||
+          (candidateSet.has(b.word) ? 1 : 0) - (candidateSet.has(a.word) ? 1 : 0)
+      );
+    } else {
+      scoredGuesses.sort((a, b) => b.score - a.score);
+    }
 
     const chosen = scoredGuesses[0];
     const topAlternatives = scoredGuesses.slice(1, 4).map(({ word, entropy, expectedSize }) => ({
@@ -381,7 +470,7 @@ export class EntropySolver extends BaseSolver {
       guess: chosen.word,
       explanation: {
         chosenGuess: chosen.word,
-        reasoning: this.generateReasoning(chosen, candidatesRemaining, guessHistory),
+        reasoning: this.generateReasoning(chosen, candidatesRemaining, guessHistory, turnsLeft),
         candidateCountBefore: candidatesRemaining.length,
         remainingCandidates: candidatesRemaining.slice(0, 50),
         expectedPartitionSize: chosen.expectedSize,
@@ -422,12 +511,13 @@ export class EntropySolver extends BaseSolver {
    */
   private scoreGuessFast(
     guess: string,
-    encodedCandidates: Uint8Array[]
-  ): { entropy: number; expectedSize: number } {
+    encodedCandidates: Uint8Array[],
+    turnsLeft: number
+  ): { entropy: number; expectedSize: number; solveProbability: number } {
     const length = guess.length;
     const total = encodedCandidates.length;
     if (total === 0) {
-      return { entropy: 0, expectedSize: 0 };
+      return { entropy: 0, expectedSize: 0, solveProbability: 0 };
     }
 
     // Encode the guess once.
@@ -480,15 +570,28 @@ export class EntropySolver extends BaseSolver {
       patternCounts.set(key, (patternCounts.get(key) || 0) + 1);
     }
 
+    // The all-green pattern is the one where every tile is state 2, i.e. the
+    // base-3 key 22...2 == 3^length - 1. Its bucket is the immediate win.
+    const allCorrectKey = Math.pow(3, length) - 1;
+
     let entropy = 0;
     let expectedSize = 0;
-    for (const count of patternCounts.values()) {
+    let solveProbability = 0;
+    for (const [key, count] of patternCounts) {
       const probability = count / total;
       entropy -= probability * Math.log2(probability);
       expectedSize += probability * count;
+
+      if (key === allCorrectKey) {
+        // This guess IS the answer: solved on this very turn.
+        solveProbability += probability;
+      } else {
+        solveProbability +=
+          probability * subSolveProbability(count, turnsLeft - 1);
+      }
     }
 
-    return { entropy, expectedSize };
+    return { entropy, expectedSize, solveProbability };
   }
 
   /**
@@ -515,11 +618,12 @@ export class EntropySolver extends BaseSolver {
    * Generate reasoning explanation
    */
   private generateReasoning(
-    chosen: { word: string; entropy: number; expectedSize: number },
+    chosen: { word: string; entropy: number; expectedSize: number; solveProbability: number },
     candidates: string[],
-    guessHistory: GuessFeedback[]
+    guessHistory: GuessFeedback[],
+    turnsLeft: number
   ): string {
-    const { word, entropy, expectedSize } = chosen;
+    const { word, entropy, expectedSize, solveProbability } = chosen;
     const isCandidate = candidates.includes(word);
 
     // Check if this is a strategic guess (doesn't match known constraints)
@@ -531,7 +635,17 @@ export class EntropySolver extends BaseSolver {
 
     let reasoning = `Selected "${word}" as the optimal next guess. `;
 
-    if (isStrategicGuess) {
+    // A sacrifice: a word that cannot be the answer, played because guessing the
+    // candidates one at a time cannot fit in the turns that are left.
+    if (isStrategicGuess && !isCandidate && candidates.length > turnsLeft) {
+      reasoning +=
+        `Deliberately spending this turn on a word that CANNOT be the answer. ` +
+        `${candidates.length} candidates remain but only ${turnsLeft} guess${turnsLeft === 1 ? '' : 'es'} ` +
+        `are left, so testing them one by one would run out of turns. ` +
+        `"${word}" instead splits those ${candidates.length} into groups of about ` +
+        `${expectedSize.toFixed(0)} (${entropy.toFixed(2)} bits), raising the chance of ` +
+        `finishing in time to roughly ${(solveProbability * 100).toFixed(0)}%.`;
+    } else if (isStrategicGuess) {
       reasoning += `This is a strategic elimination guess to maximize information gain. While it doesn't match all known constraints, it will help narrow down the ${candidates.length} remaining candidates to approximately ${expectedSize.toFixed(0)} words by testing new letter combinations.`;
     } else if (guessHistory.length === 0) {
       reasoning += `This word should narrow down the ${candidates.length.toLocaleString()} possible words to approximately ${expectedSize.toFixed(0)} candidates.`;

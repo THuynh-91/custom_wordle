@@ -132,11 +132,13 @@ app.use(express.json({ limit: '10kb' })); // Limit JSON payload size
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 /**
- * Global rate limiter (in-memory): 100 requests / minute / IP.
- * Stricter per-endpoint limiters live in the route modules (AI move, feedback).
+ * Global rate limiter (in-memory). Deliberately generous — see the note in
+ * shared/constants.ts. Set RATE_LIMIT_MAX_REQUESTS to raise or lower it without
+ * a code change; the only endpoint kept genuinely strict is /api/feedback, which
+ * writes GitHub issues with a real token.
  */
 const globalRateLimiter = new RateLimiterMemory({
-  points: RATE_LIMIT_MAX_REQUESTS, // 100 requests
+  points: Number(process.env.RATE_LIMIT_MAX_REQUESTS) || RATE_LIMIT_MAX_REQUESTS,
   duration: RATE_LIMIT_WINDOW_MS / 1000, // per 60 seconds
 });
 
